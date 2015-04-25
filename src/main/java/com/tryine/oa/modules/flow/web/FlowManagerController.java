@@ -258,7 +258,7 @@ public class FlowManagerController extends BaseController {
 		return "redirect:" + adminPath + "/flow/manager/taskInstanceList?repage";
 	}
 	
-	//流程定义xxx详细页面22222222zzwwwwwwwwwwxxxwwwwwwwwwwwwwwwwwwwwwwwwwww
+	//流程定义详细页面22222222zzwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
 	@RequiresPermissions("flow:manager:list")
 	@RequestMapping(value = { "processDefinitionDetail"})
 	public String processDefinitionDetail(@RequestParam Map<String,Object> params,HttpServletRequest request,
