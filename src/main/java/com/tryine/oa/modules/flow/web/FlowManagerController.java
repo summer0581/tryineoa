@@ -265,7 +265,7 @@ public class FlowManagerController extends BaseController {
 			HttpServletResponse response, Model model, RedirectAttributes redirectAttributes){
 		try {
 			
-		} catch (Exception e) {
+		} catch (Exception e) { 
 			// TODO Auto-generated catch block
 			addMessage(redirectAttributes, "查询流程定义失败！失败信息："+e.getMessage());
 		}
