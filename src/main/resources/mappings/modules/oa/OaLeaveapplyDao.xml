@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tryine.oa.modules.oa.dao.OaLeaveapplyDao">
+    
+	<sql id="oaLeaveapplyColumns">
+		a.id AS "id",
+		a.type AS "type",
+		a.name AS "name",
+		a.office_id AS "office.id",
+		a.post AS "post",
+		a.telephone AS "telephone",
+		a.is_positive AS "isPositive",
+		a.starttime AS "starttime",
+		a.endtime AS "endtime",
+		a.post_agent AS "postAgent",
+		a.reason AS "reason",
+		a.direct_leader_idea AS "directLeaderIdea",
+		a.human_resource_idea AS "humanResourceIdea",
+		a.general_manager_idea AS "generalManagerIdea",
+		a.chair_man_idea AS "chairManIdea",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag",
+		o4.name AS "office.name"
+	</sql>
+	
+	<sql id="oaLeaveapplyJoins">
+		LEFT JOIN sys_office o4 ON o4.id = a.office_id
+	</sql>
+    
+	<select id="get" resultType="OaLeaveapply">
+		SELECT 
+			<include refid="oaLeaveapplyColumns"/>
+		FROM oa_leaveapply a
+		<include refid="oaLeaveapplyJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="OaLeaveapply">
+		SELECT 
+			<include refid="oaLeaveapplyColumns"/>
+		FROM oa_leaveapply a
+		<include refid="oaLeaveapplyJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="name != null and name != ''">
+				AND a.name LIKE 
+					<if test="dbName == 'oracle'">'%'||#{name}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{name}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{name},'%')</if>
+			</if>
+			<if test="starttime != null and starttime != ''">
+				AND a.starttime = #{starttime}
+			</if>
+			<if test="endtime != null and endtime != ''">
+				AND a.endtime = #{endtime}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="OaLeaveapply">
+		SELECT 
+			<include refid="oaLeaveapplyColumns"/>
+		FROM oa_leaveapply a
+		<include refid="oaLeaveapplyJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO oa_leaveapply(
+			id,
+			type,
+			name,
+			office_id,
+			post,
+			telephone,
+			is_positive,
+			starttime,
+			endtime,
+			post_agent,
+			reason,
+			direct_leader_idea,
+			human_resource_idea,
+			general_manager_idea,
+			chair_man_idea,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag
+		) VALUES (
+			#{id},
+			#{type},
+			#{name},
+			#{office.id},
+			#{post},
+			#{telephone},
+			#{isPositive},
+			#{starttime},
+			#{endtime},
+			#{postAgent},
+			#{reason},
+			#{directLeaderIdea},
+			#{humanResourceIdea},
+			#{generalManagerIdea},
+			#{chairManIdea},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE oa_leaveapply SET 	
+			type = #{type},
+			name = #{name},
+			office_id = #{office.id},
+			post = #{post},
+			telephone = #{telephone},
+			is_positive = #{isPositive},
+			starttime = #{starttime},
+			endtime = #{endtime},
+			post_agent = #{postAgent},
+			reason = #{reason},
+			direct_leader_idea = #{directLeaderIdea},
+			human_resource_idea = #{humanResourceIdea},
+			general_manager_idea = #{generalManagerIdea},
+			chair_man_idea = #{chairManIdea},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE oa_leaveapply SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+</mapper>
