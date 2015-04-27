@@ -244,7 +244,7 @@ public class FlowManagerController extends BaseController {
 		return "modules/flow/manager/taskInstanceList";
 	}
 	
-	//暂停ssffffffffffffffffffffffff
+	//暂停
 	@RequiresPermissions("flow:manager:list")
 	@RequestMapping(value = { "doTaskSuspend"})
 	public String doTaskSuspend(@RequestParam Map<String,Object> params,HttpServletRequest request,
@@ -258,7 +258,7 @@ public class FlowManagerController extends BaseController {
 		return "redirect:" + adminPath + "/flow/manager/taskInstanceList?repage";
 	}
 	
-	//流程定义详细页面22222222zzwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+	//流程定义详细页面
 	@RequiresPermissions("flow:manager:list")
 	@RequestMapping(value = { "processDefinitionDetail"})
 	public String processDefinitionDetail(@RequestParam Map<String,Object> params,HttpServletRequest request,
