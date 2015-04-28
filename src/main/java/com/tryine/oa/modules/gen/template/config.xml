@@ -34,7 +34,8 @@
 			<template>treetable/viewList.xml</template>
 		</category>
 		<category value="treeTableAndList" label="树结构表（左树右表）">
-			<template>category-ref:dao</template>
+			<template>treetable/viewIndex.xml</template>
+			<template>category-ref:treeTable</template>
 		</category>
 	</category>
 	<!-- java类型 -->

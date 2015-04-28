@@ -1,71 +1,40 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2015/4/13 15:50:58                           */
+/* Created on:     2015/4/27 11:45:03                           */
 /*==============================================================*/
 
 
 /*==============================================================*/
-/* Table: oa_leaveapply                                         */
+/* Table: oa_zhidu_content                                      */
 /*==============================================================*/
-create table oa_leaveapply
+create table oa_zhidu_content
 (
    id                   national varchar(64) not null comment '编号',
-   type                 varchar(20) comment '类型',
-   name                 varchar(64) comment '姓名',
-   office_id            varchar(64) comment '部门',
-   post                 varchar(64) comment '岗位',
-   telephone            varchar(64) comment '联系电话',
-   is_positive          char(1) comment '是否转正',
-   starttime            date comment '开始时间',
-   endtime              date comment '结束时间',
-   post_agent           varchar(64) comment '岗位代理',
-   reason               varchar(4000) comment '请假理由',
-   direct_leader_idea   varchar(4000) comment '直接上级意见',
-   human_resource_idea  varchar(4000) comment '人资部意见',
-   general_manager_idea varchar(4000) comment '总经理意见',
-   chair_man_idea       varchar(4000) comment '董事长意见',
+   name                 national varchar(100) not null comment '名称',
+   content              text comment '制度内容',
+   ml_id                varchar(64) comment '所属目录',
+   files                varchar(2000) comment '附件',
    create_by            national varchar(64) not null comment '创建者',
    create_date          datetime not null comment '创建时间',
    update_by            national varchar(64) not null comment '更新者',
    update_date          datetime not null comment '更新时间',
    remarks              national varchar(255) comment '备注信息',
-   del_flag             national char(1) not null default '0' comment '删除标记'
+   del_flag             national char(1) not null default '0' comment '删除标记',
+   sort                 decimal(10,0) not null comment '排序'
 );
 
-alter table oa_leaveapply comment '请假申请表';
-
-
+alter table oa_zhidu_content comment '规章制度内容表';
 
 /*==============================================================*/
-/* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2015/4/13 16:27:44                           */
+/* Table: oa_zhidu_ml                                           */
 /*==============================================================*/
-
-
-drop table if exists tryineoa.tmp_oa_leaveapply;
-
-rename table tryineoa.oa_leaveapply to tmp_oa_leaveapply;
-
-/*==============================================================*/
-/* Table: oa_leaveapply                                         */
-/*==============================================================*/
-create table oa_leaveapply
+create table tryineoa.oa_zhidu_ml
 (
    id                   national varchar(64) not null comment '编号',
-   type                 varchar(20) comment '类型',
-   name                 varchar(64) comment '姓名',
-   office_id            varchar(64) comment '部门',
-   post                 varchar(64) comment '岗位',
-   telephone            varchar(64) comment '联系电话',
-   is_positive          char(1) comment '是否转正',
-   starttime            date comment '开始时间',
-   endtime              date comment '结束时间',
-   post_agent           varchar(64) comment '岗位代理',
-   reason               varchar(4000) comment '请假理由',
-   direct_leader_idea   varchar(4000) comment '直接上级意见',
-   human_resource_idea  varchar(4000) comment '人资部意见',
-   general_manager_idea varchar(4000) comment '总经理意见',
-   chair_man_idea       varchar(4000) comment '董事长意见',
+   parent_id            national varchar(64) not null comment '父级编号',
+   parent_ids           national varchar(2000) not null comment '所有父级编号',
+   name                 national varchar(100) not null comment '名称',
+   sort                 decimal(10,0) not null comment '排序',
    create_by            national varchar(64) not null comment '创建者',
    create_date          datetime not null comment '创建时间',
    update_by            national varchar(64) not null comment '更新者',
@@ -75,9 +44,108 @@ create table oa_leaveapply
    primary key (id)
 );
 
-alter table oa_leaveapply comment '请假申请表';
+alter table tryineoa.oa_zhidu_ml comment '规章制度目录表';
 
-insert into oa_leaveapply (id, type, name, office_id, post, telephone, is_positive, starttime, endtime, post_agent, reason, direct_leader_idea, human_resource_idea, general_manager_idea, chair_man_idea, create_by, create_date, update_by, update_date, remarks, del_flag)
-select id, type, name, office_id, post, telephone, is_positive, starttime, endtime, post_agent, reason, direct_leader_idea, human_resource_idea, general_manager_idea, chair_man_idea, create_by, create_date, update_by, update_date, remarks, del_flag
-from tryineoa.tmp_oa_leaveapply;
+/*==============================================================*/
+/* Index: test_data_parent_id                                   */
+/*==============================================================*/
+create index test_data_parent_id on tryineoa.oa_zhidu_ml
+(
+   parent_id
+);
+
+/*==============================================================*/
+/* Index: test_tree_del_flag                                    */
+/*==============================================================*/
+create index test_tree_del_flag on tryineoa.oa_zhidu_ml
+(
+   del_flag
+);
+
+
+/*==============================================================*/
+/* DBMS name:      MySQL 5.0                                    */
+/* Created on:     2015/4/28 13:41:25                           */
+/*==============================================================*/
+
+
+drop table if exists tryineoa.tmp_sys_user;
+
+rename table tryineoa.sys_user to tmp_sys_user;
+
+/*==============================================================*/
+/* Table: sys_user                                              */
+/*==============================================================*/
+create table tryineoa.sys_user
+(
+   id                   national varchar(64) not null comment '编号',
+   company_id           national varchar(64) not null comment '归属公司',
+   office_id            national varchar(64) not null comment '归属部门',
+   login_name           national varchar(100) not null comment '登录名',
+   password             national varchar(100) not null comment '密码',
+   no                   national varchar(100) comment '工号',
+   name                 national varchar(100) not null comment '姓名',
+   zhiwei               varchar(100) comment '职位',
+   email                national varchar(200) comment '邮箱',
+   phone                national varchar(200) comment '电话',
+   mobile               national varchar(200) comment '手机',
+   user_type            national char(1) comment '用户类型',
+   photo                national varchar(1000) comment '用户头像',
+   login_ip             national varchar(100) comment '最后登陆IP',
+   login_date           datetime comment '最后登陆时间',
+   login_flag           national varchar(64) comment '是否可登录',
+   create_by            national varchar(64) not null comment '创建者',
+   create_date          datetime not null comment '创建时间',
+   update_by            national varchar(64) not null comment '更新者',
+   update_date          datetime not null comment '更新时间',
+   remarks              national varchar(255) comment '备注信息',
+   del_flag             national char(1) not null default '0' comment '删除标记',
+   primary key (id)
+);
+
+alter table tryineoa.sys_user comment '用户表';
+
+insert into tryineoa.sys_user (id, company_id, office_id, login_name, password, no, name, email, phone, mobile, user_type, photo, login_ip, login_date, login_flag, create_by, create_date, update_by, update_date, remarks, del_flag)
+select id, company_id, office_id, login_name, password, no, name, email, phone, mobile, user_type, photo, login_ip, login_date, login_flag, create_by, create_date, update_by, update_date, remarks, del_flag
+from tryineoa.tmp_sys_user;
+
+/*==============================================================*/
+/* Index: sys_user_company_id                                   */
+/*==============================================================*/
+create index sys_user_company_id on tryineoa.sys_user
+(
+   company_id
+);
+
+/*==============================================================*/
+/* Index: sys_user_del_flag                                     */
+/*==============================================================*/
+create index sys_user_del_flag on tryineoa.sys_user
+(
+   del_flag
+);
+
+/*==============================================================*/
+/* Index: sys_user_login_name                                   */
+/*==============================================================*/
+create index sys_user_login_name on tryineoa.sys_user
+(
+   login_name
+);
+
+/*==============================================================*/
+/* Index: sys_user_office_id                                    */
+/*==============================================================*/
+create index sys_user_office_id on tryineoa.sys_user
+(
+   office_id
+);
+
+/*==============================================================*/
+/* Index: sys_user_update_date                                  */
+/*==============================================================*/
+create index sys_user_update_date on tryineoa.sys_user
+(
+   update_date
+);
 

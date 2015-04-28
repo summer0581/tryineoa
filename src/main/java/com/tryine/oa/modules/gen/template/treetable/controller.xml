@@ -57,6 +57,11 @@ public class ${ClassName}Controller extends BaseController {
 		return entity;
 	}
 	
+	@RequestMapping(value = {"${className}Index"})
+	public String ${className}Index(${ClassName} ${className}, Model model) {
+		return "${lastPackageName}/${viewPrefix}Index";
+	}
+	
 	@RequiresPermissions("${permissionPrefix}:view")
 	@RequestMapping(value = {"list", ""})
 	public String list(${ClassName} ${className}, HttpServletRequest request, HttpServletResponse response, Model model) {
