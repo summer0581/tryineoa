@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tryine.oa.modules.oa.dao.OaMessageRecordDao">
+    
+	<sql id="oaMessageRecordColumns">
+		a.id AS "id",
+		a.oa_message_id AS "oaMessage.id",
+		a.user_id AS "user.id",
+		a.read_flag AS "readFlag",
+		a.read_date AS "readDate",
+		b.content AS "oaMessage.content",
+		b.create_by AS "oaMessage.createBy.id",
+		b.create_date AS "oaMessage.createDate",
+		u4.name AS "oaMessage.createBy.name",
+		u3.name AS "user.name"
+	</sql>
+	
+	<sql id="oaMessageRecordJoins">
+		LEFT JOIN oa_message b ON b.id = a.oa_message_id
+		LEFT JOIN sys_user u3 ON u3.id = a.user_id
+		LEFT JOIN sys_user u4 ON u4.id = b.create_by
+	</sql>
+    
+	<select id="get" resultType="OaMessageRecord">
+		SELECT 
+			<include refid="oaMessageRecordColumns"/>
+		FROM oa_message_record a
+		<include refid="oaMessageRecordJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="OaMessageRecord">
+		SELECT 
+			<include refid="oaMessageRecordColumns"/>
+		FROM oa_message_record a
+		<include refid="oaMessageRecordJoins"/>
+		<where>
+			
+			<if test="oaMessage != null and oaMessage.id != null and oaMessage.id != ''">
+				AND a.oa_message_id = #{oaMessage.id}
+			</if>
+			<if test="type != null and type != ''">
+				<if test="'noread' == type">
+					AND a.user_id = #{currentUser.id} AND a.read_flag='0'
+				</if>
+				<if test="'readed' == type">
+					AND a.user_id = #{currentUser.id} AND a.read_flag='1'
+				</if>
+				<if test="'sended' == type">
+					AND b.create_by = #{currentUser.id}
+				</if>
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="OaMessageRecord">
+		SELECT 
+			<include refid="oaMessageRecordColumns"/>
+		FROM oa_message_record a
+		<include refid="oaMessageRecordJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO oa_message_record(
+			id,
+			oa_message_id,
+			user_id,
+			read_flag,
+			read_date
+		) VALUES (
+			#{id},
+			#{oaMessage.id},
+			#{user.id},
+			#{readFlag},
+			#{readDate}
+		)
+	</insert>
+	
+		<insert id="insertAll" parameterType="List">
+		INSERT INTO oa_message_record(
+			ID,
+			OA_MESSAGE_ID,
+			USER_ID,
+			READ_FLAG,
+			READ_DATE
+		)
+		<foreach collection="list" item="e" separator=" UNION ALL ">
+			SELECT
+				#{e.id},
+				#{e.oaMessage.id},
+				#{e.user.id},
+				#{e.readFlag},
+				#{e.readDate}
+			FROM dual
+		</foreach>
+	</insert>
+	
+	<update id="update">
+		UPDATE oa_message_record SET 	
+			oa_message_id = #{oaMessage.id},
+			user_id = #{user.id},
+			read_flag = #{readFlag},
+			read_date = #{readDate}
+		WHERE id = #{id}
+	</update>
+	
+	<delete id="delete">
+		DELETE FROM oa_message_record
+		<choose>
+			<when test="id !=null and id != ''">
+				WHERE id = #{id}
+			</when>
+			<otherwise>
+				WHERE oa_message_id = #{oaMessage.id}
+			</otherwise>
+		</choose>
+	</delete>
+	
+		
+	<delete id="deleteByOaMessageId">
+		DELETE FROM oa_message_record 
+		WHERE oa_message_id = #{oaMessageId}
+	</delete>
+</mapper>

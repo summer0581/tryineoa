@@ -1093,7 +1093,7 @@ input[type="tel"],
 input[type="color"],
 .uneditable-input {
   display: inline-block;
-  height: 26px;
+  height: 20px;
   padding: 4px 6px;
   margin-bottom: 13px;
   font-size: 17px;
@@ -3194,8 +3194,8 @@ button.close {
   padding: 4px 12px;
   margin-bottom: 0;
   *margin-left: .3em;
-  font-size: 17px;
-  line-height: 26px;
+  font-size: 14px;
+  line-height: 20px;
   color: #333333;
   text-align: center;
   text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);

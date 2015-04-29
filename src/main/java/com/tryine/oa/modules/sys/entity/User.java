@@ -38,6 +38,7 @@ public class User extends DataEntity<User> {
 	private String email;	// 邮箱
 	private String phone;	// 电话
 	private String mobile;	// 手机
+	private String zhiwei;  // 职位
 	private String userType;// 用户类型
 	private String loginIp;	// 最后登陆IP
 	private Date loginDate;	// 最后登陆日期
@@ -186,6 +187,15 @@ public class User extends DataEntity<User> {
 
 	public void setMobile(String mobile) {
 		this.mobile = mobile;
+	}
+	@Length(min=0, max=100, message="职位长度必须介于 1 和 100 之间")
+	@ExcelField(title="职位", align=2, sort=75, dictType="zhiwei")
+	public String getZhiwei() {
+		return zhiwei;
+	}
+
+	public void setZhiwei(String zhiwei) {
+		this.zhiwei = zhiwei;
 	}
 
 	@ExcelField(title="备注", align=1, sort=900)

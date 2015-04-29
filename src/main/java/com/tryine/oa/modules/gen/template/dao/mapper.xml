@@ -182,7 +182,7 @@ ${updateField?substring(0, updateField?last_index_of(","))}
 		WHERE id = ${"#"}{id}
 	</update>
 	
-	<update id="delete">
+	<delete id="delete">
 	<#if table.delFlagExists>
 		UPDATE ${table.name} SET 
 			del_flag = ${"#"}{DEL_FLAG_DELETE}
@@ -205,7 +205,7 @@ ${updateField?substring(0, updateField?last_index_of(","))}
 	<#else>
 		WHERE id = ${"#"}{id}
 	</#if>
-	</update>
+	</delete>
 	
 </mapper>]]>
 	</content>

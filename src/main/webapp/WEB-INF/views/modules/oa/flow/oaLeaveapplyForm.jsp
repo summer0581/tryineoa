@@ -105,10 +105,10 @@
 				</form:select></td>
 				<td class="">请假时间</td>
 				<td class="" colspan=5><input name="starttime" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate "
-					value="<fmt:formatDate value="${oaLeaveapply.starttime}" pattern="yyyy-MM-dd HH:00"/>"
-					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:00',isShowClear:false});"/> 至 <input name="endtime" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate "
-					value="<fmt:formatDate value="${oaLeaveapply.endtime}" pattern="yyyy-MM-dd HH:00"/>"
-					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:00',isShowClear:false});"/></td>
+					value="<fmt:formatDate value="${oaLeaveapply.starttime}" pattern="yyyy-MM-dd HH:mm:00"/>"
+					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:00',isShowClear:false});"/> 至 <input name="endtime" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate "
+					value="<fmt:formatDate value="${oaLeaveapply.endtime}" pattern="yyyy-MM-dd HH:mm:00"/>"
+					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:00',isShowClear:false});"/></td>
 			</tr>
 			<tr class="">
 				<td class="">岗位代理</td>

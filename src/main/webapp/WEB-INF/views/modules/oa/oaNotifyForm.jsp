@@ -53,9 +53,8 @@
 		<div class="control-group">
 			<label class="control-label">内容：</label>
 			<div class="controls">
-				<form:textarea id="content1" path="content" htmlEscape="false" rows="6" maxlength="2000" class="input-xxlarge required"/>
+			<form:textarea id="content1" path="content" htmlEscape="false" rows="6" class="input-xxlarge required"/>
 				<sys:ckeditor replace="content1" uploadPath="/oa/notify" />
-				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>
 		<c:if test="${oaNotify.status ne '1'}">
