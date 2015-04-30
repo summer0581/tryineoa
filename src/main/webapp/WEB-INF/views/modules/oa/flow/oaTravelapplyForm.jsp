@@ -83,11 +83,13 @@
 		</div>		
 		<table class="table table-bordered">
 			<tr class="">
-				<td class="">姓名</td>
+				<td class="" width="10%">姓名</td>
 				<td class=""><form:input path="name" htmlEscape="false" maxlength="64" class="input-small "/></td>
-				<td class="">部门</td>
+				<td class="" width="10%">部门</td>
 				<td class="" ><sys:treeselect id="office" name="office.id" value="${oaTravelapply.office.id}" labelName="office.name" labelValue="${oaTravelapply.office.name}"
 					title="部门" url="/sys/office/treeData?type=2" cssClass="input-small" allowClear="true" notAllowSelectParent="true"/></td>
+			</tr>
+			<tr>
 				<td class="">岗位</td>
 				<td class=""><form:input path="post" htmlEscape="false" maxlength="64" class="input-small "/></td>
 				<td class="">联系电话</td>
@@ -102,34 +104,36 @@
 				<td ><input name="plantobacktime" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate "
 					value="<fmt:formatDate value="${oaTravelapply.plantobacktime}" pattern="yyyy-MM-dd HH:mm:00"/>"
 					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:00',isShowClear:false});"/></td>
-				<td >随行人员</td>
-				<td colspan="7"><form:input path="joinPeople" htmlEscape="false" maxlength="500" class="input-xlarge "/></td>
 			</tr>
 			<tr>
+				<td >随行人员</td>
+				<td ><form:input path="joinPeople" htmlEscape="false" maxlength="500" class="input-xlarge "/></td>
 				<td>外出地点</td>
 				<td colspan=""><form:input path="outPlace" htmlEscape="false" maxlength="300" class="input-xlarge "/></td>
+			</tr>
+			<tr>
 				<td>外出事由</td>
-				<td colspan="3"><form:textarea path="outReason" htmlEscape="false" rows="4" maxlength="4000" class="input-xlarge "/></td>
+				<td ><form:textarea path="outReason" htmlEscape="false" rows="4" maxlength="4000" class="input-xlarge "/></td>
 				<td>客户姓名及电话</td>
 				<td><form:input path="customerInfo" htmlEscape="false" maxlength="500" class="input-xlarge "/></td>
 			</tr>
 			<tr>
-				<td colspan="8" ><h1 class="text-center">审核批复</h1></td>
+				<td colspan="4" ><h1 class="text-center">审核批复</h1></td>
 			</tr>
 			<c:if test="${'tryine_travelapply' eq result.processDefinitionKey}">
 				<tr>
 					<td>直接</br>上级</td>
-					<td colspan="3"><form:textarea path="directleaderIdea" htmlEscape="false" rows="4" maxlength="4000" class="input-xxlarge "/></td>
+					<td ><form:textarea path="directleaderIdea" htmlEscape="false" rows="4" maxlength="4000" class="input-xxlarge "/></td>
 					<td>分公司</br>总经理</td>
-					<td colspan="3"><form:textarea path="generalManagerIdea" htmlEscape="false" rows="4" maxlength="4000" class="input-xxlarge "/></td>
+					<td ><form:textarea path="generalManagerIdea" htmlEscape="false" rows="4" maxlength="4000" class="input-xxlarge "/></td>
 				</tr>
 			</c:if>
 			<c:if test="${'tryine_bossdirectmanager_travel' eq result.processDefinitionKey}">
 			<tr>
 				<td>人资总监</br>意见</td>
-				<td colspan="3"><form:textarea path="directleaderIdea" htmlEscape="false" rows="4" maxlength="4000" class="input-xxlarge "/></td>
+				<td ><form:textarea path="directleaderIdea" htmlEscape="false" rows="4" maxlength="4000" class="input-xxlarge "/></td>
 				<td>董事长</br>意见</td>
-				<td colspan="3"><form:textarea path="generalManagerIdea" htmlEscape="false" rows="4" maxlength="4000" class="input-xxlarge "/></td>
+				<td ><form:textarea path="generalManagerIdea" htmlEscape="false" rows="4" maxlength="4000" class="input-xxlarge "/></td>
 			</tr>
 			</c:if>
 		</table>

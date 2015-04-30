@@ -11,6 +11,7 @@
 		b.content AS "oaMessage.content",
 		b.create_by AS "oaMessage.createBy.id",
 		b.create_date AS "oaMessage.createDate",
+		b.url AS "oaMessage.url",
 		u4.name AS "oaMessage.createBy.name",
 		u3.name AS "user.name"
 	</sql>
@@ -76,6 +77,8 @@
 			</otherwise>
 		</choose>
 	</select>
+	
+
 	
 	<insert id="insert">
 		INSERT INTO oa_message_record(

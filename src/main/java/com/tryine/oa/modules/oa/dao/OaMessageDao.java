@@ -14,5 +14,11 @@ import com.tryine.oa.modules.oa.entity.OaMessage;
  */
 @MyBatisDao
 public interface OaMessageDao extends CrudDao<OaMessage> {
+	/**
+	 * 获取消息数目
+	 * @param oaNotify
+	 * @return
+	 */
+	public Long findCount(OaMessage oaMessage);
 	
 }

@@ -241,6 +241,29 @@ public class FlowCenterController extends BaseController {
 
 		return "modules/flow/selectStepList";
 	}
+	
+	/**
+	 * 流程代办任务列表
+	 */
+	@ResponseBody
+	@RequestMapping(value = { "todoWorkCount"})
+	public int todoWorkCount(@RequestParam Map<String,Object> params,HttpServletRequest request, HttpServletResponse response, Model model) {
+		
+		Map<String, Object> pageResult = new HashMap<String,Object>();
+		Page<TaskInstance> page = new Page<TaskInstance>(request, response);
+		params.put("userId", UserUtils.getUser().getId());
+		params.put("pageIndex", page.getPageNo());
+		params.put("pageSize", page.getPageSize());
+		try {
+			pageResult = flowCenterService
+					.queryMyTaskNotEnd(params);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Pagination ff_page = ((Pagination)pageResult.get("pageInfo"));
+		return ff_page.getTotal();
+	}
 
 
 }

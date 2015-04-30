@@ -40,11 +40,11 @@
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label">接收人名称<font color="red">*</font> ：</label>
+			<label class="control-label">接收人名称：</label>
 			<div class="controls">
 				<sys:treeselect id="receivedUser" name="receivedUserids" value="${oaMessage.receivedUserids}" labelName="receivedUsernames" labelValue="${oaMessage.receivedUsernames}"
 					title="用户" url="/sys/office/treeData?type=3" cssClass="required" checked="true" allowClear="true" notAllowSelectParent="true"/>
-				
+				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>
 		<div class="form-actions">

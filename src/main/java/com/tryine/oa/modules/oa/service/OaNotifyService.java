@@ -5,6 +5,7 @@ package com.tryine.oa.modules.oa.service;
 
 import java.util.Date;
 
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -60,6 +61,10 @@ public class OaNotifyService extends CrudService<OaNotifyDao, OaNotify> {
 	
 	@Transactional(readOnly = false)
 	public void save(OaNotify oaNotify) {
+		if (oaNotify.getContent()!=null){
+			oaNotify.setContent(StringEscapeUtils.unescapeHtml4(
+					oaNotify.getContent()));
+		}
 		super.save(oaNotify);
 		
 		// 更新发送接受人记录

@@ -27,6 +27,8 @@ public class OaMessage extends DataEntity<OaMessage> {
 	private String url;		// 链接地址
 	private List<OaMessageRecord> oaMessageRecordList = Lists.newArrayList();		// 子表列表
 	
+	private boolean isSelf;//是否为自己的数据
+	private String readFlag;	// 本人阅读状态
 	private String type; //查询类别 noread,readed,sended
 	
 	public OaMessage() {
@@ -94,4 +96,30 @@ public class OaMessage extends DataEntity<OaMessage> {
 	public void setOaMessageRecordList(List<OaMessageRecord> oaMessageRecordList) {
 		this.oaMessageRecordList = oaMessageRecordList;
 	}
+
+	public boolean isSelf() {
+		return isSelf;
+	}
+
+	public void setSelf(boolean isSelf) {
+		this.isSelf = isSelf;
+	}
+
+	public String getReadFlag() {
+		return readFlag;
+	}
+
+	public void setReadFlag(String readFlag) {
+		this.readFlag = readFlag;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+	
+	
 }

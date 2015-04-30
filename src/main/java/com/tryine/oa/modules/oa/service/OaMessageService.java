@@ -3,19 +3,22 @@
  */
 package com.tryine.oa.modules.oa.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.founder.fix.fixflow.core.impl.identity.UserTo;
 import com.tryine.oa.common.persistence.Page;
 import com.tryine.oa.common.service.CrudService;
-import com.tryine.oa.common.utils.StringUtils;
-import com.tryine.oa.modules.oa.entity.OaMessage;
+import com.tryine.oa.common.utils.IdGen;
 import com.tryine.oa.modules.oa.dao.OaMessageDao;
-import com.tryine.oa.modules.oa.entity.OaMessageRecord;
 import com.tryine.oa.modules.oa.dao.OaMessageRecordDao;
+import com.tryine.oa.modules.oa.entity.OaMessage;
+import com.tryine.oa.modules.oa.entity.OaMessageRecord;
+import com.tryine.oa.modules.sys.entity.User;
 
 /**
  * 内部消息Service
@@ -43,6 +46,15 @@ public class OaMessageService extends CrudService<OaMessageDao, OaMessage> {
 		return super.findPage(page, oaMessage);
 	}
 	
+	/**
+	 * 获取消息数目
+	 * @param oaMessage
+	 * @return
+	 */
+	public Long findCount(OaMessage oaMessage) {
+		return dao.findCount(oaMessage);
+	}
+	
 	@Transactional(readOnly = false)
 	public void save(OaMessage oaMessage) {
 		super.save(oaMessage);
@@ -58,5 +70,6 @@ public class OaMessageService extends CrudService<OaMessageDao, OaMessage> {
 		super.delete(oaMessage);
 		oaMessageRecordDao.delete(new OaMessageRecord(oaMessage));
 	}
+	
 	
 }

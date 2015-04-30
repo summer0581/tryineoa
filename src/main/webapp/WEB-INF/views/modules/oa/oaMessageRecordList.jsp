@@ -33,7 +33,7 @@
 			</c:otherwise>
 		</c:choose>
 		<li class="active"><a href="${ctx}/oa/oaMessageRecord/">${typeStr }消息列表</a></li>
-		<shiro:hasPermission name="oa:oaMessageRecord:edit"><li><a href="${ctx}/oa/oaMessage/noListForm">内部消息添加</a></li></shiro:hasPermission>
+		<shiro:hasPermission name="oa:oaMessageRecord:edit"><li><a href="${ctx}/oa/oaMessage/noListForm">内部消息发送</a></li></shiro:hasPermission>
 	</ul>
 	<form:form id="searchForm" modelAttribute="oaMessageRecord" action="${ctx}/oa/oaMessageRecord/" method="post" class="breadcrumb form-search">
 		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>

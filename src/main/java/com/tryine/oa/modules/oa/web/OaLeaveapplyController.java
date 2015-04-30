@@ -4,6 +4,8 @@
 package com.tryine.oa.modules.oa.web;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,17 +20,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.founder.fix.fixflow.core.impl.runtime.ProcessInstanceEntity;
+import com.founder.fix.fixflow.core.impl.identity.UserTo;
 import com.founder.fix.fixflow.core.runtime.ProcessInstance;
 import com.founder.fix.fixflow.core.task.TaskInstance;
 import com.founder.fix.fixflow.service.impl.FlowCenterServiceImpl;
+import com.founder.fix.fixflow.shell.FlowUtilServiceImpl;
 import com.tryine.oa.common.config.Global;
 import com.tryine.oa.common.persistence.Page;
+import com.tryine.oa.common.utils.IdGen;
 import com.tryine.oa.common.utils.StringUtils;
 import com.tryine.oa.common.web.BaseController;
 import com.tryine.oa.modules.flow.service.FlowService;
 import com.tryine.oa.modules.oa.entity.OaLeaveapply;
+import com.tryine.oa.modules.oa.entity.OaMessage;
+import com.tryine.oa.modules.oa.entity.OaMessageRecord;
 import com.tryine.oa.modules.oa.service.OaLeaveapplyService;
+import com.tryine.oa.modules.oa.service.OaMessageService;
+import com.tryine.oa.modules.sys.entity.User;
 import com.tryine.oa.modules.sys.utils.UserUtils;
 
 /**
@@ -46,6 +54,10 @@ public class OaLeaveapplyController extends BaseController {
 	private FlowCenterServiceImpl flowCenterService;
 	@Autowired
 	private FlowService flowService;
+	@Autowired
+	private OaMessageService oaMessageService;
+	
+	FlowUtilServiceImpl flowUtil = new FlowUtilServiceImpl();
 	
 	@ModelAttribute
 	public OaLeaveapply get(@RequestParam(required=false) String id) {
@@ -146,12 +158,37 @@ public class OaLeaveapplyController extends BaseController {
 		params.put("businessKey", oaLeaveapply.getId());
 		params.put("userId", UserUtils.getUser().getId());
 		try {
-  			
+			ProcessInstance processInstance = null;
 			if("demoCompleteTask".equals(action)){
-				flowCenterService.completeTask(params);
+				processInstance = flowCenterService.completeTask(params);
 			}else if("demoDoNext".equals(action)){
-				flowCenterService.completeTask(params);
+				processInstance = flowCenterService.completeTask(params);
 			}
+			/*String processInstanceId = "";
+			if(null != processInstance){
+				processInstanceId = processInstance.getId();
+			}else{
+				processInstanceId = (String)params.get("processInstanceId");
+			}
+			List<UserTo> userList = flowUtil.getNextTaskAssignee(processInstanceId);
+			
+			if(null != userList){
+				OaMessage oaMessage =  new OaMessage();
+				oaMessage.setContent("您有新的【"+processInstance.getSubject()+"】待办流程需要审批！");
+				oaMessage.setUrl("/flow/work");
+				List<OaMessageRecord> oaMessageRecordList = new ArrayList<OaMessageRecord>();
+				for(UserTo userto : userList){
+					OaMessageRecord entity = new OaMessageRecord();
+					entity.setId(IdGen.uuid());
+					entity.setOaMessage(oaMessage);
+					entity.setUser(new User(userto.getUserId()));
+					entity.setReadFlag("0");
+					oaMessageRecordList.add(entity);
+				}
+				oaMessage.setOaMessageRecordList(oaMessageRecordList);
+				oaMessageService.save(oaMessage);
+			}*/
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -79,6 +79,20 @@
 		</choose>
 	</select>
 	
+	<select id="findCount" resultType="Long">
+		SELECT 
+			count(1)
+		FROM oa_message a
+		<if test="isSelf">
+			JOIN oa_message_record r ON r.oa_message_id = a.id AND r.user_id = #{currentUser.id}
+				<if test="readFlag != null and readFlag != ''">
+					AND r.read_flag = #{readFlag}
+				</if>
+		</if>
+		WHERE a.del_flag = #{DEL_FLAG_NORMAL}
+		
+	</select>
+	
 	<insert id="insert">
 		INSERT INTO oa_message(
 			id,

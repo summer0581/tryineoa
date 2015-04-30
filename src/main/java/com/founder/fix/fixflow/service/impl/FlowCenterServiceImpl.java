@@ -30,6 +30,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.fileupload.FileItem;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
@@ -46,7 +47,6 @@ import com.founder.fix.fixflow.core.impl.bpmn.behavior.UserTaskBehavior;
 import com.founder.fix.fixflow.core.impl.command.ExpandTaskCommand;
 import com.founder.fix.fixflow.core.impl.identity.GroupTo;
 import com.founder.fix.fixflow.core.impl.identity.UserTo;
-import com.founder.fix.fixflow.core.impl.runtime.ProcessInstanceEntity;
 import com.founder.fix.fixflow.core.impl.task.QueryExpandTo;
 import com.founder.fix.fixflow.core.impl.util.DateUtil;
 import com.founder.fix.fixflow.core.impl.util.StringUtil;
@@ -57,15 +57,18 @@ import com.founder.fix.fixflow.core.task.TaskInstance;
 import com.founder.fix.fixflow.core.task.TaskQuery;
 import com.founder.fix.fixflow.service.FlowCenterService;
 import com.founder.fix.fixflow.shell.CommonServiceImpl;
-import com.founder.fix.fixflow.shell.FixFlowShellProxy;
 import com.founder.fix.fixflow.shell.FlowUtilServiceImpl;
 import com.founder.fix.fixflow.util.FileUtil;
 import com.founder.fix.fixflow.util.ImageCutUtil;
 import com.founder.fix.fixflow.util.JSONUtil;
 import com.founder.fix.fixflow.util.Pagination;
+import com.tryine.oa.modules.oa.entity.OaMessage;
+import com.tryine.oa.modules.oa.service.OaMessageService;
 @Scope("prototype")
 @Service
 public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCenterService {
+	@Autowired
+	private OaMessageService oaMessageService;
 
 	/*
 	  * <p>Title: queryMyTaskNotEnd</p>
@@ -734,6 +737,7 @@ public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCent
 
 		ProcessEngine engine = getProcessEngine(userId);
 		ProcessInstance processInstance = null;
+		
 		try{
 			processInstance = (ProcessInstance)engine.getTaskService().expandTaskComplete(expandTaskCommand, null);
 		}finally{

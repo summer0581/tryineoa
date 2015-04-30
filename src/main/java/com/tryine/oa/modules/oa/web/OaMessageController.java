@@ -15,12 +15,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.tryine.oa.common.config.Global;
 import com.tryine.oa.common.persistence.Page;
-import com.tryine.oa.common.web.BaseController;
 import com.tryine.oa.common.utils.StringUtils;
+import com.tryine.oa.common.web.BaseController;
 import com.tryine.oa.modules.oa.entity.OaMessage;
 import com.tryine.oa.modules.oa.service.OaMessageService;
 
@@ -88,6 +89,17 @@ public class OaMessageController extends BaseController {
 		oaMessageService.delete(oaMessage);
 		addMessage(redirectAttributes, "删除内部消息成功");
 		return "redirect:"+Global.getAdminPath()+"/oa/oaMessage/?repage";
+	}
+	
+	/**
+	 * 获取我的通知数目
+	 */
+	@RequestMapping(value = "self/count")
+	@ResponseBody
+	public String selfCount(OaMessage oaMessage, Model model) {
+		oaMessage.setSelf(true);
+		oaMessage.setReadFlag("0");
+		return String.valueOf(oaMessageService.findCount(oaMessage));
 	}
 
 }

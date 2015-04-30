@@ -50,7 +50,7 @@
 </head>
 <body>
 	<form id="searchForm" action="${ctx}/flow/work/allMyJoinWorkList" method="post" class="breadcrumb form-search">
-		<li><label>姓&nbsp;&nbsp;&nbsp;名：</label><input path="name" htmlEscape="false" maxlength="50" class="input-medium"/></li>
+		<li><label>姓&nbsp;&nbsp;&nbsp;名：</label><input type="text" name="name" htmlEscape="false" maxlength="50" class="input-medium"/></li>
 		&nbsp;<input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/>
 	</form>
 	<sys:message content="${message}"/>

@@ -15,7 +15,7 @@ legend {margin:10px 0;*left:-7px;*position:relative;color:#0088CC;*width:99.5%}
 .collapse {*display:none;_position:static;} .collapse.in {*display:block;}
 .close {opacity:0.3;filter:alpha(opacity=30);} .close:hover {opacity:0.8;filter:alpha(opacity=80);}
 
-a.btn, button.btn {*padding:4px 10px 4px;*border:1px solid #cccccc;filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#fefefe', endColorstr='#e6e6e6', GradientType=0);}
+a.btn, button.btn {*padding:4px 10px 4px;*border:1px solid #cccccc;}
 a.btn-primary,a.btn-primary:hover,a.btn-warning,a.btn-warning:hover,a.btn-danger,a.btn-danger:hover,a.btn-success,a.btn-success:hover,
 	a.btn-info,a.btn-info:hover,a.btn-inverse,a.btn-inverse:hover {*padding:4px 10px 3px;}
 button.btn{*padding:3px 10px 2px;*background-color:transparent;}
@@ -89,3 +89,12 @@ input.btn:hover {*color:#333333}
 #left,#right,#openClose {float:left;} #openClose {width:6px;margin:0 1px;cursor:pointer;}
 #openClose,#openClose.close {background:#efefef url("../images/openclose.png") no-repeat -29px center;}
 #openClose.close {background-position:1px center;opacity:0.5;filter:alpha(opacity=50)}
+
+.showrow {list-style: none;}
+.showrow li{float:left}
+.showrow li > a{  float: none;
+	font-size:14px;
+  padding: 17px 15px 17px;
+  color: #333333;
+  text-decoration: none;
+  text-shadow: 0 1px 0 #f6f6f6;}

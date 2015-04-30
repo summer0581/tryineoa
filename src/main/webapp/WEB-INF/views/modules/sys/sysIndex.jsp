@@ -11,7 +11,7 @@
 		#header {margin:0 0 8px;position:static;} #header li {font-size:14px;_font-size:12px;}
 		#header .brand {font-family:Helvetica, Georgia, Arial, sans-serif, 黑体;font-size:26px;padding-left:33px;}
 		#footer {margin:8px 0 0 0;padding:3px 0 0 0;font-size:11px;text-align:center;border-top:2px solid #0663A2;}
-		#footer, #footer a {color:#999;} #left{overflow-x:hidden;overflow-y:auto;} #left .collapse{position:static;}
+		#footer, #footer a {color: #000;} #left{overflow-x:hidden;overflow-y:auto;} #left .collapse{position:static;}
 		#userControl>li>a{/*color:#fff;*/text-shadow:none;} #userControl>li>a:hover, #user #userControl>li.open>a{background:transparent;}
 	</style>
 	<script type="text/javascript">
@@ -119,9 +119,25 @@
 				$.get("${ctx}/oa/oaNotify/self/count?updateSession=0&t="+new Date().getTime(),function(data){
 					var num = parseFloat(data);
 					if (num > 0){
-						$("#notifyNum,#notifyNum2").show().html("("+num+")");
+						$("#notifyNum").show().html("("+num+")"); 
 					}else{
-						$("#notifyNum,#notifyNum2").hide()
+						$("#notifyNum").hide()
+					}
+				});
+				$.get("${ctx}/oa/oaMessage/self/count?updateSession=0&t="+new Date().getTime(),function(data){
+					var num = parseFloat(data);
+					if (num > 0){
+						$("#messageNum").show().html("("+num+")");
+					}else{
+						$("#messageNum").hide()
+					}
+				});
+				$.get("${ctx}/flow/work/todoWorkCount?updateSession=0&t="+new Date().getTime(),function(data){
+					var num = parseFloat(data);
+					if (num > 0){
+						$("#todoworkNum").show().html("("+num+")");
+					}else{
+						$("#todoworkNum").hide()
 					}
 				});
 			}
@@ -161,11 +177,10 @@
 						<!--[if lte IE 6]><script type="text/javascript">$('#themeSwitch').hide();</script><![endif]-->
 					</li>
 					<li id="userInfo" class="dropdown">
-						<a class="dropdown-toggle" data-toggle="dropdown" href="#" title="个人信息">您好, ${fns:getUser().name}&nbsp;<span id="notifyNum" class="label label-info hide"></span></a>
+						<a class="dropdown-toggle" data-toggle="dropdown" href="#" title="个人信息">您好, ${fns:getUser().name}&nbsp;</a>
 						<ul class="dropdown-menu">
 							<li><a href="${ctx}/sys/user/info" target="mainFrame"><i class="icon-user"></i>&nbsp; 个人信息</a></li>
 							<li><a href="${ctx}/sys/user/modifyPwd" target="mainFrame"><i class="icon-lock"></i>&nbsp;  修改密码</a></li>
-							<li><a href="${ctx}/oa/oaNotify/self" target="mainFrame"><i class="icon-bell"></i>&nbsp;  我的通知 <span id="notifyNum2" class="label label-info hide"></span></a></li>
 						</ul>
 					</li>
 					<li><a href="${ctx}/logout" title="退出登录">退出</a></li>
@@ -222,7 +237,27 @@
 				</div>
 			</div>
 		    <div id="footer" class="row-fluid">
-	            Copyright &copy; 2012-${fns:getConfig('copyrightYear')} ${fns:getConfig('productName')} - Powered By <a href="http://TryineOA.com" target="_blank">TryineOA</a> ${fns:getConfig('version')}
+				<ul class="showrow">
+					<li>
+						<a href="${ctx}/oa/oaNotify/self" target="mainFrame">
+		    				<i class="icon-bell"></i>&nbsp;  我的通知
+		    				 <span id="notifyNum" class="label label-info hide"></span>
+		    				</a>
+					</li>
+					<li>
+						<a href="${ctx}/oa/oaMessageRecord/list?type=noread" target="mainFrame">
+		    				<i class="icon-bell"></i>&nbsp;  我的消息
+		    				 <span id="messageNum" class="label label-info hide"></span>
+		    				</a>
+					</li>
+					<li>
+						<a href="${ctx}/flow/work" target="mainFrame">
+		    				<i class="icon-bell"></i>&nbsp;  待办任务
+		    				 <span id="todoworkNum" class="label label-info hide"></span>
+		    				</a>
+					</li>
+				</ul>		
+	            <!-- Copyright &copy; 2012-${fns:getConfig('copyrightYear')} ${fns:getConfig('productName')} - Powered By <a href="http://TryineOA.com" target="_blank">TryineOA</a> ${fns:getConfig('version')} -->
 			</div>
 		</div>
 	</div>

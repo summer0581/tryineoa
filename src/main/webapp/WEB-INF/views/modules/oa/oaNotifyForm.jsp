@@ -51,11 +51,20 @@
 			</div>
 		</div>
 		<div class="control-group">
+			
+			
+			<c:if test="${oaNotify.status eq '1'}">
+			<div>
+				<div>${oaNotify.content}</div>
+			</c:if>
+			<c:if test="${oaNotify.status ne '1'}">
 			<label class="control-label">内容：</label>
 			<div class="controls">
 			<form:textarea id="content1" path="content" htmlEscape="false" rows="6" class="input-xxlarge required"/>
 				<sys:ckeditor replace="content1" uploadPath="/oa/notify" />
+			</c:if>
 			</div>
+			
 		</div>
 		<c:if test="${oaNotify.status ne '1'}">
 			<div class="control-group">

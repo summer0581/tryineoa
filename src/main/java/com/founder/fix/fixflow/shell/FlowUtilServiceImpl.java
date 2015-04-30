@@ -19,8 +19,10 @@ package com.founder.fix.fixflow.shell;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import com.founder.fix.fixflow.core.IdentityService;
 import com.founder.fix.fixflow.core.ProcessEngine;
@@ -167,6 +169,106 @@ public class FlowUtilServiceImpl extends CommonServiceImpl {
 			taskInfo = taskInfo + " (处理者 ： " + username + ") ";
 		}
 		return taskInfo;
+	}
+	
+	/**
+	 * 获取下一任务的所有执行人
+	 * @param processInstanceId
+	 * @return
+	 */
+	public List<UserTo> getNextTaskAssignee(String processInstanceId){
+		List<UserTo> assigneeList = null;
+		try {
+			ProcessEngine engine = getProcessEngine(null);
+
+			List<TaskInstance> taskInstanceQueryTos = new ArrayList<TaskInstance>();
+			taskInstanceQueryTos =engine.getTaskService().createTaskQuery().processInstanceId(processInstanceId).taskNotEnd().list();
+			assigneeList = getTaskAssignee(taskInstanceQueryTos);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally{
+			closeProcessEngine();
+		}
+		return assigneeList;
+	}
+	/**
+	 * 根据环节实例获取所有的执行人
+	 * @param taskInstanceQueryTos
+	 * @return
+	 */
+	public List<UserTo> getTaskAssignee(List<TaskInstance> taskInstanceQueryTos){
+		Set<UserTo> assigneeSet = new HashSet<UserTo>();
+		try{
+			ProcessEngine engine = getProcessEngine(null);
+			IdentityService identityService = engine.getIdentityService();
+			for (TaskInstance taskInstanceQueryTo : taskInstanceQueryTos) {
+				String assignee = taskInstanceQueryTo.getAssignee();
+				
+				if (assignee == null) {
+					Map<String, List<GroupTo>> groupTosMap=new HashMap<String, List<GroupTo>>();
+					List<IdentityLink> identityLinkList = taskInstanceQueryTo.getIdentityLinkQueryToList();
+					for (IdentityLink identityLinkQueryTo : identityLinkList) {
+						String userId = identityLinkQueryTo.getUserId();
+						if (userId == null) {
+							String groupTypeId = identityLinkQueryTo.getGroupType();
+							String groupId = identityLinkQueryTo.getGroupId();
+							GroupTo groupTo = identityService.getGroup(groupId, groupTypeId);
+							if (groupTo == null) {
+								continue;
+							}
+							if(groupTosMap.get(groupTypeId)!=null){
+								groupTosMap.get(groupTypeId).add(groupTo);
+							}
+							else{
+								List<GroupTo> groupTos=new ArrayList<GroupTo>();
+								groupTos.add(groupTo);
+								groupTosMap.put(groupTypeId, groupTos);
+							}
+							
+						} else {
+							UserTo userTo=null;
+							if (userId.equals("fixflow_allusers")) {
+								Map<String,Object> usermap = identityService.getUserTos(null, null);
+								List<UserTo> userList = (List<UserTo>)usermap.get("userList");
+								assigneeSet.addAll(userList);
+								return new ArrayList<UserTo>(assigneeSet);
+								//userTo=new UserTo("fixflow_allusers", "所有人", null);
+								
+							} else {
+								userTo= identityService.getUserTo(userId);
+							}
+							if(userTo!=null){
+								assigneeSet.add(userTo);
+							}
+						}
+					}
+					for (String groupToKey : groupTosMap.keySet()) {
+						List<GroupTo> groupTos=groupTosMap.get(groupToKey);
+						GroupDefinition groupDefinition = identityService.getGroupDefinition(groupToKey);
+						List<UserTo> assigneeList = listToUserList(groupTos,groupDefinition);
+						assigneeSet.addAll(assigneeList);
+					}
+				}
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return new ArrayList<UserTo>(assigneeSet);
+	}
+	public  List<UserTo> listToUserList(List<GroupTo> groupTos,GroupDefinition groupDefinition){
+		Set<UserTo> assigneeSet = new HashSet<UserTo>();
+		if(groupTos==null||groupTos.size()==0){
+			return null;
+		}
+		for(GroupTo groupTo : groupTos){
+			List<UserTo> userTos=groupDefinition.findUserChildMembersIncludeByGroupId(groupTo.getGroupId());
+			for (int i = 0; i < userTos.size(); i++) {
+				UserTo userTo=userTos.get(i);
+				assigneeSet.add(userTo);
+			}
+		}
+		return new ArrayList<UserTo>(assigneeSet);
 	}
 	
 	public static String listToStr(List<GroupTo> groupTos, String joinChar,GroupDefinition groupDefinition){
