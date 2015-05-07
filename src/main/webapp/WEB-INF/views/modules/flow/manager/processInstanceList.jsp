@@ -18,6 +18,24 @@
 			    			screen.width-300,screen.height-100);
 
 			});
+		    $("a[name=doTask]").click(function(){
+		    	var tii = $(this).attr("tii");
+		        var pdk = $(this).attr("pdk");
+		        var pii = $(this).attr("pii");
+		        var bizKey = $(this).attr("bk");
+		        
+		        var obj = {};
+		        var formUrl = $(this).attr("formUri");//"FlowCenter?action=startOneTask";
+		        var url = "${ctx}/"+formUrl;
+		        if(formUrl.indexOf("?")!=-1){
+		       	 url+="&";
+		       	
+		        }else{
+		       	 url+="?";
+		        }
+		        url+="viewonly=true&taskId="+tii+"&processInstanceId="+pii+"&id="+bizKey+"&processDefinitionKey="+pdk,obj;
+		        windowOpen(url,"",screen.width-300,screen.height-50);
+		  });
 			Fix.Util.ClickTr(null,false,true,0,function($table){
 				  var flag = true;
 				  $("tbody tr.selected",$table).each(function(){
@@ -199,7 +217,10 @@
 					<td>${(index.index+1)+page.pageSize*(page.pageNo-1)}</td>
 					<td>${model.processInstanceId}</td>
 					<td>${model.processDefinitionName}</td>
-					<td>${model.subject}</td>
+					<td><a name="doTask" href="#"
+					formUri="${model.formUri}" tii="${model.taskInstanceId}"
+					pii="${model.processInstanceId}" bk="${model.bizKey}"
+					pdk="${model.processDefinitionKey}">${model.subject}</a></td>
 					<td>${model.bizKey}</td>
 					<td><fmt:formatDate value="${model.startTime}" type="both"/></td>
 					<td><fmt:formatDate value="${model.updateTime}" type="both"/></td>

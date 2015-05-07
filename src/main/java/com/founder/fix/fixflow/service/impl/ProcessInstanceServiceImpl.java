@@ -122,6 +122,7 @@ public class ProcessInstanceServiceImpl extends CommonServiceImpl implements Pro
 				persistentState.put("processDefinitionName", processDefinitionName);
 				String nowNodeInfo = flowUtil.getShareTaskNowNodeInfo(tmp.getId()); 
 				persistentState.put("nowNodeInfo", nowNodeInfo);
+				persistentState.put("formUri", processDefinitionBehavior.getFormUriObj().getExpression().getValue().replaceAll("\"", ""));
 				UserTo user = identityService.getUserTo(tmp.getStartAuthor());
 				if(user !=null){
 					persistentState.put("startAuthorName", user.getPropertyValue("name"));
