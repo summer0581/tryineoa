@@ -25,6 +25,7 @@ public class OaMessage extends DataEntity<OaMessage> {
 	private String title;		// 标题
 	private String content;		// 内容
 	private String url;		// 链接地址
+	private String tempUsername;//临时用户名
 	private List<OaMessageRecord> oaMessageRecordList = Lists.newArrayList();		// 子表列表
 	
 	private boolean isSelf;//是否为自己的数据
@@ -97,11 +98,11 @@ public class OaMessage extends DataEntity<OaMessage> {
 		this.oaMessageRecordList = oaMessageRecordList;
 	}
 
-	public boolean isSelf() {
+	public boolean getIsSelf() {
 		return isSelf;
 	}
 
-	public void setSelf(boolean isSelf) {
+	public void setIsSelf(boolean isSelf) {
 		this.isSelf = isSelf;
 	}
 
@@ -119,6 +120,14 @@ public class OaMessage extends DataEntity<OaMessage> {
 
 	public void setType(String type) {
 		this.type = type;
+	}
+
+	public String getTempUsername() {
+		return tempUsername;
+	}
+
+	public void setTempUsername(String tempUsername) {
+		this.tempUsername = tempUsername;
 	}
 	
 	

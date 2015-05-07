@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tryine.oa.modules.oa.dao.OaFeedbackReceivedDao">
+    
+	<sql id="oaFeedbackReceivedColumns">
+		a.id AS "id",
+		a.feedbackid AS "feedback.id",
+		a.user AS "user.id",
+		e.name AS "user.name",
+		a.content AS "content",
+		a.back_time AS "backTime",
+		a.is_read AS "isRead",
+
+		b.name AS "feedback.name",
+		b.boxtype AS "feedback.box.id",
+		c.name AS "feedback.box.name",
+		b.content AS "feedback.content",
+		b.is_hidename AS "feedback.isHidename",
+		b.create_by AS "feedback.createBy.id",
+		d.name AS "feedback.createBy.name",
+		b.create_date AS "feedback.createDate"
+	</sql>
+	
+	<sql id="oaFeedbackReceivedJoins">
+		LEFT JOIN oa_feedback b ON b.id = a.feedbackid
+		LEFT JOIN oa_feedback_box c ON c.id = b.boxtype
+		LEFT JOIN sys_user d ON d.id = b.create_by
+		LEFT JOIN sys_user e ON e.id = a.user
+	</sql>
+    
+	<select id="get" resultType="OaFeedbackReceived">
+		SELECT 
+			<include refid="oaFeedbackReceivedColumns"/>
+		FROM oa_feedback_received a
+		<include refid="oaFeedbackReceivedJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="OaFeedbackReceived">
+		SELECT 
+			<include refid="oaFeedbackReceivedColumns"/>
+		FROM oa_feedback_received a
+		<include refid="oaFeedbackReceivedJoins"/>
+		<where>
+			<if test="isSelf">
+				AND a.user = #{currentUser.id}
+			</if>
+			<if test="feedback != null">
+				<if test="feedback.id != null and feedback.id != ''">
+					AND a.feedbackid = #{feedback.id}
+				</if>
+				<if test="feedback.createDate != null and feedback.createDate != ''">
+					<![CDATA[
+					      and DATE_FORMAT(b.create_date, '%Y-%m-%d') =  DATE_FORMAT(#{feedback.createDate}, '%Y-%m-%d')
+					]]>
+				</if>
+			</if>
+
+			<if test="isRead != null and isRead != ''">
+				AND a.is_read = #{isRead}
+			</if>
+			<if test="isRead != null and isRead != ''">
+				AND a.is_read = #{isRead}
+			</if>
+
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="OaFeedbackReceived">
+		SELECT 
+			<include refid="oaFeedbackReceivedColumns"/>
+		FROM oa_feedback_received a
+		<include refid="oaFeedbackReceivedJoins"/>
+		<where>
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO oa_feedback_received(
+			id,
+			feedbackid,
+			user,
+			content,
+			back_time,
+			is_read
+		) VALUES (
+			#{id},
+			#{feedback.id},
+			#{user.id},
+			#{content},
+			#{backTime},
+			#{isRead}
+		)
+	</insert>
+	
+	<insert id="insertAll" parameterType="List">
+		INSERT INTO oa_feedback_received(
+			id,
+			feedbackid,
+			user,
+			content,
+			back_time,
+			is_read
+		)
+		<foreach collection="list" item="e" separator=" UNION ALL ">
+			SELECT
+				#{e.id},
+				#{e.feedback.id},
+				#{e.user.id},
+				#{e.content},
+				#{e.backTime},
+				#{e.isRead}
+			FROM dual
+		</foreach>
+	</insert>
+	
+	
+	<update id="update">
+		UPDATE oa_feedback_received SET 	
+			feedbackid = #{feedback.id},
+			user = #{user.id},
+			content = #{content},
+			back_time = #{backTime},
+			is_read = #{isRead}
+		WHERE id = #{id}
+	</update>
+	
+	<delete id="delete">
+		delete from oa_feedback_received 
+		<choose>
+			<when test="id !=null and id != ''">
+				WHERE id = #{id}
+			</when>
+			<otherwise>
+				WHERE feedbackid = #{feedback.id}
+			</otherwise>
+		</choose>
+	</delete>
+	<delete id="deleteByOaFeedbackId">
+		DELETE FROM oa_feedback_received 
+		WHERE feedbackid = #{feedback.id}
+	</delete>
+</mapper>

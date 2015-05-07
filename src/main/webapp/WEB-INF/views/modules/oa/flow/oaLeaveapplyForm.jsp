@@ -25,9 +25,9 @@
 					loading('正在提交，请稍等...');
 					form.submit();
 				},
-				errorContainer: "#messageBox",
+				//errorContainer: "#messageBox",
 				errorPlacement: function(error, element) {
-					$("#messageBox").text("输入有误，请先更正。");
+					//$("#messageBox").text("输入有误，请先更正。");
 					if (element.is(":checkbox")||element.is(":radio")||element.parent().is(".input-append")){
 						error.appendTo(element.parent().parent());
 					} else {
@@ -79,7 +79,9 @@
 		<sys:message content="${message}"/>
 		<div class="container">
 			<div class="row">
-				<div class="text-center span12"><form:input path="type" htmlEscape="false" maxlength="20" class="input-mini "/>假申请单</div>
+				<div class="text-center span12">
+				<span class="help-inline"><font color="red">*</font> </span>
+				<form:input path="type" htmlEscape="false" maxlength="20" class="input-mini required"/>假申请单</div>
 			</div>
 			<div class="">
 				<div class="text-right span12">填表时间：<input name="createDate" type="text" readonly="readonly" maxlength="20" class="input-medium "
@@ -89,14 +91,18 @@
 		<table class="table table-bordered">
 			<tr class="">
 				<td class="">姓名</td>
-				<td class=""><form:input path="name" htmlEscape="false" maxlength="64" class="input-small "/></td>
+				<td class="" width="15%"><form:input path="name" htmlEscape="false" maxlength="64" class="input-small required"/>
+				<span class="help-inline"><font color="red">*</font> </span></td>
 				<td class="">部门</td>
 				<td class="" ><sys:treeselect id="office" name="office.id" value="${oaLeaveapply.office.id}" labelName="office.name" labelValue="${oaLeaveapply.office.name}"
-					title="部门" url="/sys/office/treeData?type=2" cssClass="input-small" allowClear="true" notAllowSelectParent="true"/></td>
+					title="部门" url="/sys/office/treeData?type=2" cssClass="input-small required" allowClear="true" notAllowSelectParent="true"/>
+					<span class="help-inline"><font color="red">*</font> </span></td>
 				<td class="">岗位</td>
-				<td class=""><form:input path="post" htmlEscape="false" maxlength="64" class="input-small "/></td>
+				<td class="" width="15%"><form:input path="post" htmlEscape="false" maxlength="64" class="input-small required"/>
+				<span class="help-inline"><font color="red">*</font> </span></td>
 				<td class="">联系电话</td>
-				<td class=""><form:input path="telephone" htmlEscape="false" maxlength="64" class="input-small "/></td>
+				<td class=""><form:input path="telephone" htmlEscape="false" maxlength="64" class="input-small required"/>
+				<span class="help-inline"><font color="red">*</font> </span></td>
 			</tr>
 			<tr class="">
 				<td class="">转正否</td>
@@ -104,17 +110,20 @@
 					<form:options items="${fns:getDictList('yes_no')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
 				</form:select></td>
 				<td class="">请假时间</td>
-				<td class="" colspan=5><input name="starttime" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate "
+				<td class="" colspan=5><input name="starttime" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate required"
 					value="<fmt:formatDate value="${oaLeaveapply.starttime}" pattern="yyyy-MM-dd HH:mm:00"/>"
-					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:00',isShowClear:false});"/> 至 <input name="endtime" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate "
+					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:00'});"/> 至 <input name="endtime" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate required"
 					value="<fmt:formatDate value="${oaLeaveapply.endtime}" pattern="yyyy-MM-dd HH:mm:00"/>"
-					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:00',isShowClear:false});"/></td>
+					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:00'});"/>
+					<span class="help-inline"><font color="red">*</font> </span></td>
 			</tr>
 			<tr class="">
 				<td class="">岗位代理</td>
-				<td class="" colspan=1><form:input path="postAgent" htmlEscape="false" maxlength="64" class="input-small "/></td>
+				<td class="" colspan=1><form:input path="postAgent" htmlEscape="false" maxlength="64" class="input-small "/>
+				</td>
 				<td class="">请假原因</td>
-				<td class="" colspan=5><form:textarea path="reason" htmlEscape="false" maxlength="4000" class="input-xxlarge "/></td>
+				<td class="" colspan=5><form:textarea path="reason" htmlEscape="false" maxlength="4000" class="input-xxlarge required"/>
+				<span class="help-inline"><font color="red">*</font> </span></td>
 			</tr>
 			<tr class="" style="">
 				<td class="">直接</br>上级</br>意见</td>

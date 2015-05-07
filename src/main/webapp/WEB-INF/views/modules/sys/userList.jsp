@@ -79,7 +79,7 @@
 				<td>${user.name}</td>
 				<td>${user.phone}</td>
 				<td>${user.mobile}</td>
-				<td>${fns:getDictLabel(user.zhiwei, "zhiwei", "")}</td>
+				<td>${user.zhiwei}</td>
 				<%--
 				<td>${user.roleNames}</td> --%>
 				<shiro:hasPermission name="sys:user:edit"><td>

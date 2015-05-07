@@ -80,10 +80,10 @@
 				
 				<td>
 					<c:if test="${oaMessageRecord.type eq 'sended'}">
-						${model.user.name}
+						${not empty model.tempUsername ?model.tempUsername : model.user.name}
 					</c:if>
 					<c:if test="${oaMessageRecord.type ne 'sended'}">
-						${model.oaMessage.createBy.name}
+						${not empty model.oaMessage.tempUsername ?model.oaMessage.tempUsername : model.oaMessage.createBy.name}
 					</c:if>
 				</td>
 				<td>

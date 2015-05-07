@@ -308,6 +308,7 @@
 			email = #{email}, 
 			phone = #{phone}, 
 			mobile = #{mobile}, 
+			zhiwei = #{zhiwei},
 			update_by = #{updateBy.id}, 
 			update_date = #{updateDate}, 
 			remarks = #{remarks},

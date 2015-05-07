@@ -400,7 +400,7 @@ public class TaskInstanceServiceImpl  extends CommonServiceImpl implements TaskI
 		}
 		try {
 			UserTo user = getUserTo(userId,engine);
-			assigneeName = user.getUserName();
+			assigneeName = (String)user.getPropertyValue("name");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -4,10 +4,12 @@
 package com.tryine.oa.modules.oa.entity;
 
 import org.hibernate.validator.constraints.Length;
-import com.tryine.oa.modules.sys.entity.User;
-import java.util.Date;
-import com.fasterxml.jackson.annotation.JsonFormat;
 
+import com.tryine.oa.modules.sys.entity.User;
+
+import java.util.Date;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.tryine.oa.common.persistence.DataEntity;
 
 /**
@@ -23,6 +25,7 @@ public class OaMessageRecord extends DataEntity<OaMessageRecord> {
 	private static final long serialVersionUID = 1L;
 	private OaMessage oaMessage;		// 通知通告ID 父类
 	private User user;		// 接受人
+	private String tempUsername; //接收人别名
 	private String readFlag;		// 阅读标记
 	private Date readDate;		// 阅读时间
 	
@@ -83,6 +86,16 @@ public class OaMessageRecord extends DataEntity<OaMessageRecord> {
 	public void setType(String type) {
 		this.type = type;
 	}
+
+	public String getTempUsername() {
+		return tempUsername;
+	}
+
+	public void setTempUsername(String tempUsername) {
+		this.tempUsername = tempUsername;
+	}
+
+	
 	
 	
 }

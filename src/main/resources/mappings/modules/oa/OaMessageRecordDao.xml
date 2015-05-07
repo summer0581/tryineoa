@@ -8,7 +8,9 @@
 		a.user_id AS "user.id",
 		a.read_flag AS "readFlag",
 		a.read_date AS "readDate",
+		a.temp_username AS "tempUsername",
 		b.content AS "oaMessage.content",
+		b.temp_username AS "oaMessage.tempUsername",
 		b.create_by AS "oaMessage.createBy.id",
 		b.create_date AS "oaMessage.createDate",
 		b.url AS "oaMessage.url",
@@ -85,12 +87,14 @@
 			id,
 			oa_message_id,
 			user_id,
+			temp_username,
 			read_flag,
 			read_date
 		) VALUES (
 			#{id},
 			#{oaMessage.id},
 			#{user.id},
+			#{tempUsername},
 			#{readFlag},
 			#{readDate}
 		)
@@ -101,6 +105,7 @@
 			ID,
 			OA_MESSAGE_ID,
 			USER_ID,
+			temp_username,
 			READ_FLAG,
 			READ_DATE
 		)
@@ -109,6 +114,7 @@
 				#{e.id},
 				#{e.oaMessage.id},
 				#{e.user.id},
+				#{e.tempUsername},
 				#{e.readFlag},
 				#{e.readDate}
 			FROM dual
@@ -119,6 +125,7 @@
 		UPDATE oa_message_record SET 	
 			oa_message_id = #{oaMessage.id},
 			user_id = #{user.id},
+			temp_username = #{tempUsername},
 			read_flag = #{readFlag},
 			read_date = #{readDate}
 		WHERE id = #{id}

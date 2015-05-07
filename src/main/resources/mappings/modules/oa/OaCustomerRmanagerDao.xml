@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tryine.oa.modules.oa.dao.OaCustomerRmanagerDao">
+    
+	<sql id="oaCustomerRmanagerColumns">
+		a.id AS "id",
+		a.name AS "name",
+		a.zhujijc AS "zhujijc",
+		a.files AS "files",
+		a.hf_time AS "hfTime",
+		a.sex AS "sex",
+		a.zhonglei AS "zhonglei",
+		a.xinyongdj AS "xinyongdj",
+		a.hangye AS "hangye",
+		a.guanxidj AS "guanxidj",
+		a.jieduan AS "jieduan",
+		a.laiyuan AS "laiyuan",
+		a.jianjie AS "jianjie",
+		a.quyu AS "quyu",
+		a.province AS "province",
+		a.city AS "city",
+		a.email AS "email",
+		a.telephone AS "telephone",
+		a.fax AS "fax",
+		a.website AS "website",
+		a.address AS "address",
+		a.gongxiang AS "gongxiang",
+		a.tuanduiliulan AS "tuanduiliulan",
+		a.jiazhipg AS "jiazhipg",
+		a.guimo AS "guimo",
+		a.type AS "type",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag"
+	</sql>
+	
+	<sql id="oaCustomerRmanagerJoins">
+		left join oa_customer_relation cr on cr.oa_customer_id = a.id
+	</sql>
+    
+	<select id="get" resultType="OaCustomerRmanager">
+		SELECT 
+			<include refid="oaCustomerRmanagerColumns"/>
+		FROM oa_customer_rmanager a
+		<include refid="oaCustomerRmanagerJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="OaCustomerRmanager">
+		SELECT 
+			<include refid="oaCustomerRmanagerColumns"/>
+		FROM oa_customer_rmanager a
+		<include refid="oaCustomerRmanagerJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="name != null and name != ''">
+				AND a.name LIKE 
+					<if test="dbName == 'oracle'">'%'||#{name}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{name}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{name},'%')</if>
+			</if>
+			<if test="hfTime != null and hfTime != ''">
+				AND a.hf_time = #{hfTime}
+			</if>
+			<if test="zhonglei != null and zhonglei != ''">
+				AND a.zhonglei = #{zhonglei}
+			</if>
+			<if test="xinyongdj != null and xinyongdj != ''">
+				AND a.xinyongdj = #{xinyongdj}
+			</if>
+			<if test="hangye != null and hangye != ''">
+				AND a.hangye = #{hangye}
+			</if>
+			<if test="guanxidj != null and guanxidj != ''">
+				AND a.guanxidj = #{guanxidj}
+			</if>
+			<if test="jieduan != null and jieduan != ''">
+				AND a.jieduan = #{jieduan}
+			</if>
+			<if test="laiyuan != null and laiyuan != ''">
+				AND a.laiyuan = #{laiyuan}
+			</if>
+			<if test="email != null and email != ''">
+				AND a.email = #{email}
+			</if>
+			<if test="telephone != null and telephone != ''">
+				AND a.telephone = #{telephone}
+			</if>
+			<if test="address != null and address != ''">
+				AND a.address = #{address}
+			</if>
+			<if test="jiazhipg != null and jiazhipg != ''">
+				AND a.jiazhipg = #{jiazhipg}
+			</if>
+			<if test="guimo != null and guimo != ''">
+				AND a.guimo = #{guimo}
+			</if>
+			<if test="type != null and type != ''">
+				AND a.type = #{type}
+			</if>
+			<if test="createDate != null and createDate != ''">
+				AND a.create_date = #{createDate}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="OaCustomerRmanager">
+		SELECT 
+			<include refid="oaCustomerRmanagerColumns"/>
+		FROM oa_customer_rmanager a
+		<include refid="oaCustomerRmanagerJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO oa_customer_rmanager(
+			id,
+			name,
+			zhujijc,
+			files,
+			hf_time,
+			sex,
+			zhonglei,
+			xinyongdj,
+			hangye,
+			guanxidj,
+			jieduan,
+			laiyuan,
+			jianjie,
+			quyu,
+			province,
+			city,
+			email,
+			telephone,
+			fax,
+			website,
+			address,
+			gongxiang,
+			tuanduiliulan,
+			jiazhipg,
+			guimo,
+			type,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag
+		) VALUES (
+			#{id},
+			#{name},
+			#{zhujijc},
+			#{files},
+			#{hfTime},
+			#{sex},
+			#{zhonglei},
+			#{xinyongdj},
+			#{hangye},
+			#{guanxidj},
+			#{jieduan},
+			#{laiyuan},
+			#{jianjie},
+			#{quyu},
+			#{province},
+			#{city},
+			#{email},
+			#{telephone},
+			#{fax},
+			#{website},
+			#{address},
+			#{gongxiang},
+			#{tuanduiliulan},
+			#{jiazhipg},
+			#{guimo},
+			#{type},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag}
+		)
+	</insert>
+	
+
+	
+	
+	<update id="update">
+		UPDATE oa_customer_rmanager SET 	
+			name = #{name},
+			zhujijc = #{zhujijc},
+			files = #{files},
+			hf_time = #{hfTime},
+			sex = #{sex},
+			zhonglei = #{zhonglei},
+			xinyongdj = #{xinyongdj},
+			hangye = #{hangye},
+			guanxidj = #{guanxidj},
+			jieduan = #{jieduan},
+			laiyuan = #{laiyuan},
+			jianjie = #{jianjie},
+			quyu = #{quyu},
+			province = #{province},
+			city = #{city},
+			email = #{email},
+			telephone = #{telephone},
+			fax = #{fax},
+			website = #{website},
+			address = #{address},
+			gongxiang = #{gongxiang},
+			tuanduiliulan = #{tuanduiliulan},
+			jiazhipg = #{jiazhipg},
+			guimo = #{guimo},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	<delete id="delete">
+		UPDATE oa_customer_rmanager SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</delete>
+	
+</mapper>

@@ -45,7 +45,7 @@
 		<div class="control-group">
 			<label class="control-label">发送人：</label>
 			<div class="controls">
-				${oaMessageRecord.oaMessage.createBy.name }
+				${not empty oaMessageRecord.oaMessage.tempUsername ? oaMessageRecord.oaMessage.tempUsername:oaMessageRecord.oaMessage.createBy.name }
 			</div>
 		</div>
 		<div class="control-group">
@@ -57,7 +57,7 @@
 		<div class="control-group">
 			<label class="control-label">接收人：</label>
 			<div class="controls">
-				${oaMessageRecord.user.name }
+				${not empty oaMessageRecord.tempUsername ? oaMessageRecord.tempUsername:oaMessageRecord.user.name }
 			</div>
 		</div>
 		<div class="control-group">

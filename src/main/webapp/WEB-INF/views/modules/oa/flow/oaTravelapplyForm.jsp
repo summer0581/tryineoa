@@ -84,38 +84,49 @@
 		<table class="table table-bordered">
 			<tr class="">
 				<td class="" width="10%">姓名</td>
-				<td class=""><form:input path="name" htmlEscape="false" maxlength="64" class="input-small "/></td>
+				<td class=""><form:input path="name" htmlEscape="false" maxlength="64" class="input-small required"/>
+				<span class="help-inline"><font color="red">*</font> </span>
+				</td>
 				<td class="" width="10%">部门</td>
 				<td class="" ><sys:treeselect id="office" name="office.id" value="${oaTravelapply.office.id}" labelName="office.name" labelValue="${oaTravelapply.office.name}"
-					title="部门" url="/sys/office/treeData?type=2" cssClass="input-small" allowClear="true" notAllowSelectParent="true"/></td>
+					title="部门" url="/sys/office/treeData?type=2" cssClass="input-small required" allowClear="true" notAllowSelectParent="true"/>
+					<span class="help-inline"><font color="red">*</font> </span></td>
 			</tr>
 			<tr>
 				<td class="">岗位</td>
-				<td class=""><form:input path="post" htmlEscape="false" maxlength="64" class="input-small "/></td>
+				<td class=""><form:input path="post" htmlEscape="false" maxlength="64" class="input-small required"/>
+				<span class="help-inline"><font color="red">*</font> </span></td>
 				<td class="">联系电话</td>
-				<td class=""><form:input path="telephone" htmlEscape="false" maxlength="64" class="input-small "/></td>
+				<td class=""><form:input path="telephone" htmlEscape="false" maxlength="64" class="input-small required"/>
+				<span class="help-inline"><font color="red">*</font> </span></td>
 			</tr>
 			<tr>
 				<td>外出时间</td>
-				<td ><input name="outTime" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate "
+				<td ><input name="outTime" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate required"
 					value="<fmt:formatDate value="${oaTravelapply.outTime}" pattern="yyyy-MM-dd HH:mm:00"/>"
-					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:00',isShowClear:false});"/></td>
+					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:00',isShowClear:false});"/>
+					<span class="help-inline"><font color="red">*</font> </span></td>
 				<td>预计返还时间</td>
-				<td ><input name="plantobacktime" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate "
+				<td ><input name="plantobacktime" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate required"
 					value="<fmt:formatDate value="${oaTravelapply.plantobacktime}" pattern="yyyy-MM-dd HH:mm:00"/>"
-					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:00',isShowClear:false});"/></td>
+					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:00',isShowClear:false});"/>
+					<span class="help-inline"><font color="red">*</font> </span></td>
 			</tr>
 			<tr>
 				<td >随行人员</td>
-				<td ><form:input path="joinPeople" htmlEscape="false" maxlength="500" class="input-xlarge "/></td>
+				<td ><form:input path="joinPeople" htmlEscape="false" maxlength="500" class="input-xlarge required"/>
+				<span class="help-inline"><font color="red">*</font> </span></td>
 				<td>外出地点</td>
-				<td colspan=""><form:input path="outPlace" htmlEscape="false" maxlength="300" class="input-xlarge "/></td>
+				<td colspan=""><form:input path="outPlace" htmlEscape="false" maxlength="300" class="input-xlarge required"/>
+				<span class="help-inline"><font color="red">*</font> </span></td>
 			</tr>
 			<tr>
 				<td>外出事由</td>
-				<td ><form:textarea path="outReason" htmlEscape="false" rows="4" maxlength="4000" class="input-xlarge "/></td>
+				<td ><form:textarea path="outReason" htmlEscape="false" rows="4" maxlength="4000" class="input-xlarge required"/>
+				<span class="help-inline"><font color="red">*</font> </span></td>
 				<td>客户姓名及电话</td>
-				<td><form:input path="customerInfo" htmlEscape="false" maxlength="500" class="input-xlarge "/></td>
+				<td><form:input path="customerInfo" htmlEscape="false" maxlength="500" class="input-xlarge required"/>
+				<span class="help-inline"><font color="red">*</font> </span></td>
 			</tr>
 			<tr>
 				<td colspan="4" ><h1 class="text-center">审核批复</h1></td>

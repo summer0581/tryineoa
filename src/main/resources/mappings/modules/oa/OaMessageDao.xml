@@ -7,6 +7,7 @@
 		a.title AS "title",
 		a.content AS "content",
 		a.url AS "url",
+		a.temp_username AS "tempUsername",
 		a.create_by AS "createBy.id",
 		u.name AS "createBy.name",
 		a.create_date AS "createDate",
@@ -99,6 +100,7 @@
 			title,
 			content,
 			url,
+			temp_username,
 			create_by,
 			create_date,
 			update_by,
@@ -110,6 +112,7 @@
 			#{title},
 			#{content},
 			#{url},
+			#{tempUsername},
 			#{createBy.id},
 			#{createDate},
 			#{updateBy.id},
@@ -123,6 +126,7 @@
 		UPDATE oa_message SET 	
 			title = #{title},
 			content = #{content},
+			temp_username = #{tempUsername},
 			update_by = #{updateBy.id},
 			update_date = #{updateDate},
 			remarks = #{remarks}

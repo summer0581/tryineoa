@@ -91,7 +91,7 @@ public class User extends DataEntity<User> {
 	}
 
 	@SupCol(isUnique="true", isHide="true")
-	@ExcelField(title="ID", type=1, align=2, sort=1)
+	@ExcelField(title="ID", type=0, align=2, sort=1)
 	public String getId() {
 		return id;
 	}
@@ -189,7 +189,7 @@ public class User extends DataEntity<User> {
 		this.mobile = mobile;
 	}
 	@Length(min=0, max=100, message="职位长度必须介于 1 和 100 之间")
-	@ExcelField(title="职位", align=2, sort=75, dictType="zhiwei")
+	@ExcelField(title="职位", align=2, sort=75)
 	public String getZhiwei() {
 		return zhiwei;
 	}

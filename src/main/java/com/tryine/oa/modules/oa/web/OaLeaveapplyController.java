@@ -4,8 +4,7 @@
 package com.tryine.oa.modules.oa.web;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Date;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,23 +19,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.founder.fix.fixflow.core.impl.identity.UserTo;
 import com.founder.fix.fixflow.core.runtime.ProcessInstance;
 import com.founder.fix.fixflow.core.task.TaskInstance;
 import com.founder.fix.fixflow.service.impl.FlowCenterServiceImpl;
 import com.founder.fix.fixflow.shell.FlowUtilServiceImpl;
 import com.tryine.oa.common.config.Global;
 import com.tryine.oa.common.persistence.Page;
-import com.tryine.oa.common.utils.IdGen;
 import com.tryine.oa.common.utils.StringUtils;
 import com.tryine.oa.common.web.BaseController;
 import com.tryine.oa.modules.flow.service.FlowService;
 import com.tryine.oa.modules.oa.entity.OaLeaveapply;
-import com.tryine.oa.modules.oa.entity.OaMessage;
-import com.tryine.oa.modules.oa.entity.OaMessageRecord;
 import com.tryine.oa.modules.oa.service.OaLeaveapplyService;
 import com.tryine.oa.modules.oa.service.OaMessageService;
-import com.tryine.oa.modules.sys.entity.User;
 import com.tryine.oa.modules.sys.utils.UserUtils;
 
 /**
@@ -95,6 +89,15 @@ public class OaLeaveapplyController extends BaseController {
 		}
 		if(null == oaLeaveapply.getOffice()){
 			oaLeaveapply.setOffice(UserUtils.getUser().getOffice());
+		}
+		if(StringUtils.isBlank(oaLeaveapply.getPost())){
+			oaLeaveapply.setPost(UserUtils.getUser().getZhiwei());
+		}
+		if(StringUtils.isBlank(oaLeaveapply.getTelephone())){
+			oaLeaveapply.setTelephone(UserUtils.getUser().getMobile());
+		}
+		if(null == oaLeaveapply.getCreateDate()){
+			oaLeaveapply.setCreateDate(new Date());
 		}
 		ProcessInstance processIns = null;
 		TaskInstance taskIns = null;

@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tryine.oa.modules.oa.dao.OaFeedbackDao">
+    
+	<sql id="oaFeedbackColumns">
+		a.id AS "id",
+		a.name AS "name",
+		a.boxtype AS "box.id",
+		b.name AS "box.name",
+		a.content AS "content",
+		a.is_hidename AS "isHidename",
+		a.create_by AS "createBy.id",
+		c.name AS "createBy.name",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag"
+	</sql>
+	
+	<sql id="oaFeedbackJoins">
+		left join oa_feedback_box b on b.id = a.boxtype
+		left join sys_user c on c.id = a.create_by
+	</sql>
+    
+	<select id="get" resultType="OaFeedback">
+		SELECT 
+			<include refid="oaFeedbackColumns"/>
+		FROM oa_feedback a
+		<include refid="oaFeedbackJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="OaFeedback">
+		SELECT 
+			<include refid="oaFeedbackColumns"/>
+			,(select count(id) from oa_feedback_received where feedbackid = a.id and back_time is not null) AS "isReply"
+		FROM oa_feedback a
+		<include refid="oaFeedbackJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			AND a.create_by = #{currentUser.id}
+			<if test="name != null and name != ''">
+				AND a.name LIKE 
+					<if test="dbName == 'oracle'">'%'||#{name}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{name}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{name},'%')</if>
+			</if>
+			<if test="createDate != null and createDate != ''">
+				<![CDATA[
+					AND DATE_FORMAT(a.create_date, '%Y-%m-%d') = DATE_FORMAT(#{createDate}, '%Y-%m-%d')
+				]]>
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="OaFeedback">
+		SELECT 
+			<include refid="oaFeedbackColumns"/>
+		FROM oa_feedback a
+		<include refid="oaFeedbackJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO oa_feedback(
+			id,
+			name,
+			boxtype,
+			content,
+			is_hidename,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag
+		) VALUES (
+			#{id},
+			#{name},
+			#{box.id},
+			#{content},
+			#{isHidename},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE oa_feedback SET 	
+			name = #{name},
+			boxtype = #{box.id},
+			content = #{content},
+			is_hidename = #{isHidename},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	<delete id="delete">
+		UPDATE oa_feedback SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</delete>
+	
+</mapper>

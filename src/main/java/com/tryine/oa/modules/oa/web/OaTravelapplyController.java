@@ -4,6 +4,7 @@
 package com.tryine.oa.modules.oa.web;
 
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,14 +19,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.founder.fix.fixflow.core.impl.runtime.ProcessInstanceEntity;
 import com.founder.fix.fixflow.core.runtime.ProcessInstance;
 import com.founder.fix.fixflow.core.task.TaskInstance;
 import com.founder.fix.fixflow.service.impl.FlowCenterServiceImpl;
 import com.tryine.oa.common.config.Global;
 import com.tryine.oa.common.persistence.Page;
-import com.tryine.oa.common.web.BaseController;
 import com.tryine.oa.common.utils.StringUtils;
+import com.tryine.oa.common.web.BaseController;
 import com.tryine.oa.modules.flow.service.FlowService;
 import com.tryine.oa.modules.oa.entity.OaTravelapply;
 import com.tryine.oa.modules.oa.service.OaTravelapplyService;
@@ -84,6 +84,16 @@ public class OaTravelapplyController extends BaseController {
 		if(null == oaTravelapply.getOffice()){
 			oaTravelapply.setOffice(UserUtils.getUser().getOffice());
 		}
+		if(StringUtils.isBlank(oaTravelapply.getPost())){
+			oaTravelapply.setPost(UserUtils.getUser().getZhiwei());
+		}
+		if(StringUtils.isBlank(oaTravelapply.getTelephone())){
+			oaTravelapply.setTelephone(UserUtils.getUser().getMobile());
+		}
+		if(null == oaTravelapply.getCreateDate()){
+			oaTravelapply.setCreateDate(new Date());
+		}
+		
 		ProcessInstance processIns = null;
 		TaskInstance taskIns = null;
 		try {

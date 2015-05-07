@@ -97,7 +97,7 @@ public class OaMessageController extends BaseController {
 	@RequestMapping(value = "self/count")
 	@ResponseBody
 	public String selfCount(OaMessage oaMessage, Model model) {
-		oaMessage.setSelf(true);
+		oaMessage.setIsSelf(true);
 		oaMessage.setReadFlag("0");
 		return String.valueOf(oaMessageService.findCount(oaMessage));
 	}

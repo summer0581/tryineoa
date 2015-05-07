@@ -118,7 +118,7 @@ public class UserController extends BaseController {
 		}
 		user.setRoleList(roleList);
 		// 保存用户信息
-		systemService.saveUser(user);
+		systemService.saveUser(user,false);
 		// 清除当前用户缓存
 		if (user.getLoginName().equals(UserUtils.getUser().getLoginName())){
 			UserUtils.clearCache();
@@ -182,7 +182,8 @@ public class UserController extends BaseController {
 			return "redirect:" + adminPath + "/sys/user/list?repage";
 		}
 		try {
-			int successNum = 0;
+			int successAddNum = 0;
+			int successUpdateNum = 0;
 			int failureNum = 0;
 			StringBuilder failureMsg = new StringBuilder();
 			ImportExcel ei = new ImportExcel(file, 1, 0);
@@ -192,12 +193,15 @@ public class UserController extends BaseController {
 					if ("true".equals(checkLoginName("", user.getLoginName()))){
 						user.setPassword(SystemService.entryptPassword("123456"));
 						BeanValidators.validateWithException(validator, user);
-						systemService.saveUser(user);
-						successNum++;
+						systemService.saveUser(user,true);
+						successAddNum++;
 					}else{
-						failureMsg.append("<br/>登录名 "+user.getLoginName()+" 已存在; ");
-						failureNum++;
+						systemService.saveUser(user,true);
+						//failureMsg.append("<br/>登录名 "+user.getLoginName()+" 已存在; ");
+						//failureNum++;
+						successUpdateNum++;
 					}
+					
 				}catch(ConstraintViolationException ex){
 					failureMsg.append("<br/>登录名 "+user.getLoginName()+" 导入失败：");
 					List<String> messageList = BeanValidators.extractPropertyAndMessageAsList(ex, ": ");
@@ -212,7 +216,7 @@ public class UserController extends BaseController {
 			if (failureNum>0){
 				failureMsg.insert(0, "，失败 "+failureNum+" 条用户，导入信息如下：");
 			}
-			addMessage(redirectAttributes, "已成功导入 "+successNum+" 条用户"+failureMsg);
+			addMessage(redirectAttributes, "已成功导入 "+successAddNum+" 条用户,"+"已成功更新 "+successUpdateNum+" 条用户"+failureMsg);
 		} catch (Exception e) {
 			addMessage(redirectAttributes, "导入用户失败！失败信息："+e.getMessage());
 		}

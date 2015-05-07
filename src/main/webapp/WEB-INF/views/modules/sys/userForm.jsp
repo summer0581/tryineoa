@@ -119,9 +119,7 @@
 		<div class="control-group">
 			<label class="control-label">职位:</label>
 			<div class="controls">
-				<form:select path="zhiwei" class="input-xlarge">
-					<form:options items="${fns:getDictList('zhiwei')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
-				</form:select>
+				<form:input path="zhiwei" htmlEscape="false" maxlength="100"/>
 			</div>
 		</div>
 		<div class="control-group">

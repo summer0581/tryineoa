@@ -122,7 +122,7 @@ public class SystemService extends BaseService implements InitializingBean {
 	}
 	
 	@Transactional(readOnly = false)
-	public void saveUser(User user) {
+	public void saveUser(User user,boolean isExcelSave) {
 		if (StringUtils.isBlank(user.getId())){
 			user.preInsert();
 			userDao.insert(user);
@@ -134,9 +134,14 @@ public class SystemService extends BaseService implements InitializingBean {
 			}
 			// 更新用户数据
 			user.preUpdate();
-			userDao.update(user);
+			if(isExcelSave){
+				userDao.updateUserInfo(user);
+			}else{
+				userDao.update(user);
+			}
+			
 		}
-		if (StringUtils.isNotBlank(user.getId())){
+		if (StringUtils.isNotBlank(user.getId()) && !isExcelSave){
 			// 更新用户与角色关联
 			userDao.deleteUserRole(user);
 			if (user.getRoleList() != null && user.getRoleList().size() > 0){
@@ -290,7 +295,7 @@ public class SystemService extends BaseService implements InitializingBean {
 		for (Role e : roles){
 			if (e.getId().equals(role.getId())){
 				roles.remove(e);
-				saveUser(user);
+				saveUser(user,false);
 				return true;
 			}
 		}
@@ -307,7 +312,7 @@ public class SystemService extends BaseService implements InitializingBean {
 			return null;
 		}
 		user.getRoleList().add(role);
-		saveUser(user);
+		saveUser(user,false);
 		return user;
 	}
 

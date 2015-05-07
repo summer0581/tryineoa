@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tryine.oa.modules.oa.dao.OaCustomerRelationDao">
+    
+	<sql id="oaCustomerRelationColumns">
+		a.id AS "id",
+		a.oa_customer_id AS "oaCustomer.id",
+		a.user_id AS "user.id",
+		u3.name AS "user.name"
+	</sql>
+	
+	<sql id="oaCustomerRelationJoins">
+		LEFT JOIN oa_customer_rmanager b ON b.id = a.oa_customer_id
+		LEFT JOIN sys_user u3 ON u3.id = a.user_id
+	</sql>
+    
+	<select id="get" resultType="OaCustomerRelation">
+		SELECT 
+			<include refid="oaCustomerRelationColumns"/>
+		FROM oa_customer_relation a
+		<include refid="oaCustomerRelationJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="OaCustomerRelation">
+		SELECT 
+			<include refid="oaCustomerRelationColumns"/>
+		FROM oa_customer_relation a
+		<include refid="oaCustomerRelationJoins"/>
+		<where>
+			
+			<if test="oaCustomer != null and oaCustomer != ''">
+				AND a.oa_customer_id = #{oaCustomer.id}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="OaCustomerRelation">
+		SELECT 
+			<include refid="oaCustomerRelationColumns"/>
+		FROM oa_customer_relation a
+		<include refid="oaCustomerRelationJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO oa_customer_relation(
+			id,
+			oa_customer_id,
+			user_id
+		) VALUES (
+			#{id},
+			#{oaCustomer.id},
+			#{user.id}
+		)
+	</insert>
+	
+	<insert id="insertAll" parameterType="List">
+		INSERT INTO oa_customer_relation(
+			id,
+			oa_customer_id,
+			USER_ID
+		)
+		<foreach collection="list" item="e" separator=" UNION ALL ">
+			SELECT
+				#{e.id},
+				#{e.oaCustomer.id},
+				#{e.user.id}
+			FROM dual
+		</foreach>
+	</insert>
+	
+	<update id="update">
+		UPDATE oa_customer_relation SET 	
+			oa_customer_id = #{oaCustomer.id},
+			user_id = #{user.id}
+		WHERE id = #{id}
+	</update>
+	
+	<delete id="delete">
+		DELETE FROM oa_customer_relation
+		<choose>
+			<when test="id !=null and id != ''">
+				WHERE id = #{id}
+			</when>
+			<otherwise>
+				WHERE oa_customer_id = #{oaCustomer.id}
+			</otherwise>
+		</choose>
+	</delete>
+	<delete id="deleteByOaCustomerManagerId">
+		DELETE FROM oa_customer_relation 
+		WHERE oa_customer_id = #{oaCustomer.id}
+	</delete>
+</mapper>
