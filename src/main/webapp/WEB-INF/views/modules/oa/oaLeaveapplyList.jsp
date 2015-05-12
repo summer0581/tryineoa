@@ -19,24 +19,30 @@
 <body>
 	<ul class="nav nav-tabs">
 		<li class="active"><a href="${ctx}/oa/oaLeaveapply/">请假信息列表</a></li>
-		<shiro:hasPermission name="oa:oaLeaveapply:edit"><li><a href="${ctx}/oa/oaLeaveapply/form?processDefinitionKey=tryine_leaveapply">请假信息添加</a></li></shiro:hasPermission>
 	</ul>
 	<form:form id="searchForm" modelAttribute="oaLeaveapply" action="${ctx}/oa/oaLeaveapply/" method="post" class="breadcrumb form-search">
 		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
 		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
+		<sys:tableSort id="orderBy" name="orderBy" value="${page.orderBy}" callback="page();"/>
 		<ul class="ul-form">
 			<li><label>姓名：</label>
 				<form:input path="name" htmlEscape="false" maxlength="64" class="input-medium"/>
 			</li>
 			<li><label>开始时间：</label>
-				<input name="starttime" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
-					value="<fmt:formatDate value="${oaLeaveapply.starttime}" pattern="yyyy-MM-dd HH:mm:ss"/>"
-					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/>
+				<input name="beginStarttime" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
+					value="<fmt:formatDate value="${oaLeaveapply.beginStarttime}" pattern="yyyy-MM-dd"/>"
+					onclick="WdatePicker({dateFmt:'yyyy-MM-dd'});"/> - 
+				<input name="endStarttime" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
+					value="<fmt:formatDate value="${oaLeaveapply.endStarttime}" pattern="yyyy-MM-dd HH:mm"/>"
+					onclick="WdatePicker({dateFmt:'yyyy-MM-dd 23:00'});"/>
 			</li>
 			<li><label>结束时间：</label>
-				<input name="endtime" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
-					value="<fmt:formatDate value="${oaLeaveapply.endtime}" pattern="yyyy-MM-dd HH:mm:ss"/>"
-					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/>
+				<input name="beginEndtime" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
+					value="<fmt:formatDate value="${oaLeaveapply.beginEndtime}" pattern="yyyy-MM-dd"/>"
+					onclick="WdatePicker({dateFmt:'yyyy-MM-dd'});"/> - 
+				<input name="endEndtime" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
+					value="<fmt:formatDate value="${oaLeaveapply.endEndtime}" pattern="yyyy-MM-dd HH:mm"/>"
+					onclick="WdatePicker({dateFmt:'yyyy-MM-dd 23:00'});"/>
 			</li>
 			<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></li>
 			<li class="clearfix"></li>
@@ -47,26 +53,53 @@
 		<thead>
 			<tr>
 				<th>姓名</th>
-				<th>更新时间</th>
-				<th>备注信息</th>
+				<th class="sort-column createDate">填表日期</th>
+				<th>部门</th>
+				<th>岗位</th>
+				<th>联系电话</th>
+				<th>转正否</th>
+				<th class="sort-column starttime">请假起始时间</th>
+				<th class="sort-column endtime">请假结束时间</th>
+				<th>岗位代理</th>
+				<th>请假原因</th>
 				<shiro:hasPermission name="oa:oaLeaveapply:edit"><th>操作</th></shiro:hasPermission>
 			</tr>
 		</thead>
 		<tbody>
 		<c:forEach items="${page.list}" var="oaLeaveapply">
 			<tr>
-				<td><a href="${ctx}/oa/oaLeaveapply/form?id=${oaLeaveapply.id}">
+				<td><a href="${ctx}/oa/oaLeaveapply/form?id=${oaLeaveapply.id}&processDefinitionKey=${oaTravelapply.processDefinitionKey}">
 					${oaLeaveapply.name}
 				</a></td>
 				<td>
-					<fmt:formatDate value="${oaLeaveapply.updateDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
+					<fmt:formatDate value="${oaLeaveapply.createDate}" pattern="yyyy-MM-dd"/>
 				</td>
 				<td>
-					${oaLeaveapply.remarks}
+					${oaLeaveapply.office.name}
+				</td>
+				<td>
+					${oaLeaveapply.post}
+				</td>
+				<td>
+					${oaLeaveapply.telephone}
+				</td>
+				<td>
+					${fns:getDictLabel(oaLeaveapply.isPositive, 'yes_no', '')}
+				</td>
+				<td>
+					<fmt:formatDate value="${oaLeaveapply.starttime}" pattern="yyyy-MM-dd HH:mm"/>
+				</td>
+				<td>
+					<fmt:formatDate value="${oaLeaveapply.endtime}" pattern="yyyy-MM-dd HH:mm"/>
+				</td>
+				<td>
+					${oaLeaveapply.postAgent}
+				</td>
+				<td>
+					${oaLeaveapply.reason}
 				</td>
 				<shiro:hasPermission name="oa:oaLeaveapply:edit"><td>
-    				<a href="${ctx}/oa/oaLeaveapply/form?id=${oaLeaveapply.id}">修改</a>
-					<a href="${ctx}/oa/oaLeaveapply/delete?id=${oaLeaveapply.id}" onclick="return confirmx('确认要删除该请假信息吗？', this.href)">删除</a>
+    				<a href="${ctx}/oa/oaLeaveapply/form?id=${oaLeaveapply.id}&processDefinitionKey=${oaTravelapply.processDefinitionKey}">查看</a>
 				</td></shiro:hasPermission>
 			</tr>
 		</c:forEach>

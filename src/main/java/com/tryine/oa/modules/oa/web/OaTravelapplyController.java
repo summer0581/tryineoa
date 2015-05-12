@@ -61,7 +61,7 @@ public class OaTravelapplyController extends BaseController {
 	
 	@RequiresPermissions("oa:oaTravelapply:view")
 	@RequestMapping(value = {"list", ""})
-	public String list(OaTravelapply oaTravelapply, HttpServletRequest request, HttpServletResponse response, Model model) {
+	public String list(OaTravelapply oaTravelapply,@RequestParam Map<String,Object> params, HttpServletRequest request, HttpServletResponse response, Model model) {
 		Page<OaTravelapply> page = oaTravelapplyService.findPage(new Page<OaTravelapply>(request, response), oaTravelapply); 
 		model.addAttribute("page", page);
 		return "modules/oa/oaTravelapplyList";

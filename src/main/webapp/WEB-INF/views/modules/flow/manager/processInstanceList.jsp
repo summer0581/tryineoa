@@ -146,7 +146,7 @@
 	 		}
 	  	}
 		function page(n,s){
-        	location = '${ctx}/flow/work/?pageNo='+n+'&pageSize='+s;
+        	location = '${ctx}/flow/manager/?pageNo='+n+'&pageSize='+s;
         }
 		
 		function clearInfo(){

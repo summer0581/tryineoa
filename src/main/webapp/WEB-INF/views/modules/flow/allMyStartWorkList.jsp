@@ -31,23 +31,37 @@
 		        }else{
 		       	 url+="?";
 		        }
-		        url+="id="+bizKey,obj,"dialogWidth=800px;dialogHeight=600px";
+		        url+="viewonly=true&taskId="+tii+"&processInstanceId="+pii+"&id="+bizKey+"&processDefinitionKey="+pdk,obj,"dialogWidth=800px;dialogHeight=600px";
 		       	location = url;
 		      });
 
 		});
 		function page(n,s){
-        	location = '${ctx}/flow/work/?pageNo='+n+'&pageSize='+s;
+        	location = '${ctx}/flow/work/allMyStartWorkList?pageNo='+n+'&pageSize='+s;
         }
-		
+		function clearInfo(){
+			$("#searchForm").find("input").not(".btn").val("");
+			$("#searchForm").submit();
+	 	}
 
 	</script>
 
 </head>
 <body>
 	<form id="searchForm" action="${ctx}/flow/work/allMyStartWorkList" method="post" class="breadcrumb form-search">
-		<li><label>姓&nbsp;&nbsp;&nbsp;名：</label><input type="text" name="name" htmlEscape="false" maxlength="50" class="input-medium"/></li>
+		<li><label>流程名称：</label>
+		<input type="text" name="processName" value="${params.processName}" htmlEscape="false" maxlength="50" class="input-medium"/></li>
+		<li><label>流程主题：</label><input type="text" name="subject" value="${params.subject}" htmlEscape="false" maxlength="50" class="input-medium"/></li>
+		<li><label>流程状态：</label>  
+			<select name="status" class="input-xlarge" style="width:100px;">
+				<option value="">请选择</option>
+				<c:forEach items="${fns:getDictList('flow_instanceStatus')}" var="type">
+					<option value="${type.value}" <c:if test="${params.status eq type.value}">selected</c:if>>${ type.label}</option>
+				</c:forEach>
+			</select>              
+		</li>
 		&nbsp;<input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/>
+		<input class="btn btn-primary" type="button" onclick="clearInfo();" value="重置"/>
 	</form>
 	<sys:message content="${message}"/>
 	<table class="table table-striped table-bordered table-condensed">

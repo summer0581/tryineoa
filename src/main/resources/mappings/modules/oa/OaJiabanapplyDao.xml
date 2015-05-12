@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tryine.oa.modules.oa.dao.OaJiabanapplyDao">
+    
+	<sql id="oaJiabanapplyColumns">
+		a.id AS "id",
+		a.name AS "name",
+		a.office_id AS "office.id",
+		a.post AS "post",
+		a.starttime AS "starttime",
+		a.endtime AS "endtime",
+		a.hours AS "hours",
+		a.shiduan AS "shiduan",
+		a.address AS "address",
+		a.reason AS "reason",
+		a.direct_leader_idea AS "directLeaderIdea",
+		a.human_resource_idea AS "humanResourceIdea",
+		a.general_manager_idea AS "generalManagerIdea",
+		a.chair_man_idea AS "chairManIdea",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag",
+		o3.name AS "office.name"
+	</sql>
+	
+	<sql id="oaJiabanapplyJoins">
+		LEFT JOIN sys_office o3 ON o3.id = a.office_id
+	</sql>
+    
+	<select id="get" resultType="OaJiabanapply">
+		SELECT 
+			<include refid="oaJiabanapplyColumns"/>
+		FROM oa_jiabanapply a
+		<include refid="oaJiabanapplyJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="OaJiabanapply">
+		SELECT 
+			<include refid="oaJiabanapplyColumns"/>
+			,p.PROCESSDEFINITION_KEY AS 'processDefinitionKey'
+		FROM oa_jiabanapply a
+		<include refid="oaJiabanapplyJoins"/>
+		INNER JOIN fixflow_run_processinstance p ON p.biz_key = a.id
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL} AND p.INSTANCE_STATUS = 'COMPLETE'
+			<if test="name != null and name != ''">
+				AND a.name LIKE 
+					<if test="dbName == 'oracle'">'%'||#{name}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{name}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{name},'%')</if>
+			</if>
+			<if test="beginStarttime != null  and beginStarttime != '' ">
+				<![CDATA[
+					AND a.starttime >= #{beginStarttime} 
+				]]>
+			</if>
+			<if test="endStarttime != null and endStarttime != ''">
+				<![CDATA[
+					AND a.starttime <= #{endStarttime}
+				]]>
+			</if>
+			<if test="beginEndtime != null  and beginEndtime != ''">
+				<![CDATA[
+					AND a.endtime >= #{beginEndtime}
+				]]>
+			</if>
+			<if test="endEndtime != null and endEndtime != ''">
+				<![CDATA[
+					AND a.endtime <= #{endEndtime}
+				]]>
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="OaJiabanapply">
+		SELECT 
+			<include refid="oaJiabanapplyColumns"/>
+		FROM oa_jiabanapply a
+		<include refid="oaJiabanapplyJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO oa_jiabanapply(
+			id,
+			name,
+			office_id,
+			post,
+			starttime,
+			endtime,
+			hours,
+			shiduan,
+			address,
+			reason,
+			direct_leader_idea,
+			human_resource_idea,
+			general_manager_idea,
+			chair_man_idea,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag
+		) VALUES (
+			#{id},
+			#{name},
+			#{office.id},
+			#{post},
+			#{starttime},
+			#{endtime},
+			#{hours},
+			#{shiduan},
+			#{address},
+			#{reason},
+			#{directLeaderIdea},
+			#{humanResourceIdea},
+			#{generalManagerIdea},
+			#{chairManIdea},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE oa_jiabanapply SET 	
+			name = #{name},
+			office_id = #{office.id},
+			post = #{post},
+			starttime = #{starttime},
+			endtime = #{endtime},
+			hours = #{hours},
+			shiduan = #{shiduan},
+			address = #{address},
+			reason = #{reason},
+			direct_leader_idea = #{directLeaderIdea},
+			human_resource_idea = #{humanResourceIdea},
+			general_manager_idea = #{generalManagerIdea},
+			chair_man_idea = #{chairManIdea},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	<delete id="delete">
+		UPDATE oa_jiabanapply SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</delete>
+	
+</mapper>

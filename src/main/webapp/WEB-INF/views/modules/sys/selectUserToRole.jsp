@@ -48,7 +48,7 @@
 		function treeOnClick(event, treeId, treeNode, clickFlag){
 			$.fn.zTree.getZTreeObj(treeId).expandNode(treeNode);
 			if("officeTree"==treeId){
-				$.get("${ctx}/sys/role/users?officeId=" + treeNode.id, function(userNodes){
+				$.getJSON("${ctx}/sys/role/users?officeId=" + treeNode.id, function(userNodes){
 					$.fn.zTree.init($("#userTree"), setting, userNodes);
 				});
 			}

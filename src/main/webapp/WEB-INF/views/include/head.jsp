@@ -21,4 +21,5 @@
 <script src="${ctxStatic}/common/jeesite.js" type="text/javascript"></script>
 <script src="${ctxStatic}/common/ajaxfileupload.js" type="text/javascript"></script>
 <script src="${ctxStatic}/common/city.js" type="text/javascript"></script>
+<script src="${ctxStatic}/common/popup.js" type="text/javascript"></script>
 <script type="text/javascript">var ctx = '${ctx}', ctxStatic='${ctxStatic}';</script>

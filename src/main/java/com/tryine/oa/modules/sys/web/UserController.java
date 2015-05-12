@@ -58,7 +58,7 @@ public class UserController extends BaseController {
 			return new User();
 		}
 	}
-
+	
 	@RequiresPermissions("sys:user:view")
 	@RequestMapping(value = {"index"})
 	public String index(User user, Model model) {

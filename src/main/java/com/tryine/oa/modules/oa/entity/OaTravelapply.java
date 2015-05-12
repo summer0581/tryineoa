@@ -3,19 +3,20 @@
  */
 package com.tryine.oa.modules.oa.entity;
 
-import org.hibernate.validator.constraints.Length;
-import com.tryine.oa.modules.sys.entity.Office;
 import java.util.Date;
-import com.fasterxml.jackson.annotation.JsonFormat;
 
-import com.tryine.oa.common.persistence.DataEntity;
+import org.hibernate.validator.constraints.Length;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.tryine.oa.common.persistence.FlowEntity;
+import com.tryine.oa.modules.sys.entity.Office;
 
 /**
  * 出差申请Entity
  * @author Summer
  * @version 2015-04-16
  */
-public class OaTravelapply extends DataEntity<OaTravelapply> {
+public class OaTravelapply extends FlowEntity<OaTravelapply> {
 	
 	private static final long serialVersionUID = 1L;
 	private String name;		// 姓名
@@ -25,11 +26,17 @@ public class OaTravelapply extends DataEntity<OaTravelapply> {
 	private Date outTime;		// 外出时间
 	private Date plantobacktime;		// 预计返还时间
 	private String outPlace;		// 外出地点
-	private String customerInfo;		// 客户姓名及电话
+	private String customerInfo;		// 客户姓名
+	private String customerTelephone;		// 客户电话
 	private String joinPeople;		// 随行人员
 	private String directleaderIdea;		// 直接上级意见
 	private String generalManagerIdea;		// 分公司总经理意见
 	private String outReason;		// 外出事由
+	
+	private Date startOutTime;		// 外出起始时间
+	private Date endOutTime;		// 外出结束时间
+	private Date startPlantobacktime;		// 预计返还起始时间
+	private Date endPlantobacktime;		// 预计返还结束时间
 	
 	public OaTravelapply() {
 		super();
@@ -102,7 +109,7 @@ public class OaTravelapply extends DataEntity<OaTravelapply> {
 		this.outPlace = outPlace;
 	}
 	
-	@Length(min=0, max=500, message="客户姓名及电话长度必须介于 0 和 500 之间")
+	@Length(min=0, max=200, message="客户姓名长度必须介于 0 和 200 之间")
 	public String getCustomerInfo() {
 		return customerInfo;
 	}
@@ -111,6 +118,16 @@ public class OaTravelapply extends DataEntity<OaTravelapply> {
 		this.customerInfo = customerInfo;
 	}
 	
+	
+	@Length(min=0, max=64, message="客户电话长度必须介于 0 和64 之间")
+	public String getCustomerTelephone() {
+		return customerTelephone;
+	}
+
+	public void setCustomerTelephone(String customerTelephone) {
+		this.customerTelephone = customerTelephone;
+	}
+
 	@Length(min=0, max=500, message="随行人员长度必须介于 0 和 500 之间")
 	public String getJoinPeople() {
 		return joinPeople;
@@ -146,5 +163,39 @@ public class OaTravelapply extends DataEntity<OaTravelapply> {
 	public void setOutReason(String outReason) {
 		this.outReason = outReason;
 	}
+
+	public Date getStartOutTime() {
+		return startOutTime;
+	}
+
+	public void setStartOutTime(Date startOutTime) {
+		this.startOutTime = startOutTime;
+	}
+
+	public Date getEndOutTime() {
+		return endOutTime;
+	}
+
+	public void setEndOutTime(Date endOutTime) {
+		this.endOutTime = endOutTime;
+	}
+
+	public Date getStartPlantobacktime() {
+		return startPlantobacktime;
+	}
+
+	public void setStartPlantobacktime(Date startPlantobacktime) {
+		this.startPlantobacktime = startPlantobacktime;
+	}
+
+	public Date getEndPlantobacktime() {
+		return endPlantobacktime;
+	}
+
+	public void setEndPlantobacktime(Date endPlantobacktime) {
+		this.endPlantobacktime = endPlantobacktime;
+	}
+	
+	
 	
 }

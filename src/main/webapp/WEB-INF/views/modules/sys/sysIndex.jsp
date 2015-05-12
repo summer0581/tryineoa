@@ -114,6 +114,7 @@
 					$(this).click();
 				}
 			});
+
 			// 获取通知数目  <c:set var="oaNotifyRemindInterval" value="${fns:getConfig('oa.notify.remind.interval')}"/>
 			function getNotifyNum(){
 				$.get("${ctx}/oa/oaNotify/self/count?updateSession=0&t="+new Date().getTime(),function(data){
@@ -139,7 +140,28 @@
 					}else{
 						$("#todoworkNum").hide()
 					}
+					var messageBody = "";
+					if($("#notifyNum").is(":visible")){
+						messageBody += "您有<a href='#' onclick=javascript:top.$('#notifyNum_but')[0].click();>"+$("#notifyNum").html()+"条通知</a><br>";
+					}
+					if($("#messageNum").is(":visible")){
+						messageBody += "您有<a href='#' onclick=javascript:top.$('#messageNum_but')[0].click()>"+$("#messageNum").html()+"条消息</a><br>"
+					}
+					if($("#todoworkNum").is(":visible")){
+						messageBody += "您有<a href='#' onclick=javascript:top.$('#todoworkNum_but')[0].click()>"+$("#todoworkNum").html()+"条待办任务</a><br>"
+					}
+									
+					if("" != messageBody){
+						var MSG1 = new CLASS_MSN_MESSAGE("aa",200,120,"系统消息提示：",messageBody,""); 
+					    MSG1.rect(null,null,null,(windowCreatePopup?screen.height:$(document).height())-0); 
+					    MSG1.timeout    = 450;
+					    MSG1.speed    = 10; 
+					    MSG1.step    = 5; 
+					    //alert(MSG1.top); 
+					    MSG1.show(); 
+					}			
 				});
+				
 			}
 			getNotifyNum(); //<c:if test="${oaNotifyRemindInterval ne '' && oaNotifyRemindInterval ne '0'}">
 			setInterval(getNotifyNum, ${oaNotifyRemindInterval}); //</c:if>
@@ -239,19 +261,19 @@
 		    <div id="footer" class="row-fluid">
 				<ul class="showrow">
 					<li>
-						<a href="${ctx}/oa/oaNotify/self" target="mainFrame">
+						<a id="notifyNum_but" href="${ctx}/oa/oaNotify/self" target="mainFrame">
 		    				<i class="icon-bell"></i>&nbsp;  我的通知
 		    				 <span id="notifyNum" class="label label-info hide"></span>
 		    				</a>
 					</li>
 					<li>
-						<a href="${ctx}/oa/oaMessageRecord/list?type=noread" target="mainFrame">
+						<a id="messageNum_but" href="${ctx}/oa/oaMessageRecord/list?type=noread" target="mainFrame">
 		    				<i class="icon-bell"></i>&nbsp;  我的消息
 		    				 <span id="messageNum" class="label label-info hide"></span>
 		    				</a>
 					</li>
 					<li>
-						<a href="${ctx}/flow/work" target="mainFrame">
+						<a id="todoworkNum_but" href="${ctx}/flow/work" target="mainFrame">
 		    				<i class="icon-bell"></i>&nbsp;  待办任务
 		    				 <span id="todoworkNum" class="label label-info hide"></span>
 		    				</a>

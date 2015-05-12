@@ -156,12 +156,21 @@ function clearInfo(){
 	$("#searchForm").find("input").not(".btn").val("");
 	$("#searchForm").submit();
  	}
+function page(n,s){
+	$("#pageNo").val(n);
+	$("#pageSize").val(s);
+	$("#searchForm").submit();
+	return false;
+}
 </script>
 </head>
 
 <body>
 
 <form id="searchForm" method="post" action="${ctx}/flow/manager/taskInstanceList" class="breadcrumb form-search">
+		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
+		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
+		
     <!-- 隐藏参数部分 -->
     	<input type="hidden" id="action" name="action" value="taskInstanceList"/>
 		<sys:treeselect id="transferUser" name="transferUserId" value="" labelName="transferUserName" labelValue="${params.transferUserName}"
@@ -178,8 +187,8 @@ function clearInfo(){
 		<li><label>发起人：</label><sys:treeselect id="initor" name="initor" value="${params.initor}" labelName="initorName" labelValue="${params.initorName}"
 					title="用户" url="/sys/office/treeData?type=3" allowClear="true" notAllowSelectParent="true" cssClass="input-medium"/>
 		</li>
-		<li><label>到达时间：</label><input type="text" id="arrivalTimeS" name="arrivalTimeS" class="fix-input" style="width:69px;" value="${params.arrivalTimeS}" onClick="WdatePicker()"/>
-            - <input type="text" id="arrivalTimeE" name="arrivalTimeE" class="fix-input" style="width:69px;" value="${params.arrivalTimeE}" onClick="WdatePicker()"/>
+		<li><label>到达时间：</label><input type="text" id="arrivalTimeS" name="arrivalTimeS" class="input-mini fix-input"  value="${params.arrivalTimeS}" onClick="WdatePicker()"/>
+            - <input type="text" id="arrivalTimeE" name="arrivalTimeE" class="input-mini fix-input"  value="${params.arrivalTimeE}" onClick="WdatePicker()"/>
         </li>
 		<li class="btns">
 		&nbsp;<input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/>
@@ -204,7 +213,7 @@ function clearInfo(){
 			<th>单据号</th>
 			<th>任务主题</th>
 			<th>发起人</th>
-			<th>发起时间</th>
+			<th >发起时间</th>
 			<th>当前步骤</th>
 			<th width="160">到达时间</th>
 			<th width="60">流程状态</th>
@@ -239,7 +248,7 @@ function clearInfo(){
 			</tr>
 		</c:forEach>
 	</table>
-
+<div class="pagination">${page}</div>
 
  
 </body>

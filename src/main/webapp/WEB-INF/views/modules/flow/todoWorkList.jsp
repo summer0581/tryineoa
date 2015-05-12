@@ -50,8 +50,21 @@
 </head>
 <body>
 	<form id="searchForm" action="${ctx}/flow/work/" method="post" class="breadcrumb form-search">
-		<li><label>姓&nbsp;&nbsp;&nbsp;名：</label><input type="text" name="name" htmlEscape="false" maxlength="50" class="input-medium"/></li>
+		<li><label>流程名称：</label>
+		<input type="text" name="processName" value="${params.processName}" htmlEscape="false" maxlength="50" class="input-medium"/></li>
+		<li><label>发起人：</label><sys:treeselect id="initor" name="initor" value="${params.initor}" labelName="initorName1" labelValue="${params.initorName1}"
+					title="用户" url="/sys/office/treeData?type=3" allowClear="true" notAllowSelectParent="true" cssClass="input-medium"/>
+		</li>
+		<li><label>流程状态：</label>  
+			<select name="status" class="input-xlarge" style="width:100px;">
+				<option value="">请选择</option>
+				<c:forEach items="${fns:getDictList('flow_instanceStatus')}" var="type">
+					<option value="${type.value}" <c:if test="${params.status eq type.value}">selected</c:if>>${ type.label}</option>
+				</c:forEach>
+			</select>              
+		</li>
 		&nbsp;<input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/>
+		<input class="btn btn-primary" type="button" onclick="clearInfo();" value="重置"/>	
 	</form>
 	<sys:message content="${message}"/>
 	<table class="table table-striped table-bordered table-condensed">

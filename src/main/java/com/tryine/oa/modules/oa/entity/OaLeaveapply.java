@@ -3,19 +3,20 @@
  */
 package com.tryine.oa.modules.oa.entity;
 
-import org.hibernate.validator.constraints.Length;
-import com.tryine.oa.modules.sys.entity.Office;
 import java.util.Date;
-import com.fasterxml.jackson.annotation.JsonFormat;
 
-import com.tryine.oa.common.persistence.DataEntity;
+import org.hibernate.validator.constraints.Length;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.tryine.oa.common.persistence.FlowEntity;
+import com.tryine.oa.modules.sys.entity.Office;
 
 /**
  * 请假申请流程Entity
  * @author Summer
  * @version 2015-04-13
  */
-public class OaLeaveapply extends DataEntity<OaLeaveapply> {
+public class OaLeaveapply extends FlowEntity<OaLeaveapply> {
 	
 	private static final long serialVersionUID = 1L;
 	private String type;		// 类型
@@ -32,6 +33,11 @@ public class OaLeaveapply extends DataEntity<OaLeaveapply> {
 	private String humanResourceIdea;		// 人资部意见
 	private String generalManagerIdea;		// 总经理意见
 	private String chairManIdea;		// 董事长意见
+	
+	private Date beginStarttime;
+	private Date endStarttime;
+	private Date beginEndtime;
+	private Date endEndtime;
 	
 	public OaLeaveapply() {
 		super();
@@ -165,5 +171,39 @@ public class OaLeaveapply extends DataEntity<OaLeaveapply> {
 	public void setChairManIdea(String chairManIdea) {
 		this.chairManIdea = chairManIdea;
 	}
+
+	public Date getBeginStarttime() {
+		return beginStarttime;
+	}
+
+	public void setBeginStarttime(Date beginStarttime) {
+		this.beginStarttime = beginStarttime;
+	}
+
+	public Date getEndStarttime() {
+		return endStarttime;
+	}
+
+	public void setEndStarttime(Date endStarttime) {
+		this.endStarttime = endStarttime;
+	}
+
+	public Date getBeginEndtime() {
+		return beginEndtime;
+	}
+
+	public void setBeginEndtime(Date beginEndtime) {
+		this.beginEndtime = beginEndtime;
+	}
+
+	public Date getEndEndtime() {
+		return endEndtime;
+	}
+
+	public void setEndEndtime(Date endEndtime) {
+		this.endEndtime = endEndtime;
+	}
+	
+	
 	
 }

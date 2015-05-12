@@ -101,6 +101,7 @@ public class UserUtils {
 		UserUtils.clearCache(getUser());
 	}
 	
+	
 	/**
 	 * 清除指定用户缓存
 	 * @param user

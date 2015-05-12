@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:fixflow="http://www.founderfix.com/fixflow" id="Definitions_1" targetNamespace="http://www.founderfix.com">
-  <bpmn2:process id="tryine_travelapply" fixflow:verification="true" fixflow:dbid="tryine_travelapply:2:40ccf164-b70e-4ca2-8f1f-7208b4375c96" fixflow:category="人力资源" name="出差申请">
+  <bpmn2:process id="tryine_travelapply" fixflow:verification="true" fixflow:dbid="tryine_travelapply:1:d495a30d-2f59-4d19-bcee-1260b6af6fed" fixflow:category="人力资源" name="出差申请">
     <bpmn2:extensionElements>
       <fixflow:formUri>
         <fixflow:expression xsi:type="fixflow:Expression" id="Expression_1" name="&quot;oa/oaTravelapply/form?action=doTask&quot;">&quot;oa/oaTravelapply/form?action=doTask&quot;</fixflow:expression>
@@ -137,7 +137,7 @@ return UserUtils.getCompanyLeader(processInfo.getInitiator());</bpmn2:formalExpr
       </bpmn2:potentialOwner>
     </bpmn2:userTask>
     <bpmn2:sequenceFlow id="SequenceFlow_8" name="" sourceRef="UserTask_5" targetRef="UserTask_6"/>
-    <bpmn2:userTask id="UserTask_1" fixflow:taskType="FIXFLOWTASK" name="1.请假申请">
+    <bpmn2:userTask id="UserTask_1" fixflow:taskType="FIXFLOWTASK" name="1.出差申请">
       <bpmn2:extensionElements>
         <fixflow:assignPolicyType id="potentialOwner"/>
         <fixflow:taskCommand id="HandleCommand_2" name="启动并送部门直接负责人审批" commandType="startandsubmit" isVerification="true" isSaveData="true" isSimulationRun="false"/>

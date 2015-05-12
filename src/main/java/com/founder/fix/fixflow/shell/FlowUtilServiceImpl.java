@@ -72,7 +72,7 @@ public class FlowUtilServiceImpl extends CommonServiceImpl {
 		try {
 			String taskInfo = "";
 			ProcessEngine engine = getProcessEngine(null);
-			ProcessInstance processInstanceQueryTo = engine.getRuntimeService().getProcessInstance(processInstanceId);
+			ProcessInstance processInstanceQueryTo = engine.getRuntimeService().getProcessInstanceSimple(processInstanceId);
 			if (processInstanceQueryTo.getEndTime() != null) {
 				if(processInstanceQueryTo.getInstanceType().equals(ProcessInstanceType.COMPLETE)){
 					return "完成";
@@ -164,9 +164,12 @@ public class FlowUtilServiceImpl extends CommonServiceImpl {
 			}
 		} else {
 			UserTo user = identityService.getUserTo(assignee);
-			String username = (String)user.getPropertyValue("name");
-			username="<span title='"+username+"("+assignee+")'>"+username+"</span>";
-			taskInfo = taskInfo + " (处理者 ： " + username + ") ";
+			if(null != user){
+				String username = (String)user.getPropertyValue("name");
+				username="<span title='"+username+"("+assignee+")'>"+username+"</span>";
+				taskInfo = taskInfo + " (处理者 ： " + username + ") ";
+			}
+
 		}
 		return taskInfo;
 	}

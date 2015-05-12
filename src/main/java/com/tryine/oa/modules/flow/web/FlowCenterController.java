@@ -67,6 +67,7 @@ public class FlowCenterController extends BaseController {
 		page.setPageNo(ff_page.getPageIndex());
 		page.setList((List<TaskInstance>)pageResult.get("dataList"));
 		model.addAttribute("page", page);
+		model.addAttribute("params",params);
 
 		return "modules/flow/todoWorkList";
 	}
@@ -96,6 +97,7 @@ public class FlowCenterController extends BaseController {
 		page.setPageNo(ff_page.getPageIndex());
 		page.setList((List<TaskInstance>)pageResult.get("dataList"));
 		model.addAttribute("page", page);
+		model.addAttribute("params",params);
 
 		return "modules/flow/allMyStartWorkList";
 	}
@@ -124,6 +126,7 @@ public class FlowCenterController extends BaseController {
 		page.setPageNo(ff_page.getPageIndex());
 		page.setList((List<TaskInstance>)pageResult.get("dataList"));
 		model.addAttribute("page", page);
+		model.addAttribute("params",params);
 
 		return "modules/flow/allMyJoinWorkList";
 	}

@@ -34,7 +34,7 @@
 </head>
 <body>
 	<ul class="nav nav-tabs">
-		<li><a href="${ctx}/sys/user/list">单位通讯录</a></li>
+		<li><a href="#">单位通讯录</a></li>
 	</ul><br/>
 	<form:form id="inputForm" modelAttribute="user" action="" method="post" class="form-horizontal">
 		<form:hidden path="id"/>

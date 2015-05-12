@@ -12,6 +12,7 @@
 		a.plantobacktime AS "plantobacktime",
 		a.out_place AS "outPlace",
 		a.customer_info AS "customerInfo",
+		a.customer_telephone AS "customerTelephone",
 		a.join_people AS "joinPeople",
 		a.directleader_idea AS "directleaderIdea",
 		a.general_manager_idea AS "generalManagerIdea",
@@ -40,15 +41,37 @@
 	<select id="findList" resultType="OaTravelapply">
 		SELECT 
 			<include refid="oaTravelapplyColumns"/>
+			,p.PROCESSDEFINITION_KEY AS 'processDefinitionKey'
 		FROM oa_travelapply a
 		<include refid="oaTravelapplyJoins"/>
+		INNER JOIN fixflow_run_processinstance p ON p.biz_key = a.id
 		<where>
-			a.del_flag = #{DEL_FLAG_NORMAL}
+			a.del_flag = #{DEL_FLAG_NORMAL} AND p.INSTANCE_STATUS = 'COMPLETE'
 			<if test="name != null and name != ''">
 				AND a.name LIKE 
 					<if test="dbName == 'oracle'">'%'||#{name}||'%'</if>
 					<if test="dbName == 'mssql'">'%'+#{name}+'%'</if>
 					<if test="dbName == 'mysql'">concat('%',#{name},'%')</if>
+			</if>
+			<if test="startOutTime != null and startOutTime != ''">
+				<![CDATA[
+					AND a.out_time >= #{startOutTime}
+				]]>
+			</if>
+			<if test="endOutTime != null and endOutTime != ''">
+				<![CDATA[
+					AND a.out_time <= #{endOutTime}
+				]]>
+			</if>
+			<if test="startPlantobacktime != null and startPlantobacktime != ''">
+				<![CDATA[
+					AND a.plantobacktime >= #{startPlantobacktime}
+				]]>
+			</if>
+			<if test="endPlantobacktime != null and endPlantobacktime != ''">
+				<![CDATA[
+					AND a.plantobacktime <= #{endPlantobacktime}
+				]]>
 			</if>
 		</where>
 		<choose>
@@ -90,6 +113,7 @@
 			plantobacktime,
 			out_place,
 			customer_info,
+			customer_telephone,
 			join_people,
 			directleader_idea,
 			general_manager_idea,
@@ -110,6 +134,7 @@
 			#{plantobacktime},
 			#{outPlace},
 			#{customerInfo},
+			#{customerTelephone},
 			#{joinPeople},
 			#{directleaderIdea},
 			#{generalManagerIdea},
@@ -133,6 +158,7 @@
 			plantobacktime = #{plantobacktime},
 			out_place = #{outPlace},
 			customer_info = #{customerInfo},
+			customer_telephone = #{customerTelephone},
 			join_people = #{joinPeople},
 			directleader_idea = #{directleaderIdea},
 			general_manager_idea = #{generalManagerIdea},

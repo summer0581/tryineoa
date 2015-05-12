@@ -8,5 +8,6 @@
 <%@ taglib prefix="sys" tagdir="/WEB-INF/tags/sys" %>
 <%@ taglib prefix="act" tagdir="/WEB-INF/tags/act" %>
 <%@ taglib prefix="cms" tagdir="/WEB-INF/tags/cms" %>
+<%@ taglib prefix="flow" tagdir="/WEB-INF/tags/flow" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}${fns:getAdminPath()}"/>
 <c:set var="ctxStatic" value="${pageContext.request.contextPath}/static"/>

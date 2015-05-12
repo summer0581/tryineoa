@@ -96,9 +96,9 @@ public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCent
 			tq.taskCandidateUser(StringUtil.getString(filter.get("userId")));
 //			tq.processDefinitionKey(StringUtil.getString(filter.get("pdkey")));
 			
-			String descritpion = StringUtil.getString(filter.get("title"));
-			if(StringUtil.isNotEmpty(descritpion))
-				tq.taskDescriptionLike(descritpion);
+			String processName = StringUtil.getString(filter.get("processName"));
+			if(StringUtil.isNotEmpty(processName))
+				tq.processDefinitionNameLike(processName);
 			
 			String initor	   = StringUtil.getString(filter.get("initor"));
 			if(StringUtil.isNotEmpty(initor))
@@ -303,8 +303,8 @@ public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCent
 		FlowUtilServiceImpl flowUtil = new FlowUtilServiceImpl();
 		String processDefinitionKey = StringUtil.getString(filter.get("processDefinitionKey"));
 		String processInstanceId    = StringUtil.getString(filter.get("processInstanceId"));
-		String title				= StringUtil.getString(filter.get("title"));
-//		String subject				= StringUtil.getString(filter.get("subject"));
+		String processName				= StringUtil.getString(filter.get("processName"));
+		String subject				= StringUtil.getString(filter.get("subject"));
 		String bizKey				= StringUtil.getString(filter.get("bizKey"));
 		String initor				= StringUtil.getString(filter.get("initor"));
 		String status				= StringUtil.getString(filter.get("status"));
@@ -327,8 +327,10 @@ public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCent
 				processInstanceQuery.processDefinitionKey(processDefinitionKey);
 			if(StringUtil.isNotEmpty(processInstanceId))
 				processInstanceQuery.processInstanceId(processInstanceId);
-			if(StringUtil.isNotEmpty(title))
-				processInstanceQuery.subjectLike(title);
+			if(StringUtil.isNotEmpty(processName))
+				processInstanceQuery.processDefinitionNameLike(processName);
+			if(StringUtil.isNotEmpty(subject))
+				processInstanceQuery.subjectLike(subject);
 			if(StringUtil.isNotEmpty(bizKey))
 				processInstanceQuery.processInstanceBusinessKeyLike(bizKey);
 			if(processInstanceStatus !=null){
@@ -721,14 +723,15 @@ public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCent
 
 		//命令类型，可以从流程引擎配置中查询   启动并提交为startandsubmit
 		expandTaskCommand.setCommandType(commandType);
-		//设置提交人
-		expandTaskCommand.setInitiator(userId);
+		
 		//设置命令的id,需和节点上配置的按钮编号对应，会执行按钮中的脚本。
 		expandTaskCommand.setUserCommandId(commandId);
 		expandTaskCommand.setTaskComment(taskComment);
 		if(StringUtil.isNotEmpty(taskId)){
 			expandTaskCommand.setTaskId(taskId);
+			expandTaskCommand.setHandler(userId);
 		}else{
+			expandTaskCommand.setInitiator(userId);
 			expandTaskCommand.setProcessDefinitionKey(processDefinitionKey);
 			//设置流程的业务关联键
 			expandTaskCommand.setBusinessKey(businessKey);
