@@ -24,12 +24,16 @@ import com.founder.fix.fixflow.core.task.TaskInstance;
 import com.founder.fix.fixflow.service.impl.FlowCenterServiceImpl;
 import com.tryine.oa.common.config.Global;
 import com.tryine.oa.common.persistence.Page;
-import com.tryine.oa.common.web.BaseController;
 import com.tryine.oa.common.utils.StringUtils;
+import com.tryine.oa.common.web.BaseController;
 import com.tryine.oa.modules.flow.service.FlowService;
+import com.tryine.oa.modules.oa.entity.OaJiabanapply;
 import com.tryine.oa.modules.oa.entity.OaTiaoxiuapply;
+import com.tryine.oa.modules.oa.service.OaJiabanapplyService;
 import com.tryine.oa.modules.oa.service.OaMessageService;
 import com.tryine.oa.modules.oa.service.OaTiaoxiuapplyService;
+import com.tryine.oa.modules.sys.entity.User;
+import com.tryine.oa.modules.sys.service.SystemService;
 import com.tryine.oa.modules.sys.utils.UserUtils;
 
 /**
@@ -44,11 +48,15 @@ public class OaTiaoxiuapplyController extends BaseController {
 	@Autowired
 	private OaTiaoxiuapplyService oaTiaoxiuapplyService;
 	@Autowired
+	private OaJiabanapplyService oaJiabanapplyService;
+	@Autowired
 	private FlowCenterServiceImpl flowCenterService;
 	@Autowired
 	private FlowService flowService;
 	@Autowired
 	private OaMessageService oaMessageService;
+	@Autowired
+	private SystemService systemService;
 	
 	@ModelAttribute
 	public OaTiaoxiuapply get(@RequestParam(required=false) String id) {
@@ -70,6 +78,34 @@ public class OaTiaoxiuapplyController extends BaseController {
 		return "modules/oa/oaTiaoxiuapplyList";
 	}
 
+	@RequiresPermissions("oa:oaTiaoxiuapply:view")
+	@RequestMapping(value = {"tiaoxiuDayList"})
+	public String tiaoxiudaylist(OaTiaoxiuapply oaTiaoxiuapply, HttpServletRequest request, HttpServletResponse response, Model model) {
+		User createBy = null;
+		if(null == oaTiaoxiuapply.getCreateBy() || StringUtils.isBlank(oaTiaoxiuapply.getCreateBy().getId())){
+			createBy = UserUtils.getUser();
+		}else{
+			createBy = UserUtils.get(oaTiaoxiuapply.getCreateBy().getId());
+		}
+		oaTiaoxiuapply.setCreateBy(createBy);
+		model.addAttribute("canTiaoxiuHours", createBy.getTiaoxiuTimes());
+		
+		Page<OaTiaoxiuapply> page = oaTiaoxiuapplyService.findPage(new Page<OaTiaoxiuapply>(request, response), oaTiaoxiuapply); 
+		OaJiabanapply oaJiabanapply = new OaJiabanapply();
+		oaJiabanapply.setCreateBy(createBy);
+
+		double jiabanHours = oaJiabanapplyService.countJiabanHours(oaJiabanapply);
+		double tiaoxiuHours = oaTiaoxiuapplyService.countTiaoxiuHours(oaTiaoxiuapply);
+		model.addAttribute("countJiabanHours", jiabanHours);
+		
+		model.addAttribute("countTiaoxiuHours", tiaoxiuHours);
+		
+		model.addAttribute("canTiaoxiuHours", createBy.getTiaoxiuTimes());
+		double outTiaoxiuHours = createBy.getTiaoxiuTimes() - (jiabanHours - tiaoxiuHours);
+		model.addAttribute("outTiaoxiuHours", outTiaoxiuHours > 0 ? outTiaoxiuHours : 0);
+		model.addAttribute("page", page);
+		return "modules/oa/oaTiaoxiuDayList";
+	}
 	@RequiresPermissions("oa:oaTiaoxiuapply:view")
 	@RequestMapping(value = "form")
 	public String form(OaTiaoxiuapply oaTiaoxiuapply,@RequestParam Map<String,Object> params, Model model) {
@@ -115,6 +151,13 @@ public class OaTiaoxiuapplyController extends BaseController {
 		
 		model.addAttribute("result", params);
 		model.addAttribute("oaTiaoxiuapply", oaTiaoxiuapply);
+		User createBy = null;
+		if(null == oaTiaoxiuapply.getCreateBy()){
+			createBy = UserUtils.getUser();
+		}else{
+			createBy = UserUtils.get(oaTiaoxiuapply.getCreateBy().getId());
+		}
+		model.addAttribute("canTiaoxiuHours", createBy.getTiaoxiuTimes());
 		return "modules/oa/flow/oaTiaoxiuapplyForm";
 	}
 
@@ -157,7 +200,13 @@ public class OaTiaoxiuapplyController extends BaseController {
 			if("demoCompleteTask".equals(action)){
 				processInstance = flowCenterService.completeTask(params);
 			}else if("demoDoNext".equals(action)){
-				processInstance = flowCenterService.completeTask(params);
+				flowCenterService.completeTask(params);
+				processInstance = flowService.getProcessInstanceByInstanceId(params);
+				if(null != processInstance.getEndTime()){//当流程完全结束时
+					User user = UserUtils.get(oaTiaoxiuapply.getCreateBy().getId());
+					user.setTiaoxiuTimes(user.getTiaoxiuTimes()-Double.parseDouble(oaTiaoxiuapply.getRestHours()));
+					systemService.updateUserInfo(user);
+				}
 			}
 
 		} catch (SQLException e) {
@@ -167,7 +216,7 @@ public class OaTiaoxiuapplyController extends BaseController {
 
 		
 		addMessage(redirectAttributes, "保存调休申请成功");
-		return "redirect:"+Global.getAdminPath()+"/flow/work/?repage";
+		return "redirect:"+Global.getAdminPath()+"/flow/work";
 	}
 	
 	@RequiresPermissions("oa:oaTiaoxiuapply:edit")
@@ -175,7 +224,7 @@ public class OaTiaoxiuapplyController extends BaseController {
 	public String delete(OaTiaoxiuapply oaTiaoxiuapply, RedirectAttributes redirectAttributes) {
 		oaTiaoxiuapplyService.delete(oaTiaoxiuapply);
 		addMessage(redirectAttributes, "删除调休申请成功");
-		return "redirect:"+Global.getAdminPath()+"/oa/oaTiaoxiuapply/?repage";
+		return "redirect:"+Global.getAdminPath()+"/oa/oaTiaoxiuapply";
 	}
 
 }

@@ -11,3 +11,4 @@
 <%@ taglib prefix="flow" tagdir="/WEB-INF/tags/flow" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}${fns:getAdminPath()}"/>
 <c:set var="ctxStatic" value="${pageContext.request.contextPath}/static"/>
+<c:set var="jsversion" value="${fns:getDate('yyyyMMddhhmmss')}"/>

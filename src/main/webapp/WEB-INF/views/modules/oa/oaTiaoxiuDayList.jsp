@@ -2,7 +2,7 @@
 <%@ include file="/WEB-INF/views/include/taglib.jsp"%>
 <html>
 <head>
-	<title>调休申请管理</title>
+	<title>加班申请管理</title>
 	<meta name="decorator" content="default"/>
 	<script type="text/javascript">
 		$(document).ready(function() {
@@ -18,16 +18,17 @@
 </head>
 <body>
 	<ul class="nav nav-tabs">
-		<li class="active"><a href="${ctx}/oa/oaTiaoxiuapply/">调休申请列表</a></li>
+		<li ><a href="${ctx }/oa/oaJiabanapply/jiabanDayList?createBy.id=${oaTiaoxiuapply.createBy.id}">加班记录</a></li>
+		<li class="active"><a href="${ctx }/oa/oaTiaoxiuapply/tiaoxiuDayList?createBy.id=${oaTiaoxiuapply.createBy.id}">调休记录</a></li>		<li ><h4><span class="help-inline"><font color="red">总加班时长：</font>${countJiabanHours }小时 </span></h4></li>
+		<li ><h4><span class="help-inline"><font color="red">已调休时长：</font>${countTiaoxiuHours }小时 </span></h4></li>
+		<li ><h4><span class="help-inline"><font color="red">剩余调休时长：</font>${canTiaoxiuHours }小时(其中含有${outTiaoxiuHours }小时系统外加班时长) </span></h4></li>
 	</ul>
-	<form:form id="searchForm" modelAttribute="oaTiaoxiuapply" action="${ctx}/oa/oaTiaoxiuapply/" method="post" class="breadcrumb form-search">
+	<form:form id="searchForm" modelAttribute="oaTiaoxiuapply" action="${ctx}/oa/oaTiaoxiuapply/tiaoxiuDayList" method="post" class="breadcrumb form-search">
+		<input id="createBy.id" name="createBy.id" type="hidden" value="${oaTiaoxiuapply.createBy.id}"/>
 		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
 		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
 		<sys:tableSort id="orderBy" name="orderBy" value="${page.orderBy}" callback="page();"/>
 		<ul class="ul-form">
-			<li><label>姓名：</label>
-				<form:input path="name" htmlEscape="false" maxlength="64" class="input-medium"/>
-			</li>
 			<li class="clearfix"><label>休息时间：</label>
 				<input name="restStarttime" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
 					value="<fmt:formatDate value="${oaTiaoxiuapply.restStarttime}" pattern="yyyy-MM-dd"/>"
@@ -91,7 +92,7 @@
 				<td>
 					${oaTiaoxiuapply.restHours}
 				</td>
-				<!-- <td>
+				<!--<td>
 					<fmt:formatDate value="${oaTiaoxiuapply.jiabanStarttime}" pattern="yyyy-MM-dd HH:mm"/>
 				</td>
 				<td>

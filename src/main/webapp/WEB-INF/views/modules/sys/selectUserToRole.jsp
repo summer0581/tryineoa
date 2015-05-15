@@ -49,6 +49,14 @@
 			$.fn.zTree.getZTreeObj(treeId).expandNode(treeNode);
 			if("officeTree"==treeId){
 				$.getJSON("${ctx}/sys/role/users?officeId=" + treeNode.id, function(userNodes){
+					for(var i = 0 ; i < userNodes.length ; i ++){
+						var usernode = userNodes[i];
+						var index = $.inArray(String(usernode.id), ids);
+						if(index>=0){
+							userNodes.splice(i,1);
+							i--;
+						}
+					}
 					$.fn.zTree.init($("#userTree"), setting, userNodes);
 				});
 			}

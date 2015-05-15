@@ -24,11 +24,13 @@
 		a.update_date AS "updateDate",
 		a.remarks AS "remarks",
 		a.del_flag AS "delFlag",
-		o4.name AS "office.name"
+		o3.name AS "office.name"
 	</sql>
 	
 	<sql id="oaLeaveapplyJoins">
-		LEFT JOIN sys_office o4 ON o4.id = a.office_id
+		LEFT JOIN sys_office o3 ON o3.id = a.office_id
+		LEFT JOIN sys_user u ON u.id = a.create_by
+		LEFT JOIN sys_office o ON o.id = u.office_id	
 	</sql>
     
 	<select id="get" resultType="OaLeaveapply">
@@ -81,6 +83,8 @@
 				]]>
 			</if>
 		</where>
+		<!-- 数据范围过滤 -->
+		${sqlMap.dsf}
 		<choose>
 			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
 				ORDER BY ${page.orderBy}

@@ -57,12 +57,19 @@
 				$("#directLeaderIdea,#generalManagerIdea,#humanResourceIdea,#chairManIdea").attr("readonly","readonly");
 			}
 		});
+		
+		function openLeaveDetail(){
+			var url = "${ctx}/oa/oaJiabanapply/jiabanDayList?createBy.id="+$("#createBy_id").val();
+			windowOpen(url,"",screen.width-300,screen.height-50);
+		}
+		
 	</script>
 </head>
 <body>
 
 	<form:form id="inputForm" modelAttribute="oaTiaoxiuapply" action="${ctx}/oa/oaTiaoxiuapply/save" method="post" class="form-horizontal">
 		<form:hidden path="id"/>
+		<input type="hidden" id="createBy_id" name="createBy.id" value="${oaTiaoxiuapply.createBy.id }"/>
 		<sys:message content="${message}"/>		
 		<div class="control-group text-center">
 			<h1>调休申请单</h1>
@@ -100,40 +107,42 @@
 			<label class="control-label">休息时间：</label>
 			<div class="controls">
 				<input id="restStarttime" name="restStarttime" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate required"
-					value="<fmt:formatDate value="${oaTiaoxiuapply.restStarttime}" pattern="yyyy-MM-dd HH:00:00"/>"
-					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:00:00',maxDate:'#F{$dp.$D(\'restEndtime\');}',isShowClear:false});"/> - 
+					value="<fmt:formatDate value="${oaTiaoxiuapply.restStarttime}" pattern="yyyy-MM-dd HH:mm"/>"
+					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm',maxDate:'#F{$dp.$D(\'restEndtime\');}',isShowClear:false});"/> - 
 				<input id="restEndtime" name="restEndtime" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate required"
-					value="<fmt:formatDate value="${oaTiaoxiuapply.restEndtime}" pattern="yyyy-MM-dd HH:00:00"/>"
-					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:00:00',minDate:'#F{$dp.$D(\'restStarttime\');}',isShowClear:false});"/>
+					value="<fmt:formatDate value="${oaTiaoxiuapply.restEndtime}" pattern="yyyy-MM-dd HH:mm"/>"
+					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm',minDate:'#F{$dp.$D(\'restStarttime\');}',isShowClear:false});"/>
 				<span class="help-inline"><font color="red">*</font> </span>
+				<input type="button" value="查看加班详情" class="btn btn-primary" onclick="openLeaveDetail()"></input>
+				<span class="help-inline"><font color="red">还剩余调休：</font>${canTiaoxiuHours }小时 </span>
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">休息总小时：</label>
 			<div class="controls">
-				<form:input path="restHours" htmlEscape="false" maxlength="11" class="input-mini required digits"/>
+				<form:input path="restHours" htmlEscape="false" maxlength="11" class="input-mini required number"/>
 				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>
-		<div class="control-group">
+		<!-- <div class="control-group">
 			<label class="control-label">加班时间：</label>
 			<div class="controls">
 				<input id="jiabanStarttime" name="jiabanStarttime" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate "
-					value="<fmt:formatDate value="${oaTiaoxiuapply.jiabanStarttime}" pattern="yyyy-MM-dd HH:00:00"/>"
-					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:00:00',maxDate:'#F{$dp.$D(\'jiabanEndtime\');}',isShowClear:false});"/> - 
+					value="<fmt:formatDate value="${oaTiaoxiuapply.jiabanStarttime}" pattern="yyyy-MM-dd HH:mm"/>"
+					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm',maxDate:'#F{$dp.$D(\'jiabanEndtime\');}',isShowClear:false});"/> - 
 				<input id="jiabanEndtime" name="jiabanEndtime" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate "
-					value="<fmt:formatDate value="${oaTiaoxiuapply.jiabanEndtime}" pattern="yyyy-MM-dd HH:00:00"/>"
-					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:00:00',minDate:'#F{$dp.$D(\'jiabanStarttime\');}',isShowClear:false});"/>
+					value="<fmt:formatDate value="${oaTiaoxiuapply.jiabanEndtime}" pattern="yyyy-MM-dd HH:mm"/>"
+					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm',minDate:'#F{$dp.$D(\'jiabanStarttime\');}',isShowClear:false});"/>
 				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">加班总小时：</label>
 			<div class="controls">
-				<form:input path="jiabanHours" htmlEscape="false" maxlength="11" class="input-mini required digits "/>
+				<form:input path="jiabanHours" htmlEscape="false" maxlength="11" class="input-mini required number "/>
 				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
-		</div>
+		</div> -->
 		<div class="control-group">
 			<label class="control-label">岗位代理：</label>
 			<div class="controls">

@@ -198,7 +198,7 @@ public class OaLeaveapplyController extends BaseController {
 		}
 		
 		addMessage(redirectAttributes, "保存请假信息成功");
-		return "redirect:"+Global.getAdminPath()+"/flow/work/?repage";
+		return "redirect:"+Global.getAdminPath()+"/flow/work";
 	}
 	
 	@RequiresPermissions("oa:oaLeaveapply:edit")
@@ -206,7 +206,7 @@ public class OaLeaveapplyController extends BaseController {
 	public String delete(OaLeaveapply oaLeaveapply, RedirectAttributes redirectAttributes) {
 		oaLeaveapplyService.delete(oaLeaveapply);
 		addMessage(redirectAttributes, "删除请假信息成功");
-		return "redirect:"+Global.getAdminPath()+"/oa/oaLeaveapply/?repage";
+		return "redirect:"+Global.getAdminPath()+"/oa/oaLeaveapply";
 	}
 
 }

@@ -102,18 +102,18 @@
 			<label class="control-label">加班时间：</label>
 			<div class="controls">
 				<input id="starttime" name="starttime" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate required"
-					value="<fmt:formatDate value="${oaJiabanapply.starttime}" pattern="yyyy-MM-dd HH:00:00"/>"
-					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:00:00',maxDate:'#F{$dp.$D(\'endtime\');}',isShowClear:false});"/> -
+					value="<fmt:formatDate value="${oaJiabanapply.starttime}" pattern="yyyy-MM-dd HH:mm:00"/>"
+					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:00',maxDate:'#F{$dp.$D(\'endtime\');}',isShowClear:false});"/> -
 				<input id="endtime" name="endtime" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate required"
-					value="<fmt:formatDate value="${oaJiabanapply.endtime}" pattern="yyyy-MM-dd HH:00:00"/>"
-					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:00:00',minDate:'#F{$dp.$D(\'starttime\');}',isShowClear:false});"/>
+					value="<fmt:formatDate value="${oaJiabanapply.endtime}" pattern="yyyy-MM-dd HH:mm:00"/>"
+					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:00',minDate:'#F{$dp.$D(\'starttime\');}',isShowClear:false});"/>
 					<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">总小时：</label>
 			<div class="controls">
-				<form:input path="hours" htmlEscape="false" maxlength="11" class="input-mini required digits"/>
+				<form:input path="hours" htmlEscape="false" maxlength="11" class="input-mini required number"/>
 				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>

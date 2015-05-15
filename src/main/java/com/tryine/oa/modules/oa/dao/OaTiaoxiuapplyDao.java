@@ -14,5 +14,5 @@ import com.tryine.oa.modules.oa.entity.OaTiaoxiuapply;
  */
 @MyBatisDao
 public interface OaTiaoxiuapplyDao extends CrudDao<OaTiaoxiuapply> {
-	
+	public double countTiaoxiuHours(OaTiaoxiuapply oaTiaoxiuapply);
 }

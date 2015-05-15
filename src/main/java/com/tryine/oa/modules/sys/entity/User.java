@@ -44,6 +44,7 @@ public class User extends DataEntity<User> {
 	private Date loginDate;	// 最后登陆日期
 	private String loginFlag;	// 是否允许登陆
 	private String photo;	// 头像
+	private double tiaoxiuTimes;//调休时长
 
 	private String oldLoginName;// 原登录名
 	private String newPassword;	// 新密码
@@ -177,6 +178,14 @@ public class User extends DataEntity<User> {
 
 	public void setPhone(String phone) {
 		this.phone = phone;
+	}
+	@ExcelField(title="调休时长", align=2, sort=65)
+	public double getTiaoxiuTimes() {
+		return tiaoxiuTimes;
+	}
+
+	public void setTiaoxiuTimes(double tiaoxiuTimes) {
+		this.tiaoxiuTimes = tiaoxiuTimes;
 	}
 
 	@Length(min=0, max=200, message="手机长度必须介于 1 和 200 之间")

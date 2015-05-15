@@ -163,7 +163,7 @@ public class OaTravelapplyController extends BaseController {
 			e.printStackTrace();
 		}
 		addMessage(redirectAttributes, "保存出差申请成功");
-		return "redirect:"+Global.getAdminPath()+"/flow/work/?repage";
+		return "redirect:"+Global.getAdminPath()+"/flow/work";
 	}
 	
 	@RequiresPermissions("oa:oaTravelapply:edit")
@@ -171,7 +171,7 @@ public class OaTravelapplyController extends BaseController {
 	public String delete(OaTravelapply oaTravelapply, RedirectAttributes redirectAttributes) {
 		oaTravelapplyService.delete(oaTravelapply);
 		addMessage(redirectAttributes, "删除出差申请成功");
-		return "redirect:"+Global.getAdminPath()+"/oa/oaTravelapply/?repage";
+		return "redirect:"+Global.getAdminPath()+"/oa/oaTravelapply";
 	}
 
 }

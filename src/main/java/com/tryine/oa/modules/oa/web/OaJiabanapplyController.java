@@ -24,11 +24,15 @@ import com.founder.fix.fixflow.core.task.TaskInstance;
 import com.founder.fix.fixflow.service.impl.FlowCenterServiceImpl;
 import com.tryine.oa.common.config.Global;
 import com.tryine.oa.common.persistence.Page;
-import com.tryine.oa.common.web.BaseController;
 import com.tryine.oa.common.utils.StringUtils;
+import com.tryine.oa.common.web.BaseController;
 import com.tryine.oa.modules.flow.service.FlowService;
 import com.tryine.oa.modules.oa.entity.OaJiabanapply;
+import com.tryine.oa.modules.oa.entity.OaTiaoxiuapply;
 import com.tryine.oa.modules.oa.service.OaJiabanapplyService;
+import com.tryine.oa.modules.oa.service.OaTiaoxiuapplyService;
+import com.tryine.oa.modules.sys.entity.User;
+import com.tryine.oa.modules.sys.service.SystemService;
 import com.tryine.oa.modules.sys.utils.UserUtils;
 
 /**
@@ -43,9 +47,13 @@ public class OaJiabanapplyController extends BaseController {
 	@Autowired
 	private OaJiabanapplyService oaJiabanapplyService;
 	@Autowired
+	private OaTiaoxiuapplyService oaTiaoxiuapplyService;
+	@Autowired
 	private FlowCenterServiceImpl flowCenterService;
 	@Autowired
 	private FlowService flowService;
+	@Autowired
+	private SystemService systemService;
 	
 	@ModelAttribute
 	public OaJiabanapply get(@RequestParam(required=false) String id) {
@@ -65,6 +73,34 @@ public class OaJiabanapplyController extends BaseController {
 		Page<OaJiabanapply> page = oaJiabanapplyService.findPage(new Page<OaJiabanapply>(request, response), oaJiabanapply); 
 		model.addAttribute("page", page);
 		return "modules/oa/oaJiabanapplyList";
+	}
+	
+	@RequiresPermissions("oa:oaJiabanapply:view")
+	@RequestMapping(value = {"jiabanDayList"})
+	public String jiabandaylist(OaJiabanapply oaJiabanapply, HttpServletRequest request, HttpServletResponse response, Model model) {
+		User createBy = null;
+		if(null == oaJiabanapply.getCreateBy() || StringUtils.isBlank(oaJiabanapply.getCreateBy().getId())){
+			createBy = UserUtils.getUser();
+		}else{
+			createBy = UserUtils.get(oaJiabanapply.getCreateBy().getId());
+		}
+		oaJiabanapply.setCreateBy(createBy);
+		model.addAttribute("canTiaoxiuHours", createBy.getTiaoxiuTimes());
+		
+		Page<OaJiabanapply> page = oaJiabanapplyService.findPage(new Page<OaJiabanapply>(request, response), oaJiabanapply); 
+		double jiabanHours = oaJiabanapplyService.countJiabanHours(oaJiabanapply);
+		OaTiaoxiuapply oaTiaoxiuapply = new OaTiaoxiuapply();
+		oaTiaoxiuapply.setCreateBy(createBy);
+		double tiaoxiuHours = oaTiaoxiuapplyService.countTiaoxiuHours(oaTiaoxiuapply);
+		model.addAttribute("countJiabanHours", jiabanHours);
+		
+		model.addAttribute("countTiaoxiuHours", tiaoxiuHours);
+		
+		model.addAttribute("canTiaoxiuHours", createBy.getTiaoxiuTimes());
+		double outTiaoxiuHours = createBy.getTiaoxiuTimes() - (jiabanHours - tiaoxiuHours);
+		model.addAttribute("outTiaoxiuHours", outTiaoxiuHours > 0 ? outTiaoxiuHours : 0);
+		model.addAttribute("page", page);
+		return "modules/oa/oaJiabanDayList";
 	}
 
 	@RequiresPermissions("oa:oaJiabanapply:view")
@@ -156,16 +192,21 @@ public class OaJiabanapplyController extends BaseController {
 			if("demoCompleteTask".equals(action)){
 				processInstance = flowCenterService.completeTask(params);
 			}else if("demoDoNext".equals(action)){
-				processInstance = flowCenterService.completeTask(params);
+				flowCenterService.completeTask(params);
+				processInstance = flowService.getProcessInstanceByInstanceId(params);
+				if(null != processInstance.getEndTime()){//当流程完全结束时
+					User user = UserUtils.get(oaJiabanapply.getCreateBy().getId());
+					user.setTiaoxiuTimes(user.getTiaoxiuTimes()+Double.parseDouble(oaJiabanapply.getHours()));
+					systemService.updateUserInfo(user);
+				}
 			}
-
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
 		addMessage(redirectAttributes, "保存加班申请成功");
-		return "redirect:"+Global.getAdminPath()+"/flow/work/?repage";
+		return "redirect:"+Global.getAdminPath()+"/flow/work";
 	}
 	
 	@RequiresPermissions("oa:oaJiabanapply:edit")
@@ -173,7 +214,8 @@ public class OaJiabanapplyController extends BaseController {
 	public String delete(OaJiabanapply oaJiabanapply, RedirectAttributes redirectAttributes) {
 		oaJiabanapplyService.delete(oaJiabanapply);
 		addMessage(redirectAttributes, "删除加班申请成功");
-		return "redirect:"+Global.getAdminPath()+"/oa/oaJiabanapply/?repage";
+		return "redirect:"+Global.getAdminPath()+"/oa/oaJiabanapply";
 	}
+	
 
 }

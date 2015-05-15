@@ -50,6 +50,13 @@ public interface UserDao extends CrudDao<User> {
 	 * @return
 	 */
 	public int updateLoginInfo(User user);
+	
+	/**
+	 * 初始化所有用户的可调休时长
+	 * @param user
+	 * @return
+	 */
+	public int initUserTiaoxiuTime(User user);
 
 	/**
 	 * 删除用户角色关联数据

@@ -68,6 +68,7 @@
 		a.name,
 		a.email,
 		a.phone,
+		a.tiaoxiu_times AS "tiaoxiuTimes",
 		a.mobile,
 		a.zhiwei,
 		a.user_type,
@@ -220,6 +221,25 @@
 		WHERE a.del_flag = #{DEL_FLAG_NORMAL}
 	</select>
 	
+		<!-- 初始化所有用户的可调休时长 XOA -->
+	<update id="initUserTiaoxiuTime" >
+		update sys_user u set u.tiaoxiu_times = 
+		(SELECT 
+			sum(a.hours)
+		FROM oa_jiabanapply a 
+		INNER JOIN fixflow_run_processinstance p ON p.biz_key = a.id
+			where a.del_flag = '0'
+			AND p.INSTANCE_STATUS = 'COMPLETE' 
+			and a.create_by = u.id) - 
+		(SELECT 
+					IFNULL(sum(a.rest_hours),0)
+				FROM oa_tiaoxiuapply a 
+				INNER JOIN fixflow_run_processinstance p ON p.biz_key = a.id
+					where a.del_flag = '0'
+					AND p.INSTANCE_STATUS = 'COMPLETE' 
+					and a.create_by = u.id)
+	</update>
+	
 	<!-- 插入用户 -->
 	<insert id="insert">
 		INSERT INTO sys_user(
@@ -231,7 +251,8 @@
 			no, 
 			name, 
 			email, 
-			phone, 
+			phone,
+			tiaoxiu_times, 
 			mobile, 
 			zhiwei,
 			user_type, 
@@ -253,6 +274,7 @@
 			#{name}, 
 			#{email}, 
 			#{phone}, 
+			#{tiaoxiuTimes},
 			#{mobile},
 			#{zhiwei}, 
 			#{userType}, 
@@ -278,6 +300,7 @@
 			name = #{name}, 
 			email = #{email}, 
 			phone = #{phone}, 
+			tiaoxiu_times = #{tiaoxiuTimes},
 			mobile = #{mobile}, 
 			zhiwei = #{zhiwei},
 			user_type = #{userType}, 
@@ -312,7 +335,8 @@
 			update_by = #{updateBy.id}, 
 			update_date = #{updateDate}, 
 			remarks = #{remarks},
-			photo = #{photo}
+			photo = #{photo},
+			tiaoxiu_times = #{tiaoxiuTimes}
 		WHERE id = #{id}
 	</update>
 	

@@ -14,5 +14,6 @@ import com.tryine.oa.modules.oa.entity.OaJiabanapply;
  */
 @MyBatisDao
 public interface OaJiabanapplyDao extends CrudDao<OaJiabanapply> {
+	public double countJiabanHours(OaJiabanapply oaJiabanapply);
 	
 }

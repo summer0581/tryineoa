@@ -3,23 +3,23 @@
 <meta http-equiv="Expires" content="0"><meta http-equiv="Cache-Control" content="no-cache"><meta http-equiv="Cache-Control" content="no-store">
 <link href="${ctxStatic}/index/images/favicon.ico" rel="SHORTCUT ICON" />
 <script src="${ctxStatic}/jquery/jquery-1.8.3.js" type="text/javascript"></script>
-<link href="${ctxStatic}/bootstrap/2.3.1/css_${not empty cookie.theme.value ? cookie.theme.value : 'cerulean'}/bootstrap.css" type="text/css" rel="stylesheet" />
+<link href="${ctxStatic}/bootstrap/2.3.1/css_${not empty cookie.theme.value ? cookie.theme.value : 'cerulean'}/bootstrap.css?version=${jsversion}" type="text/css" rel="stylesheet" />
 <script src="${ctxStatic}/bootstrap/2.3.1/js/bootstrap.js" type="text/javascript"></script>
-<link href="${ctxStatic}/bootstrap/2.3.1/awesome/font-awesome.min.css" type="text/css" rel="stylesheet" />
+<link href="${ctxStatic}/bootstrap/2.3.1/awesome/font-awesome.min.css?version=${jsversion}" type="text/css" rel="stylesheet" />
 <!--[if lte IE 7]><link href="${ctxStatic}/bootstrap/2.3.1/awesome/font-awesome-ie7.min.css" type="text/css" rel="stylesheet" /><![endif]-->
 <!--[if lte IE 6]><link href="${ctxStatic}/bootstrap/bsie/css/bootstrap-ie6.min.css" type="text/css" rel="stylesheet" />
 <script src="${ctxStatic}/bootstrap/bsie/js/bootstrap-ie.min.js" type="text/javascript"></script><![endif]-->
 <link href="${ctxStatic}/jquery-select2/3.4/select2.min.css" rel="stylesheet" />
 <script src="${ctxStatic}/jquery-select2/3.4/select2.min.js" type="text/javascript"></script>
-<link href="${ctxStatic}/jquery-validation/1.11.0/jquery.validate.css" type="text/css" rel="stylesheet" />
-<script src="${ctxStatic}/jquery-validation/1.11.0/jquery.validate.js" type="text/javascript"></script>
-<link href="${ctxStatic}/jquery-jbox/2.3/Skins/Bootstrap/jbox.min.css" rel="stylesheet" />
-<script src="${ctxStatic}/jquery-jbox/2.3/jquery.jBox-2.3.min.js" type="text/javascript"></script>
+<link href="${ctxStatic}/jquery-validation/1.11.0/jquery.validate.css?version=${jsversion}" type="text/css" rel="stylesheet" />
+<script src="${ctxStatic}/jquery-validation/1.11.0/jquery.validate.js?version=${jsversion}" type="text/javascript"></script>
+<link href="${ctxStatic}/jquery-jbox/2.3/Skins/Bootstrap/jbox.min.css?version=${jsversion}" rel="stylesheet" />
+<script src="${ctxStatic}/jquery-jbox/2.3/jquery.jBox-2.3.min.js?version=${jsversion}" type="text/javascript"></script>
 <script src="${ctxStatic}/My97DatePicker/WdatePicker.js" type="text/javascript"></script>
 <script src="${ctxStatic}/common/mustache.min.js" type="text/javascript"></script>
-<link href="${ctxStatic}/common/jeesite.css" type="text/css" rel="stylesheet" />
-<script src="${ctxStatic}/common/jeesite.js" type="text/javascript"></script>
-<script src="${ctxStatic}/common/ajaxfileupload.js" type="text/javascript"></script>
-<script src="${ctxStatic}/common/city.js" type="text/javascript"></script>
-<script src="${ctxStatic}/common/popup.js" type="text/javascript"></script>
+<link href="${ctxStatic}/common/jeesite.css?version=${jsversion}" type="text/css" rel="stylesheet" />
+<script src="${ctxStatic}/common/jeesite.js?version=${jsversion}" type="text/javascript"></script>
+<script src="${ctxStatic}/common/ajaxfileupload.js?version=${jsversion}" type="text/javascript"></script>
+<script src="${ctxStatic}/common/city.js?version=${jsversion}" type="text/javascript"></script>
+<script src="${ctxStatic}/common/popup.js?version=${jsversion}" type="text/javascript"></script>
 <script type="text/javascript">var ctx = '${ctx}', ctxStatic='${ctxStatic}';</script>

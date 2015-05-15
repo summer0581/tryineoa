@@ -396,6 +396,11 @@ public class SystemService extends BaseService implements InitializingBean {
 		System.out.println(sb.toString());
 		return true;
 	}
+	@Transactional(readOnly = false)
+	public void initUserTiaoxiuTime(User user){
+		userDao.initUserTiaoxiuTime(user);
+		CacheUtils.getCacheManager().clearAll();
+	}
 
 
 	@Override

@@ -31,6 +31,8 @@ public class OaLeaveapplyService extends CrudService<OaLeaveapplyDao, OaLeaveapp
 	}
 	
 	public Page<OaLeaveapply> findPage(Page<OaLeaveapply> page, OaLeaveapply oaLeaveapply) {
+		// 生成数据权限过滤条件（dsf为dataScopeFilter的简写，在xml中使用 ${sqlMap.dsf}调用权限SQL）
+		oaLeaveapply.getSqlMap().put("dsf", dataScopeFilter(oaLeaveapply.getCurrentUser(), "o", "u"));
 		return super.findPage(page, oaLeaveapply);
 	}
 	

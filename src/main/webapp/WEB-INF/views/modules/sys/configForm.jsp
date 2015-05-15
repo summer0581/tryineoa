@@ -25,8 +25,18 @@
 		});
 		
 		function clearAllCache(){
-			$("#inputForm").attr("action","${ctx}/sys/config/clearAllCache");
-			$("#inputForm").submit();
+			function initData(){
+				$("#inputForm").attr("action","${ctx}/sys/config/clearAllCache");
+				$("#inputForm").submit();
+			}
+			confirmx("确定清空所有用户缓存吗?一旦缓存被清除，所有用户将会强制退出系统",initData,null);
+		}
+		function initUserTiaoxiuTime(){
+			function initData(){
+				$("#inputForm").attr("action","${ctx}/sys/config/initUserTiaoxiuTime");
+				$("#inputForm").submit();
+			}
+			confirmx("确定初始化用户调休时长吗?一旦数据被初始化，历史数据将无法找回",initData,null);
 		}
 	</script>
 </head>
@@ -40,6 +50,12 @@
 			<label class="control-label">去除全部缓存:</label>
 			<div class="controls">
                 <input id="btnClearCache" class="btn btn-primary" onclick="clearAllCache()" type="button" value="清除缓存"/>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">初始化所有用户调休时长:</label>
+			<div class="controls">
+                <input id="btnClearCache" class="btn btn-primary" onclick="initUserTiaoxiuTime()" type="button" value="初始化用户调休时长"/>
 			</div>
 		</div>
 		
