@@ -48,11 +48,11 @@ public class AddressManagerController extends BaseController {
 
 	@RequestMapping(value = {"list", ""})
 	public String list(User user, HttpServletRequest request, HttpServletResponse response, Model model) {
-		Page<User> page = systemService.findUser(new Page<User>(request, response), user);
+		Page<User> page = systemService.findUserForUnitAddress(new Page<User>(request, response), user);
         model.addAttribute("page", page);
 		return "modules/sys/unitAddressList";
 	}
-
+	
 	@RequestMapping(value = "form")
 	public String form(User user, Model model) {
 		if (user.getCompany()==null || user.getCompany().getId()==null){

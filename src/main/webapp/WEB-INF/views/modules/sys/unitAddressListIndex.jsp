@@ -33,7 +33,7 @@
 		};
 		
 		function refreshTree(){
-			$.getJSON("${ctx}/sys/office/treeData",function(data){
+			$.getJSON("${ctx}/sys/office/treeDataAll",function(data){
 				$.fn.zTree.init($("#ztree"), setting, data).expandAll(true);
 			});
 		}

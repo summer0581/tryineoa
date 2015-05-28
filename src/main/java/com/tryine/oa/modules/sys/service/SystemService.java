@@ -92,6 +92,13 @@ public class SystemService extends BaseService implements InitializingBean {
 		return page;
 	}
 	
+	public Page<User> findUserForUnitAddress(Page<User> page, User user) {
+		// 设置分页参数
+		user.setPage(page);
+		// 执行分页查询
+		page.setList(userDao.findList(user));
+		return page;
+	}
 	/**
 	 * 无分页查询人员列表
 	 * @param user

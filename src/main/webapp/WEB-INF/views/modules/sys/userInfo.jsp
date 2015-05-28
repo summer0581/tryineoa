@@ -77,6 +77,12 @@
 			</div>
 		</div>
 		<div class="control-group">
+			<label class="control-label">QQ:</label>
+			<div class="controls">
+				<form:input path="qq" htmlEscape="false" maxlength="50"/>
+			</div>
+		</div>
+		<div class="control-group">
 			<label class="control-label">备注:</label>
 			<div class="controls">
 				<form:textarea path="remarks" htmlEscape="false" rows="3" maxlength="200" class="input-xlarge"/>

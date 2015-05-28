@@ -41,17 +41,17 @@
 	</form:form>
 	<sys:message content="${message}"/>
 	<table id="contentTable" class="table table-striped table-bordered table-condensed">
-		<thead><tr><th>归属公司</th><th>归属部门</th><th class="sort-column login_name">登录名</th><th class="sort-column name">姓名</th><th>电话</th><th>手机</th><th>角色</th></tr></thead>
+		<thead><tr><th>归属公司</th><th>归属部门</th><th class="sort-column name">姓名</th><th>职务</th><th>电话</th><th>手机</th><th>QQ</th></tr></thead>
 		<tbody>
 		<c:forEach items="${page.list}" var="user">
 			<tr>
 				<td>${user.company.name}</td>
 				<td>${user.office.name}</td>
-				<td><a href="${ctx}/sys/addressManager/form?id=${user.id}">${user.loginName}</a></td>
-				<td>${user.name}</td>
+				<td><a href="${ctx}/sys/addressManager/form?id=${user.id}">${user.name}</a></td>
+				<td>${user.zhiwei}</td>
 				<td>${user.phone}</td>
 				<td>${user.mobile}</td>
-				<td>${user.roleNames}</td>
+				<td>${user.qq}</td>
 			</tr>
 		</c:forEach>
 		</tbody>

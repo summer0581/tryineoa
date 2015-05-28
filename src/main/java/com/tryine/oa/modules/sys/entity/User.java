@@ -38,6 +38,7 @@ public class User extends DataEntity<User> {
 	private String email;	// 邮箱
 	private String phone;	// 电话
 	private String mobile;	// 手机
+	private String qq; //QQ号
 	private String zhiwei;  // 职位
 	private String userType;// 用户类型
 	private String loginIp;	// 最后登陆IP
@@ -179,6 +180,17 @@ public class User extends DataEntity<User> {
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
+	
+	@Length(min=0, max=20, message="QQ长度必须介于 1 和 20 之间")
+	@ExcelField(title="QQ", align=2, sort=700)
+	public String getQq() {
+		return qq;
+	}
+
+	public void setQq(String qq) {
+		this.qq = qq;
+	}
+	
 	@ExcelField(title="调休时长", align=2, sort=65)
 	public double getTiaoxiuTimes() {
 		return tiaoxiuTimes;

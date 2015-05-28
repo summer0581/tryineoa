@@ -173,4 +173,41 @@ public class OfficeController extends BaseController {
 		}
 		return mapList;
 	}
+	
+	/**
+	 * 获取机构JSON数据。
+	 * @param extId 排除的ID
+	 * @param type	类型（1：公司；2：部门/小组/其它：3：用户）
+	 * @param grade 显示级别
+	 * @param response
+	 * @return
+	 */
+	@RequiresPermissions("user")
+	@ResponseBody
+	@RequestMapping(value = "treeDataAll")
+	public List<Map<String, Object>> treeDataAll(@RequestParam(required=false) String extId, @RequestParam(required=false) String type,
+			@RequestParam(required=false) Long grade, @RequestParam(required=false) Boolean isAll, HttpServletResponse response) {
+		List<Map<String, Object>> mapList = Lists.newArrayList();
+		isAll = true;//设置显示所有人信息
+		List<Office> list = officeService.findList(isAll);
+		for (int i=0; i<list.size(); i++){
+			Office e = list.get(i);
+			if ((StringUtils.isBlank(extId) || (extId!=null && !extId.equals(e.getId()) && e.getParentIds().indexOf(","+extId+",")==-1))
+					&& (type == null || (type != null && (type.equals("1") ? type.equals(e.getType()) : true)))
+					&& (grade == null || (grade != null && Integer.parseInt(e.getGrade()) <= grade.intValue()))
+					&& Global.YES.equals(e.getUseable())){
+				Map<String, Object> map = Maps.newHashMap();
+				map.put("id", e.getId());
+				map.put("pId", e.getParentId());
+				map.put("pIds", e.getParentIds());
+				map.put("name", e.getName());
+				if (type != null && "3".equals(type)){
+					map.put("isParent", true);
+				}
+				mapList.add(map);
+			}
+		}
+		return mapList;
+	}
+	
 }
