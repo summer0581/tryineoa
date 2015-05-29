@@ -736,9 +736,10 @@ public class FlowCenterServiceImpl extends CommonServiceImpl implements FlowCent
 			//设置流程的业务关联键
 			expandTaskCommand.setBusinessKey(businessKey);
 		}
-		expandTaskCommand.setParamMap(taskParams);
-
-		ProcessEngine engine = getProcessEngine(userId);
+		//expandTaskCommand.setParamMap(taskParams);
+ 		expandTaskCommand.setVariables(taskParams);
+		//expandTaskCommand.setTransientVariables(taskParams);
+		ProcessEngine engine = getProcessEngine(userId); 
 		ProcessInstance processInstance = null;
 		
 		try{
