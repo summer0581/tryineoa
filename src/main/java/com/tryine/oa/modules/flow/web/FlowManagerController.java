@@ -6,6 +6,7 @@ package com.tryine.oa.modules.flow.web;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,6 +33,7 @@ import com.founder.fix.fixflow.service.ProcessDefinitionService;
 import com.founder.fix.fixflow.service.ProcessInstanceService;
 import com.founder.fix.fixflow.service.TaskInstanceService;
 import com.founder.fix.fixflow.service.UserGroupService;
+import com.founder.fix.fixflow.util.JSONUtil;
 import com.founder.fix.fixflow.util.Pagination;
 import com.tryine.oa.common.persistence.Page;
 import com.tryine.oa.common.utils.UploadUtils;
@@ -57,6 +59,7 @@ public class FlowManagerController extends BaseController {
 	private UserGroupService userGroupService;
 	@Autowired
 	private JobService jobService;
+	
 
 	/**
 	 * 流程实例管理任务列表
@@ -84,6 +87,36 @@ public class FlowManagerController extends BaseController {
 
 		return "modules/flow/manager/processInstanceList";
 	}
+	/**
+	 * 流程实例管理任务列表变量保存
+	 */
+	@RequiresPermissions("flow:manager:edit")
+	@RequestMapping(value = { "variableEdit" })
+	public String processVariableEdit(@RequestParam Map<String,Object> params,HttpServletRequest request, HttpServletResponse response, Model model,RedirectAttributes redirectAttributes) {
+		try {
+			String tmp = (String)params.get("insertAndUpdate");
+			if(StringUtil.isNotEmpty(tmp)){
+				Map<String,Object> tMap = JSONUtil.parseJSON2Map(tmp);
+				params.put("insertAndUpdate", tMap);
+				params.put("userId", UserUtils.getUser().getId());
+			}
+			processInstanceService.saveProcessVariables(params);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			addMessage(redirectAttributes, "变量修改失败！失败信息："+e.getMessage());
+		}
+		String processInstanceId = (String) params.get("processInstanceId");
+		return "redirect:" + adminPath + "/flow/manager/toProcessVariable?processInstanceId="+processInstanceId;
+	}
+	/**
+	 * 流程实例管理任务列表变量重定向
+	 */
+	@RequiresPermissions("flow:manager:list")
+	@RequestMapping(value = { "variableRedirect" })
+	public String processVariableRedirect(@RequestParam Map<String,Object> params,HttpServletRequest request, HttpServletResponse response, Model model,RedirectAttributes redirectAttributes) {
+		return "modules/flow/manager/processVariableModel";
+	}
+	
 	
 	/**
 	 * 流程定义管理任务列表
@@ -194,11 +227,12 @@ public class FlowManagerController extends BaseController {
 		Map<String, Object> pageResult = new HashMap<String,Object>();
 		try {
 			pageResult = processInstanceService.getProcessVariables(params);
+			pageResult.put("processInstanceId", params.get("processInstanceId"));
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			addMessage(redirectAttributes, "获取流程参数失败！失败信息："+e.getMessage());
 		}
-		model.addAttribute("result", pageResult);		
+		model.addAttribute("result", pageResult);
 		return "modules/flow/manager/processVariableList";
 	}
 	

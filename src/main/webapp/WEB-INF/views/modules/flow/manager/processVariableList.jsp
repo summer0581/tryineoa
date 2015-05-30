@@ -4,12 +4,13 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="decorator" content="default"/>
+<link rel="stylesheet" type="text/css" href="${ctxStatic}/flow/css/flow.css">
 
 <script type="text/javascript">
 	function addNew(){
 		var nowIndex = $("#nowIndex").val();
-		$.ajax({ type: "POST", 
-			url: "fixflow/manager/processVariableModel.jsp", 
+		$.ajax({ type: "post", 
+			url: "${ctx}/flow/manager/variableRedirect", 
 			data: "index="+nowIndex, 
 			success: function(msg)
 			{ 
@@ -60,9 +61,9 @@
 </head>
 
 <body>
-<form method="post" id="form" action="FlowManager">
+<form method="post" id="form" action="${ctx}/flow/manager/variableEdit">
 <div class="popup">
-    <table width="100%" class="fix-table" id="detailTable">
+    <table width="100%" class="table table-striped table-bordered table-condensed fix-table" id="detailTable">
 		<thead>
 			<th><input type="checkbox" id="checkall" name="checkall"/></th>
 			<th>变量编号</th>

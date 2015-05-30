@@ -194,7 +194,7 @@ public class ProcessInstanceServiceImpl extends CommonServiceImpl implements Pro
 		ProcessEngine engine = getTransactionProcessEngine(userId);
 		try{
 			RuntimeService runtimeService = engine.getRuntimeService();
-			if(StringUtil.isNotEmpty(deleteIndex)){
+			if(null!=deleteIndex){
 				String[] keys  = deleteIndex.split(",");
 				for(String tmp:keys){
 					runtimeService.deleteProcessInstanceVariable(processInstanceId, tmp);
