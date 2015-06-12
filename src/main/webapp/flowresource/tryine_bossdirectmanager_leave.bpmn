@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:fixflow="http://www.founderfix.com/fixflow" id="Definitions_1" targetNamespace="http://www.founderfix.com">
-  <bpmn2:process id="tryine_bossdirectmanager_leave" fixflow:verification="true" fixflow:dbid="tryine_bossdirectmanager_leave:1:56954659-5ed4-4728-b4a0-215340006913" fixflow:category="人力资源" name="董事长直系请假申请">
+  <bpmn2:process id="tryine_bossdirectmanager_leave" fixflow:verification="true" fixflow:dbid="tryine_bossdirectmanager_leave:2:3886b6c7-5a24-4ed8-acf7-90cfa5775361" fixflow:category="人力资源" name="董事长直系请假申请">
     <bpmn2:extensionElements>
       <fixflow:formUri>
         <fixflow:expression xsi:type="fixflow:Expression" id="Expression_1" name="&quot;oa/oaLeaveapply/form?action=doTask&quot;">&quot;oa/oaLeaveapply/form?action=doTask&quot;</fixflow:expression>
@@ -60,7 +60,7 @@ for(Role role : roles){&#xD;
 }&#xD;
 return false;</bpmn2:conditionExpression>
     </bpmn2:sequenceFlow>
-    <bpmn2:sequenceFlow id="SequenceFlow_6" name="一天以上/董事长直系" sourceRef="ExclusiveGateway_1" targetRef="UserTask_5">
+    <bpmn2:sequenceFlow id="SequenceFlow_6" name="一天以上" sourceRef="ExclusiveGateway_1" targetRef="UserTask_5">
       <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression" id="FormalExpression_5" fixflow:name="importjava.util.List;&#xD;&#xA;importcom.tryine.oa.modules.sys.entity.Role;&#xD;&#xA;importcom.tryine.oa.modules.sys.entity.User;&#xD;&#xA;importcom.tryine.oa.modules.sys.utils.UserUtils;&#xD;&#xA;&#xD;&#xA;Useruser=UserUtils.get(processInfo.getInitiator());&#xD;&#xA;List&lt;Role>roles=UserUtils.getRoleList(user);&#xD;&#xA;for(Rolerole:roles){&#xD;&#xA;&#x9;if(&quot;9d2fd83863f64cbc8a6f67945a1cc0d8&quot;.equals(role.getId())){&#xD;&#xA;&#x9;&#x9;returntrue;&#xD;&#xA;&#x9;}&#xD;&#xA;}&#xD;&#xA;if(${leaveDate}>1.0){&#xD;&#xA;&#x9;returntrue;&#xD;&#xA;}&#xD;&#xA;returnfalse;">import java.util.List;&#xD;
 import com.tryine.oa.modules.sys.entity.Role;&#xD;
 import com.tryine.oa.modules.sys.entity.User;&#xD;
