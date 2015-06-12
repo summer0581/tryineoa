@@ -2,7 +2,7 @@
 <%@ include file="/WEB-INF/views/include/taglib.jsp"%>
 <html>
 <head>
-	<title>意见反馈管理</title>
+	<title>企业信箱管理</title>
 	<meta name="decorator" content="default"/>
 	<script type="text/javascript">
 		$(document).ready(function() {
@@ -27,7 +27,7 @@
 </head>
 <body>
 	<ul class="nav nav-tabs">
-		<li><a href="#">查看意见<shiro:hasPermission name="oa:oaFeedbackReceived:edit">${not empty oaFeedback.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="oa:oaFeedbackReceived:edit">查看</shiro:lacksPermission></a></li>
+		<li><a href="#">查看信件<shiro:hasPermission name="oa:oaFeedbackReceived:edit">${not empty oaFeedback.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="oa:oaFeedbackReceived:edit">查看</shiro:lacksPermission></a></li>
 	</ul><br/>
 	<form:form id="inputForm" modelAttribute="oaFeedbackReceived" action="${ctx}/oa/oaFeedbackReceived/save" method="post" class="form-horizontal">
 		<form:hidden path="id"/>
@@ -35,16 +35,16 @@
 		<form:hidden path="feedback.createBy.id"/>
 		<sys:message content="${message}"/>		
 		<div class="control-group text-center">
-			基本意见信息
+			基本信件信息
 		</div>
 		<div class="control-group">
-			<label class="control-label">意见标题：</label>
+			<label class="control-label">信件标题：</label>
 			<div class="controls">
 				${oaFeedbackReceived.feedback.name }
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label">意见箱：</label>
+			<label class="control-label">信件箱：</label>
 			<div class="controls">
 				${oaFeedbackReceived.feedback.box.name }
 			</div>

@@ -48,7 +48,7 @@ public class OaMessageController extends BaseController {
 		}
 		return entity;
 	}
-	
+
 	@RequiresPermissions("oa:oaMessage:view")
 	@RequestMapping(value = {"list", ""})
 	public String list(OaMessage oaMessage, @RequestParam Map<String,Object> params, HttpServletRequest request, HttpServletResponse response, Model model) {

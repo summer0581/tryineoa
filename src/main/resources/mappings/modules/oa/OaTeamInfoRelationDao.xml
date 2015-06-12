@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tryine.oa.modules.oa.dao.OaTeamInfoRelationDao">
+    
+	<sql id="oaTeamInfoRelationColumns">
+		a.id AS "id",
+		a.oa_team_id AS "oaTeam.id",
+		a.user_id AS "user.id",
+		b.team_name AS "oaTeam.name",
+		u3.name AS "user.name"
+	</sql>
+	
+	<sql id="oaTeamInfoRelationJoins">
+		LEFT JOIN oa_team_info b ON b.id = a.oa_team_id
+		LEFT JOIN sys_user u3 ON u3.id = a.user_id
+	</sql>
+    
+	<select id="get" resultType="OaTeamInfoRelation">
+		SELECT 
+			<include refid="oaTeamInfoRelationColumns"/>
+		FROM oa_team_info_relation a
+		<include refid="oaTeamInfoRelationJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="OaTeamInfoRelation">
+		SELECT 
+			<include refid="oaTeamInfoRelationColumns"/>
+		FROM oa_team_info_relation a
+		<include refid="oaTeamInfoRelationJoins"/>
+		<where>
+			
+			<if test="oaTeam != null and oaTeam.id != null and oaTeam.id != ''">
+				AND a.oa_team_id = #{oaTeam.id}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="OaTeamInfoRelation">
+		SELECT 
+			<include refid="oaTeamInfoRelationColumns"/>
+		FROM oa_team_info_relation a
+		<include refid="oaTeamInfoRelationJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO oa_team_info_relation(
+			id,
+			oa_team_id,
+			user_id
+		) VALUES (
+			#{id},
+			#{oaTeam.id},
+			#{user.id}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE oa_team_info_relation SET 	
+			oa_team_id = #{oaTeam.id},
+			user_id = #{user.id}
+		WHERE id = #{id}
+	</update>
+	
+	<delete id="delete">
+		DELETE FROM oa_team_info_relation
+		<choose>
+			<when test="id !=null and id != ''">
+				WHERE id = #{id}
+			</when>
+			<otherwise>
+				WHERE oa_team_id = #{oaTeam.id}
+			</otherwise>
+		</choose>
+	</delete>
+	
+</mapper>

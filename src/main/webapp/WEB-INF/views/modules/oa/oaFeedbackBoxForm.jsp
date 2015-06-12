@@ -2,7 +2,7 @@
 <%@ include file="/WEB-INF/views/include/taglib.jsp"%>
 <html>
 <head>
-	<title>意见箱管理</title>
+	<title>类型管理</title>
 	<meta name="decorator" content="default"/>
 	<script type="text/javascript">
 		$(document).ready(function() {
@@ -27,14 +27,14 @@
 </head>
 <body>
 	<ul class="nav nav-tabs">
-		<li><a href="${ctx}/oa/oaFeedbackBox/">意见箱列表</a></li>
-		<li class="active"><a href="${ctx}/oa/oaFeedbackBox/form?id=${oaFeedbackBox.id}">意见箱<shiro:hasPermission name="oa:oaFeedbackBox:edit">${not empty oaFeedbackBox.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="oa:oaFeedbackBox:edit">查看</shiro:lacksPermission></a></li>
+		<li><a href="${ctx}/oa/oaFeedbackBox/">类型列表</a></li>
+		<li class="active"><a href="${ctx}/oa/oaFeedbackBox/form?id=${oaFeedbackBox.id}">类型<shiro:hasPermission name="oa:oaFeedbackBox:edit">${not empty oaFeedbackBox.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="oa:oaFeedbackBox:edit">查看</shiro:lacksPermission></a></li>
 	</ul><br/>
 	<form:form id="inputForm" modelAttribute="oaFeedbackBox" action="${ctx}/oa/oaFeedbackBox/save" method="post" class="form-horizontal">
 		<form:hidden path="id"/>
 		<sys:message content="${message}"/>		
 		<div class="control-group">
-			<label class="control-label">意见箱名称：</label>
+			<label class="control-label">类型名称：</label>
 			<div class="controls">
 				<form:input path="name" htmlEscape="false" maxlength="64" class="input-xlarge required"/>
 				<span class="help-inline"><font color="red">*</font> </span>

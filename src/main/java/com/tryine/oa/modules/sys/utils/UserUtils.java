@@ -154,6 +154,19 @@ public class UserUtils {
 	}
 	
 	/**
+	 * 获取指定用户角色列表
+	 * @return
+	 */
+	public static List<Role> getRoleList(User user){
+		@SuppressWarnings("unchecked")
+		List<Role> roleList = new ArrayList<Role>();
+		Role role = new Role();
+		role.getSqlMap().put("dsf", BaseService.dataScopeFilter(user, "o", "u"));
+		roleList = roleDao.findList(role);	
+		return roleList;
+	}
+	
+	/**
 	 * 获取当前用户授权菜单
 	 * @return
 	 */

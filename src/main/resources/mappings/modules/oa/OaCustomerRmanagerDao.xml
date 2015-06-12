@@ -34,16 +34,49 @@
 		a.update_by AS "updateBy.id",
 		a.update_date AS "updateDate",
 		a.remarks AS "remarks",
-		a.del_flag AS "delFlag"
+		a.del_flag AS "delFlag",
+		a.isOpenSea AS "isOpenSea"
 	</sql>
-	
+	<sql id="oaCustomerRmanagerChilderColumns">
+		(
+			SELECT
+				GROUP_CONCAT(c. NAME)
+			FROM
+				oa_customer_rmanager oa
+			LEFT JOIN oa_customer_relation b ON oa.id = b.oa_customer_id
+			LEFT JOIN sys_user c ON b.owner_user_id = c.id
+			WHERE
+				a.id = oa.id
+		) AS "ownerNames",
+		 (
+			SELECT
+				GROUP_CONCAT(cr. NAME)
+			FROM
+				oa_customer_rmanager oar
+			LEFT JOIN oa_customer_read_share_relation br ON oar.id = br.oa_customer_read_id
+			LEFT JOIN sys_user cr ON br.read_user_id = cr.id
+			WHERE
+				a.id = oar.id
+		) AS "oaCustomerRmanagerReadNames",
+		 (
+			SELECT
+				GROUP_CONCAT(cw. NAME)
+			FROM
+				oa_customer_rmanager oaw
+			LEFT JOIN oa_customer_write_share_relation bw ON oaw.id = bw.oa_customer_write_id
+			LEFT JOIN sys_user cw ON bw.write_user_id = cw.id
+			WHERE
+				a.id = oaw.id
+		) AS "oaCustomerRmanagerWriteNames"
+	</sql>
 	<sql id="oaCustomerRmanagerJoins">
-		left join oa_customer_relation cr on cr.oa_customer_id = a.id
+		
 	</sql>
     
 	<select id="get" resultType="OaCustomerRmanager">
 		SELECT 
-			<include refid="oaCustomerRmanagerColumns"/>
+			<include refid="oaCustomerRmanagerColumns"/>,
+			<include refid="oaCustomerRmanagerChilderColumns"/>						
 		FROM oa_customer_rmanager a
 		<include refid="oaCustomerRmanagerJoins"/>
 		WHERE a.id = #{id}
@@ -52,6 +85,7 @@
 	<select id="findList" resultType="OaCustomerRmanager">
 		SELECT 
 			<include refid="oaCustomerRmanagerColumns"/>
+			
 		FROM oa_customer_rmanager a
 		<include refid="oaCustomerRmanagerJoins"/>
 		<where>
@@ -103,6 +137,12 @@
 			</if>
 			<if test="createDate != null and createDate != ''">
 				AND a.create_date = #{createDate}
+			</if>
+			<if test="gongxiang != null and gongxiang != ''">
+				AND a.gongxiang = #{gongxiang}
+			</if>
+			<if test="isOpenSea != null and isOpenSea != ''">
+				AND a.isOpenSea = #{isOpenSea}
 			</if>
 		</where>
 		<choose>
@@ -166,7 +206,8 @@
 			update_by,
 			update_date,
 			remarks,
-			del_flag
+			del_flag,
+			isOpenSea
 		) VALUES (
 			#{id},
 			#{name},
@@ -199,7 +240,8 @@
 			#{updateBy.id},
 			#{updateDate},
 			#{remarks},
-			#{delFlag}
+			#{delFlag},
+			#{isOpenSea}
 		)
 	</insert>
 	
@@ -234,7 +276,8 @@
 			guimo = #{guimo},
 			update_by = #{updateBy.id},
 			update_date = #{updateDate},
-			remarks = #{remarks}
+			remarks = #{remarks},
+			isOpenSea = #{isOpenSea}
 		WHERE id = #{id}
 	</update>
 	

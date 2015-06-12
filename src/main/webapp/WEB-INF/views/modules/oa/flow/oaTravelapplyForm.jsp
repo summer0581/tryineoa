@@ -1,9 +1,10 @@
-<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page contentType="text/html;charset=UTF-8" deferredSyntaxAllowedAsLiteral="true"%>
 <%@ include file="/WEB-INF/views/include/taglib.jsp"%>
 <html>
 <head>
 	<title>出差申请管理</title>
 	<meta name="decorator" content="default"/>
+	<script src="${ctxStatic}/common/common.js?version=${jsversion}" type="text/javascript"></script>
 	<script type="text/javascript">
 		$(document).ready(function() {
 			//$("#name").focus();
@@ -96,7 +97,7 @@
 			<div class="controls">
 				<input id="outTime" name="outTime" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate required"
 					value="<fmt:formatDate value="${oaTravelapply.outTime}" pattern="yyyy-MM-dd HH:mm:00"/>"
-					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:00',maxDate:'#F{$dp.$D(\'plantobacktime\');}',isShowClear:false});"/>
+					onclick="WdatePicker({minDate:'%y-#{%M-1}-%d 00:00:00',dateFmt:'yyyy-MM-dd HH:mm:00',maxDate:'#F{$dp.$D(\'plantobacktime\');}',isShowClear:false});"/>
 					<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>
@@ -175,6 +176,7 @@
 			</div>
 		</div>
 		</c:if>
+		<div><span style="color:#317EB3;">*左键双击输入框快速输入“同意/不同意”</span></div>
 
 
 		<flow:initFlow flowInitMap="${result }"></flow:initFlow>

@@ -1,9 +1,10 @@
-<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page contentType="text/html;charset=UTF-8" deferredSyntaxAllowedAsLiteral="true"%>
 <%@ include file="/WEB-INF/views/include/taglib.jsp"%>
 <html>
 <head>
 	<title>调休申请管理</title>
 	<meta name="decorator" content="default"/>
+	<script src="${ctxStatic}/common/common.js?version=${jsversion}" type="text/javascript"></script>
 	<script type="text/javascript">
 		$(document).ready(function() {
 			//$("#name").focus();
@@ -108,7 +109,7 @@
 			<div class="controls">
 				<input id="restStarttime" name="restStarttime" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate required"
 					value="<fmt:formatDate value="${oaTiaoxiuapply.restStarttime}" pattern="yyyy-MM-dd HH:mm"/>"
-					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm',maxDate:'#F{$dp.$D(\'restEndtime\');}',isShowClear:false});"/> - 
+					onclick="WdatePicker({minDate:'%y-#{%M-1}-%d 00:00:00',dateFmt:'yyyy-MM-dd HH:mm',maxDate:'#F{$dp.$D(\'restEndtime\');}',isShowClear:false});"/> - 
 				<input id="restEndtime" name="restEndtime" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate required"
 					value="<fmt:formatDate value="${oaTiaoxiuapply.restEndtime}" pattern="yyyy-MM-dd HH:mm"/>"
 					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm',minDate:'#F{$dp.$D(\'restStarttime\');}',isShowClear:false});"/>
@@ -181,10 +182,10 @@
 		<div class="control-group">
 			<label class="control-label">董事长意见：</label>
 			<div class="controls">
-				<form:textarea path="chairManIdea" htmlEscape="false" maxlength="4000" class="input-xlarge "/>
+				<form:textarea path="chairManIdea" htmlEscape="false" maxlength="4000" class="input-xlarge "/>	
 			</div>
 		</div>
-
+		<div><span style="color:#317EB3;">*左键双击输入框快速输入“同意/不同意”</span></div>
 		<flow:initFlow flowInitMap="${result }"></flow:initFlow>
 	</form:form>
 </body>

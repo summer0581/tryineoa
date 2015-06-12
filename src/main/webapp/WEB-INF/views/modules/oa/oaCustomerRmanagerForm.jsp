@@ -23,6 +23,29 @@
 				}
 			});
 			citySelect.addressInit('quyu','province','city','','${oaCustomerRmanager.quyu}', '${oaCustomerRmanager.province}', '${oaCustomerRmanager.city}', '');
+			/**
+			*	页面初始化时：共享/未共享切换操作
+			*/
+			$("#gongxiang").each(function(){
+				var currentSelected = $(this).val();
+				if(currentSelected == "share"){
+					$(".shareDiv").removeAttr("hidden");
+				}else{
+					$(".shareDiv").attr("hidden","hidden");
+				}
+			});
+			/**
+			*	改变共享/未共享切换操作
+			*/
+			$("#gongxiang").change(function(){
+				var currentSelected = $(this).val();
+				if(currentSelected == "share"){
+					$(".shareDiv").removeAttr("hidden");
+				}else{
+					$(".shareDiv").attr("hidden","hidden");
+				}
+			});
+			
 		});
 	</script>
 </head>
@@ -183,6 +206,24 @@
 				</form:select>
 			</div>
 		</div>
+		
+		<div class="control-group shareDiv"  hidden>
+			<label class="control-label">只读共享人员：</label>
+			<div class="controls">
+             	<sys:treeselect id="oaCustomerRmanagerRead" name="oaCustomerRmanagerReadIds" value="${oaCustomerRmanager.oaCustomerRmanagerReadIds}" labelName="oaCustomerRmanagerReadNames" labelValue="${oaCustomerRmanager.oaCustomerRmanagerReadNames}"
+					title="用户" url="/sys/office/treeData?type=3" cssClass="input-xxlarge required" notAllowSelectParent="true" checked="true"/>
+				<span class="help-inline"><font color="red">*</font> </span>
+			</div>
+		</div>
+		<div class="control-group shareDiv"  hidden>
+			<label class="control-label">可写共享人员：</label>
+			<div class="controls">
+             	<sys:treeselect id="oaCustomerRmanagerWrite" name="oaCustomerRmanagerWriteIds" value="${oaCustomerRmanager.oaCustomerRmanagerWriteIds}" labelName="oaCustomerRmanagerWriteNames" labelValue="${oaCustomerRmanager.oaCustomerRmanagerWriteNames}"
+					title="用户" url="/sys/office/treeData?type=3" cssClass="input-xxlarge required" notAllowSelectParent="true" checked="true"/>
+				<span class="help-inline"><font color="red">*</font> </span>
+			</div>
+		</div> 
+		
 		<div class="control-group">
 			<label class="control-label">团队浏览：</label>
 			<div class="controls">

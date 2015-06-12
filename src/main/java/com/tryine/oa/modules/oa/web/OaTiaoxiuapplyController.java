@@ -5,6 +5,7 @@ package com.tryine.oa.modules.oa.web;
 
 import java.sql.SQLException;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,6 +25,7 @@ import com.founder.fix.fixflow.core.task.TaskInstance;
 import com.founder.fix.fixflow.service.impl.FlowCenterServiceImpl;
 import com.tryine.oa.common.config.Global;
 import com.tryine.oa.common.persistence.Page;
+import com.tryine.oa.common.utils.DateUtils;
 import com.tryine.oa.common.utils.StringUtils;
 import com.tryine.oa.common.web.BaseController;
 import com.tryine.oa.modules.flow.service.FlowService;
@@ -167,11 +169,16 @@ public class OaTiaoxiuapplyController extends BaseController {
 		if (!beanValidator(model, oaTiaoxiuapply)){
 			return form(oaTiaoxiuapply, params, model);
 		}
+		Date startTime = DateUtils.parseDate(params.get("restStarttime"));
+		Date endTime = DateUtils.parseDate(params.get("restEndtime"));	
+		Double leaveDate = DateUtils.getDistanceOfTwoDate(startTime, endTime);
+		Map<String, Double> taskParams = new HashMap<String, Double>();
+		taskParams.put("leaveDate", leaveDate);
+		params.put("taskParams", taskParams);//将计算出的请假天数传入流程
 		oaTiaoxiuapplyService.save(oaTiaoxiuapply);
 		String action = (String)params.get("action");
 		String nodeId = (String)params.get("nodeId");
 		String processDefinitionKey = (String)params.get("processDefinitionKey");
-		
 		String _taskComment = "";
 		if("tryine_leaveapply".equals(processDefinitionKey)){
 			if("UserTask_2".equals(nodeId)){//部门领导审核

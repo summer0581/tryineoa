@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tryine.oa.modules.oa.dao.OaCustomerWriteShareRelationDao">
+    
+	<sql id="oaCustomerWriteShareRelationColumns">
+		a.id AS "id",
+		a.oa_customer_write_id AS "oaCustomerWrite.id",
+		a.write_user_id AS "writeUser.id"
+	</sql>
+	
+	<sql id="oaCustomerWriteShareRelationJoins">
+	</sql>
+    
+	<select id="get" resultType="OaCustomerWriteShareRelation">
+		SELECT 
+			<include refid="oaCustomerWriteShareRelationColumns"/>
+		FROM oa_customer_write_share_relation a
+		<include refid="oaCustomerWriteShareRelationJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="OaCustomerWriteShareRelation">
+		SELECT 
+			<include refid="oaCustomerWriteShareRelationColumns"/>
+		FROM oa_customer_write_share_relation a
+		<include refid="oaCustomerWriteShareRelationJoins"/>
+		<where>
+			
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="OaCustomerWriteShareRelation">
+		SELECT 
+			<include refid="oaCustomerWriteShareRelationColumns"/>
+		FROM oa_customer_write_share_relation a
+		<include refid="oaCustomerWriteShareRelationJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO oa_customer_write_share_relation(
+			id,
+			oa_customer_write_id,
+			write_user_id
+		) VALUES (
+			#{id},
+			#{oaCustomerWrite.id},
+			#{writeUser.id}
+		)
+	</insert>
+	
+	<insert id="insertAll" parameterType="List">
+		INSERT INTO oa_customer_write_share_relation(
+			id,
+			oa_customer_write_id,
+			write_user_id
+		)
+		<foreach collection="list" item="e" separator=" UNION ALL ">
+			SELECT
+				#{e.id},
+				#{e.oaCustomerWrite.id},
+				#{e.writeUser.id}
+			FROM dual
+		</foreach>
+	</insert>
+	
+	<update id="update">
+		UPDATE oa_customer_write_share_relation SET 	
+			oa_customer_write_id = #{oaCustomerWrite.id},
+			write_user_id = #{writeUser.id}
+		WHERE id = #{id}
+	</update>
+	
+	<delete id="delete">
+		DELETE FROM oa_customer_write_share_relation
+		<choose>
+			<when test="id !=null and id != ''">
+				WHERE id = #{id}
+			</when>
+			<otherwise>
+				WHERE oa_customer_write_id = #{oaCustomerWrite.id}
+			</otherwise>
+		</choose>
+	</delete>
+	<delete id="deleteByOaCustomerManagerId">
+		DELETE FROM oa_customer_write_share_relation 
+		WHERE oa_customer_write_id = #{oaCustomerWrite.id}
+	</delete>
+</mapper>

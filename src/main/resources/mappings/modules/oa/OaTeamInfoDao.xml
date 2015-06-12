@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tryine.oa.modules.oa.dao.OaTeamInfoDao">
+    
+	<sql id="oaTeamInfoColumns">
+		a.id AS "id",
+		a.team_name AS "teamName",
+		a.head_user AS "headUser.id",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag",
+		b.name AS "headUser.name"
+	</sql>
+	
+	<sql id="oaTeamInfoJoins">
+		LEFT JOIN sys_user b ON a.head_user=b.id
+	</sql>
+    
+	<select id="get" resultType="OaTeamInfo">
+		SELECT 
+			<include refid="oaTeamInfoColumns"/>
+		FROM oa_team_info a
+		<include refid="oaTeamInfoJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="OaTeamInfo">
+		SELECT 
+			<include refid="oaTeamInfoColumns"/>
+			,(
+				SELECT
+					GROUP_CONCAT(c.NAME)
+				FROM
+					oa_team_info oa
+				LEFT JOIN oa_team_info_relation tir ON oa.id = tir.oa_team_id
+				LEFT JOIN sys_user c ON tir.user_id = c.id
+				WHERE
+					a.id = oa.id
+			) AS "oaTeamInfoRelationNamesList"
+		FROM oa_team_info a
+		<include refid="oaTeamInfoJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="teamName != null and teamName != ''">
+				AND a.team_name LIKE 
+						<if test="dbName == 'oracle'">'%'||#{teamName}||'%'</if>
+						<if test="dbName == 'mysql'">CONCAT('%', #{teamName}, '%')</if>
+			</if>
+			<if test="headUser != null and headUser.id != null and headUser.id != ''">
+				AND a.head_user = #{headUser.id}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="OaTeamInfo">
+		SELECT 
+			<include refid="oaTeamInfoColumns"/>
+		FROM oa_team_info a
+		<include refid="oaTeamInfoJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO oa_team_info(
+			id,
+			team_name,
+			head_user,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag
+		) VALUES (
+			#{id},
+			#{teamName},
+			#{headUser.id},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE oa_team_info SET 	
+			team_name = #{teamName},
+			head_user = #{headUser.id},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	<delete id="delete">
+		UPDATE oa_team_info SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</delete>
+	
+</mapper>

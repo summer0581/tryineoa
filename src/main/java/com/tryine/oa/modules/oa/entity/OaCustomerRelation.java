@@ -17,7 +17,8 @@ public class OaCustomerRelation extends DataEntity<OaCustomerRelation> {
 	
 	private static final long serialVersionUID = 1L;
 	private OaCustomerRmanager oaCustomer;		// 客户ID 父类
-	private User user;		// 拥有者ID
+	private User ownerUser;		// 拥有者ID
+	
 	
 	public OaCustomerRelation() {
 		super();
@@ -39,13 +40,29 @@ public class OaCustomerRelation extends DataEntity<OaCustomerRelation> {
 	public void setOaCustomer(OaCustomerRmanager oaCustomer) {
 		this.oaCustomer = oaCustomer;
 	}
-	
-	public User getUser() {
-		return user;
+
+	public User getOwnerUser() {
+		return ownerUser;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
+	public void setOwnerUser(User ownerUser) {
+		this.ownerUser = ownerUser;
 	}
-	
+/*
+	public User getReadUser() {
+		return readUser;
+	}
+
+	public void setReadUser(User readUser) {
+		this.readUser = readUser;
+	}
+
+	public User getWriteUser() {
+		return writeUser;
+	}
+
+	public void setWriteUser(User writeUser) {
+		this.writeUser = writeUser;
+	}
+	*/
 }

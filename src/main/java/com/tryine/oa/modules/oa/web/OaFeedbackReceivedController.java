@@ -33,7 +33,7 @@ import com.tryine.oa.modules.oa.service.OaFeedbackReceivedService;
 import com.tryine.oa.modules.oa.service.OaMessageService;
 
 /**
- * 意见反馈Controller
+ * 信件Controller
  * @author Summer
  * @version 2015-05-05
  */
@@ -105,7 +105,7 @@ public class OaFeedbackReceivedController extends BaseController {
 		/*消息发送start*/
 		if(oaFeedbackReceived.getIsSendMessage()){
 			OaMessage oaMessage =  new OaMessage();
-			oaMessage.setContent("您有新的意见反馈回复【 "+oaFeedbackReceived.getFeedback().getName()+"】需要查看！");
+			oaMessage.setContent("您有新的信件回复【 "+oaFeedbackReceived.getFeedback().getName()+"】需要查看！");
 			oaMessage.setUrl("/oa/oaFeedback");
 			List<OaMessageRecord> oaMessageRecordList = new ArrayList<OaMessageRecord>();
 			OaMessageRecord entity = new OaMessageRecord();
@@ -122,7 +122,7 @@ public class OaFeedbackReceivedController extends BaseController {
 		}
 		/*消息发送end*/
 		
-		addMessage(redirectAttributes, "保存意见反馈成功");
+		addMessage(redirectAttributes, "保存信件成功");
 		return "redirect:"+Global.getAdminPath()+"/oa/oaFeedbackReceived/?repage";
 	}
 	
@@ -130,7 +130,7 @@ public class OaFeedbackReceivedController extends BaseController {
 	@RequestMapping(value = "delete")
 	public String delete(OaFeedbackReceived oaFeedbackReceived, RedirectAttributes redirectAttributes) {
 		oaFeedbackReceivedService.delete(oaFeedbackReceived);
-		addMessage(redirectAttributes, "删除意见反馈成功");
+		addMessage(redirectAttributes, "删除信件成功");
 		return "redirect:"+Global.getAdminPath()+"/oa/oaFeedbackReceived/?repage";
 	}
 
