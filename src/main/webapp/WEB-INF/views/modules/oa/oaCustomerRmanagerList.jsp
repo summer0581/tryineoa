@@ -22,6 +22,7 @@
 		<li class="active"><a href="${ctx}/oa/oaCustomerRmanager/">全部客户</a></li>	
 		<li ><a href="${ctx}/oa/oaCustomerRmanager/qiyelist">企业客户</a></li>	
 		<li ><a href="${ctx}/oa/oaCustomerRmanager/gerenlist">个人客户</a></li>	
+		<li><a href="${ctx}/oa/oaCustomerRmanager/shareList">共享客户</a></li>
 		<li class="btns">
 			<input id="btnQiye" class="btn btn-primary" type="button" value="增加企业客户" onclick="location='${ctx}/oa/oaCustomerRmanager/qiyeform'"/>
 			<input id="btnGeren" class="btn btn-primary" type="button" value="增加个人客户" onclick="location='${ctx}/oa/oaCustomerRmanager/form'"/>

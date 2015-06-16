@@ -143,19 +143,25 @@ public class OaTravelapplyController extends BaseController {
 		String _taskComment = "";
 		if("tryine_travelapply".equals(processDefinitionKey)){
 			if("UserTask_2".equals(nodeId)){//部门领导审核
-				_taskComment = oaTravelapply.getDirectleaderIdea();
+				_taskComment = oaTravelapply.getDirectLeaderIdea();
 			}else if("UserTask_3".equals(nodeId)){//分公司总经理
+				_taskComment = oaTravelapply.getBranchLeaderIdea();
+			}else if("UserTask_4".equals(nodeId)){//人资总监
+				_taskComment = oaTravelapply.getHumanResourceIdea();
+			}else if("UserTask_5".equals(nodeId)||"UserTask_8".equals(nodeId)){//集团总经理
 				_taskComment = oaTravelapply.getGeneralManagerIdea();
+			}else if("UserTask_7".equals(nodeId)){//董事长
+				_taskComment = oaTravelapply.getChairManIdea();
 			}
 		}else if("tryine_bossdirectmanager_travel".equals(processDefinitionKey)){
 			if("UserTask_1".equals(nodeId)){//人力资源审核
-				_taskComment = oaTravelapply.getDirectleaderIdea();
+				_taskComment = oaTravelapply.getHumanResourceIdea();
 			}else if("UserTask_2".equals(nodeId)){//董事长审核
+				_taskComment = oaTravelapply.getChairManIdea();
+			}else if("UserTask_5".equals(nodeId)||"UserTask_6".equals(nodeId)){//集团总经理
 				_taskComment = oaTravelapply.getGeneralManagerIdea();
 			}
 		}
-
-
 		params.put("_taskComment", _taskComment);//将每个环节的意见放置进入流程意见字段
 		params.put("businessKey", oaTravelapply.getId());
 		params.put("userId", UserUtils.getUser().getId());

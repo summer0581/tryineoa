@@ -184,17 +184,21 @@ public class OaTiaoxiuapplyController extends BaseController {
 			if("UserTask_2".equals(nodeId)){//部门领导审核
 				_taskComment = oaTiaoxiuapply.getDirectLeaderIdea();
 			}else if("UserTask_3".equals(nodeId)){//分公司总经理
-				_taskComment = oaTiaoxiuapply.getGeneralManagerIdea();
+				_taskComment = oaTiaoxiuapply.getBranchLeaderIdea();
 			}else if("UserTask_4".equals(nodeId)){//人资总监
 				_taskComment = oaTiaoxiuapply.getHumanResourceIdea();
+			}else if("UserTask_7".equals(nodeId)||"UserTask_8".equals(nodeId)){//集团总经理
+				_taskComment = oaTiaoxiuapply.getGeneralManagerIdea();
 			}else if("UserTask_5".equals(nodeId)){//董事长
 				_taskComment = oaTiaoxiuapply.getChairManIdea();
 			}
 		}else if("tryine_bossdirectmanager_leave".equals(processDefinitionKey)){
 			if("UserTask_1".equals(nodeId)){//人资总监
 				_taskComment = oaTiaoxiuapply.getHumanResourceIdea();
-			}else if("UserTask_2".equals(nodeId)){//董事长
+			}else if("UserTask_5".equals(nodeId)){//董事长
 				_taskComment = oaTiaoxiuapply.getChairManIdea();
+			}else if("UserTask_2".equals(nodeId)||"UserTask_7".equals(nodeId)){//集团总经理
+				_taskComment = oaTiaoxiuapply.getGeneralManagerIdea();
 			}
 		}
 

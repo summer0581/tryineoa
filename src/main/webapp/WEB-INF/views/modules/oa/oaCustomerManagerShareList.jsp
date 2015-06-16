@@ -19,7 +19,14 @@
 </head>
 <body>
 	<ul class="nav nav-tabs">
-		<li class="active"><a href="${ctx}/oa/oaCustomerRmanager/shareList">共享客户</a></li>	
+		<li><a href="${ctx}/oa/oaCustomerRmanager/">全部客户</a></li>	
+		<li><a href="${ctx}/oa/oaCustomerRmanager/qiyelist">企业客户</a></li>	
+		<li><a href="${ctx}/oa/oaCustomerRmanager/gerenlist">个人客户</a></li>	
+		<li class="active"><a href="${ctx}/oa/oaCustomerRmanager/shareList">共享客户</a></li>
+		<li class="btns">
+			<input id="btnQiye" class="btn btn-primary" type="button" value="增加企业客户" onclick="location='${ctx}/oa/oaCustomerRmanager/qiyeform'"/>
+			<input id="btnGeren" class="btn btn-primary" type="button" value="增加个人客户" onclick="location='${ctx}/oa/oaCustomerRmanager/form'"/>
+		</li>	
 	</ul>
 	<form:form id="searchForm" modelAttribute="oaCustomerRmanager" action="${ctx}/oa/oaCustomerRmanager/shareList" method="post" class="breadcrumb form-search">
 		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>

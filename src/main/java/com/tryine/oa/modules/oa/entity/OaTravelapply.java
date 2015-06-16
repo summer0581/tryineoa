@@ -29,8 +29,12 @@ public class OaTravelapply extends FlowEntity<OaTravelapply> {
 	private String customerInfo;		// 客户姓名
 	private String customerTelephone;		// 客户电话
 	private String joinPeople;		// 随行人员
-	private String directleaderIdea;		// 直接上级意见
-	private String generalManagerIdea;		// 分公司总经理意见
+	private String directLeaderIdea;		// 直接上级意见
+	private String branchLeaderIdea;		// 分公司总经理意见
+	private String generalManagerIdea;		// 集团总经理意见
+	private String humanResourceIdea;		// 人资部意见
+	private String chairManIdea;		// 董事长意见
+	
 	private String outReason;		// 外出事由
 	
 	private Date startOutTime;		// 外出起始时间
@@ -137,16 +141,16 @@ public class OaTravelapply extends FlowEntity<OaTravelapply> {
 		this.joinPeople = joinPeople;
 	}
 	
-	@Length(min=0, max=4000, message="直接上级意见长度必须介于 0 和 4000 之间")
-	public String getDirectleaderIdea() {
-		return directleaderIdea;
+	@Length(min=0, max=2000, message="直接上级意见长度必须介于 0 和 2000 之间")
+	public String getdirectLeaderIdea() {
+		return directLeaderIdea;
 	}
 
-	public void setDirectleaderIdea(String directleaderIdea) {
-		this.directleaderIdea = directleaderIdea;
+	public void setdirectLeaderIdea(String directLeaderIdea) {
+		this.directLeaderIdea = directLeaderIdea;
 	}
 	
-	@Length(min=0, max=4000, message="分公司总经理意见长度必须介于 0 和 4000 之间")
+	@Length(min=0, max=2000, message="集团总经理意见长度必须介于 0 和 2000 之间")
 	public String getGeneralManagerIdea() {
 		return generalManagerIdea;
 	}
@@ -154,8 +158,16 @@ public class OaTravelapply extends FlowEntity<OaTravelapply> {
 	public void setGeneralManagerIdea(String generalManagerIdea) {
 		this.generalManagerIdea = generalManagerIdea;
 	}
-	
-	@Length(min=0, max=4000, message="外出事由长度必须介于 0 和 4000 之间")
+	@Length(min=0, max=2000, message="分公司总经理意见长度必须介于 0 和 2000 之间")
+	public String getBranchLeaderIdea() {
+		return branchLeaderIdea;
+	}
+
+	public void setBranchLeaderIdea(String branchLeaderIdea) {
+		this.branchLeaderIdea = branchLeaderIdea;
+	}
+
+	@Length(min=0, max=2000, message="外出事由长度必须介于 0 和 2000 之间")
 	public String getOutReason() {
 		return outReason;
 	}
@@ -194,6 +206,30 @@ public class OaTravelapply extends FlowEntity<OaTravelapply> {
 
 	public void setEndPlantobacktime(Date endPlantobacktime) {
 		this.endPlantobacktime = endPlantobacktime;
+	}
+	@Length(min=0, max=2000, message="直接上级意见长度必须介于 0 和 2000 之间")
+	public String getDirectLeaderIdea() {
+		return directLeaderIdea;
+	}
+
+	public void setDirectLeaderIdea(String directLeaderIdea) {
+		this.directLeaderIdea = directLeaderIdea;
+	}
+	@Length(min=0, max=2000, message="人资总监意见长度必须介于 0 和 2000 之间")
+	public String getHumanResourceIdea() {
+		return humanResourceIdea;
+	}
+
+	public void setHumanResourceIdea(String humanResourceIdea) {
+		this.humanResourceIdea = humanResourceIdea;
+	}
+	@Length(min=0, max=2000, message="董事长意见长度必须介于 0 和 2000 之间")
+	public String getChairManIdea() {
+		return chairManIdea;
+	}
+
+	public void setChairManIdea(String chairManIdea) {
+		this.chairManIdea = chairManIdea;
 	}
 	
 	
