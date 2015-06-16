@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:fixflow="http://www.founderfix.com/fixflow" id="Definitions_1" targetNamespace="http://www.founderfix.com">
-  <bpmn2:process id="tryine_bossdirectmanager_travel" fixflow:verification="true" fixflow:dbid="tryine_bossdirectmanager_travel:1:cc3bf792-b20a-4984-94ec-9108d1cd4709" fixflow:category="人力资源" name="董事长直系出差申请">
+  <bpmn2:process id="tryine_bossdirectmanager_travel" fixflow:verification="true" fixflow:dbid="tryine_bossdirectmanager_travel:2:3bc74be7-d2ec-4786-b677-d3869d34d594" fixflow:category="人力资源" name="董事长直系出差申请">
     <bpmn2:extensionElements>
       <fixflow:formUri>
         <fixflow:expression xsi:type="fixflow:Expression" id="Expression_1" name="&quot;oa/oaTravelapply/form?action=doTask&quot;">&quot;oa/oaTravelapply/form?action=doTask&quot;</fixflow:expression>
@@ -13,51 +13,6 @@
         <fixflow:documentation xsi:type="fixflow:Documentation" id="Documentation_1"></fixflow:documentation>
       </fixflow:DataVariable>
     </bpmn2:extensionElements>
-    <bpmn2:userTask id="UserTask_3" fixflow:taskType="FIXFLOWTASK" name="5.前台存档">
-      <bpmn2:extensionElements>
-        <fixflow:assignPolicyType id="potentialOwner"/>
-        <fixflow:skipStrategy fixflow:isEnable="true">
-          <fixflow:expression xsi:type="fixflow:Expression" id="Expression_3" name="returntrue;">return true;</fixflow:expression>
-          <fixflow:skipAssignee xsi:type="fixflow:SkipAssignee">
-            <fixflow:expression xsi:type="fixflow:Expression" id="Expression_5" name="&quot;374dfcccb6e44e35948e3abac7b34bf0&quot;">&quot;374dfcccb6e44e35948e3abac7b34bf0&quot;</fixflow:expression>
-          </fixflow:skipAssignee>
-        </fixflow:skipStrategy>
-        <fixflow:expectedExecutionTime/>
-        <fixflow:taskCommand id="Advance_ProcessStatus" name="流程状态" commandType="processStatus"/>
-        <fixflow:taskCommand id="HandleCommand_3" name="办结并存档" commandType="submit" isVerification="true" isSaveData="true" isSimulationRun="false"/>
-      </bpmn2:extensionElements>
-      <bpmn2:incoming>SequenceFlow_3</bpmn2:incoming>
-      <bpmn2:outgoing>SequenceFlow_9</bpmn2:outgoing>
-      <bpmn2:potentialOwner id="PotentialOwner_10" fixflow:resourceType="role" fixflow:includeExclusion="INCLUDE" fixflow:isContainsSub="false" name="前台">
-        <bpmn2:resourceAssignmentExpression id="ResourceAssignmentExpression_10">
-          <bpmn2:formalExpression id="FormalExpression_10" fixflow:name="&quot;374dfcccb6e44e35948e3abac7b34bf0&quot;">&quot;374dfcccb6e44e35948e3abac7b34bf0&quot;</bpmn2:formalExpression>
-        </bpmn2:resourceAssignmentExpression>
-      </bpmn2:potentialOwner>
-    </bpmn2:userTask>
-    <bpmn2:sequenceFlow id="SequenceFlow_9" name="" sourceRef="UserTask_3" targetRef="EndEvent_1"/>
-    <bpmn2:endEvent id="EndEvent_1" name="结束">
-      <bpmn2:incoming>SequenceFlow_9</bpmn2:incoming>
-    </bpmn2:endEvent>
-    <bpmn2:userTask id="UserTask_1" fixflow:taskType="FIXFLOWTASK" name="4.人资总监浏览">
-      <bpmn2:extensionElements>
-        <fixflow:assignPolicyType id="potentialOwner"/>
-        <fixflow:skipStrategy fixflow:isCreateSkipProcess="false" fixflow:isEnable="true">
-          <fixflow:expression xsi:type="fixflow:Expression" id="Expression_3" name="returnprocessInfo.getInitiator()==&quot;a7025251f6e64a31881dc74a798625f0&quot;">return processInfo.getInitiator() == &quot;a7025251f6e64a31881dc74a798625f0&quot;</fixflow:expression>
-        </fixflow:skipStrategy>
-        <fixflow:expectedExecutionTime/>
-        <fixflow:taskCommand id="Advance_ProcessStatus" name="流程状态" commandType="processStatus"/>
-        <fixflow:taskCommand id="HandleCommand_3" name="提交前台" commandType="submit" isVerification="true" isSaveData="true" isSimulationRun="false"/>
-        <fixflow:taskCommand id="HandleCommand_4" name="回退上一步" commandType="rollBackTaskPreviousStep" isVerification="true" isSaveData="true" isSimulationRun="false"/>
-      </bpmn2:extensionElements>
-      <bpmn2:incoming>SequenceFlow_11</bpmn2:incoming>
-      <bpmn2:outgoing>SequenceFlow_3</bpmn2:outgoing>
-      <bpmn2:potentialOwner id="PotentialOwner_11" fixflow:resourceType="role" fixflow:includeExclusion="INCLUDE" fixflow:isContainsSub="false" name="人资总监">
-        <bpmn2:resourceAssignmentExpression id="ResourceAssignmentExpression_11">
-          <bpmn2:formalExpression id="FormalExpression_11" fixflow:name="&quot;96b5823f7c9d4159b1432f39042d61a6&quot;">&quot;96b5823f7c9d4159b1432f39042d61a6&quot;</bpmn2:formalExpression>
-        </bpmn2:resourceAssignmentExpression>
-      </bpmn2:potentialOwner>
-    </bpmn2:userTask>
-    <bpmn2:sequenceFlow id="SequenceFlow_3" name="" sourceRef="UserTask_1" targetRef="UserTask_3"/>
     <bpmn2:userTask id="UserTask_5" name="2.集团总经理审批">
       <bpmn2:extensionElements>
         <fixflow:taskCommand id="Advance_ProcessStatus" name="流程状态" commandType="processStatus"/>
@@ -118,8 +73,8 @@ return false;</bpmn2:conditionExpression>
     </bpmn2:startEvent>
     <bpmn2:sequenceFlow id="SequenceFlow_10" name="" sourceRef="StartEvent_1" targetRef="UserTask_4"/>
     <bpmn2:parallelGateway id="ParallelGateway_1" name="" gatewayDirection="Converging">
-      <bpmn2:incoming>SequenceFlow_8</bpmn2:incoming>
       <bpmn2:incoming>SequenceFlow_7</bpmn2:incoming>
+      <bpmn2:incoming>SequenceFlow_8</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_11</bpmn2:outgoing>
     </bpmn2:parallelGateway>
     <bpmn2:sequenceFlow id="SequenceFlow_11" name="" sourceRef="ParallelGateway_1" targetRef="UserTask_1"/>
@@ -174,12 +129,12 @@ return false;</bpmn2:conditionExpression>
         <fixflow:assignPolicyType id="potentialOwner"/>
         <fixflow:taskCommand id="HandleCommand_2" name="提交董事长" commandType="submit" isVerification="true" isSaveData="true" isSimulationRun="false"/>
         <fixflow:skipStrategy fixflow:isEnable="true">
-          <fixflow:expression xsi:type="fixflow:Expression" name="董事长直系">&quot;9d2fd83863f64cbc8a6f67945a1cc0d8&quot;</fixflow:expression>
+          <fixflow:expression xsi:type="fixflow:Expression" id="Expression_6" name="董事长直系">&quot;9d2fd83863f64cbc8a6f67945a1cc0d8&quot;</fixflow:expression>
           <fixflow:skipAssignee xsi:type="fixflow:SkipAssignee">
-            <fixflow:expression xsi:type="fixflow:Expression" name="&quot;eccc48420a91460d831a0ed3daece76f&quot;">&quot;eccc48420a91460d831a0ed3daece76f&quot;</fixflow:expression>
+            <fixflow:expression xsi:type="fixflow:Expression" id="Expression_7" name="&quot;eccc48420a91460d831a0ed3daece76f&quot;">&quot;eccc48420a91460d831a0ed3daece76f&quot;</fixflow:expression>
           </fixflow:skipAssignee>
           <fixflow:skipComment xsi:type="fixflow:SkipComment">
-            <fixflow:expression xsi:type="fixflow:Expression" name="return&quot;董事长直系请董事长审批&quot;;">return &quot;董事长直系请董事长审批&quot;;</fixflow:expression>
+            <fixflow:expression xsi:type="fixflow:Expression" id="Expression_8" name="return&quot;董事长直系请董事长审批&quot;;">return &quot;董事长直系请董事长审批&quot;;</fixflow:expression>
           </fixflow:skipComment>
         </fixflow:skipStrategy>
         <fixflow:taskCommand id="HandleCommand_3" name="退回-上一步" commandType="rollBackTaskPreviousStep" isVerification="true" isSaveData="true" isSimulationRun="false"/>
@@ -193,6 +148,51 @@ return false;</bpmn2:conditionExpression>
       </bpmn2:potentialOwner>
     </bpmn2:userTask>
     <bpmn2:sequenceFlow id="SequenceFlow_1" name="" sourceRef="UserTask_6" targetRef="UserTask_2"/>
+    <bpmn2:userTask id="UserTask_3" fixflow:taskType="FIXFLOWTASK" name="5.前台存档">
+      <bpmn2:extensionElements>
+        <fixflow:assignPolicyType id="potentialOwner"/>
+        <fixflow:skipStrategy fixflow:isEnable="true">
+          <fixflow:expression xsi:type="fixflow:Expression" id="Expression_3" name="returntrue;">return true;</fixflow:expression>
+          <fixflow:skipAssignee xsi:type="fixflow:SkipAssignee">
+            <fixflow:expression xsi:type="fixflow:Expression" id="Expression_5" name="&quot;374dfcccb6e44e35948e3abac7b34bf0&quot;">&quot;374dfcccb6e44e35948e3abac7b34bf0&quot;</fixflow:expression>
+          </fixflow:skipAssignee>
+        </fixflow:skipStrategy>
+        <fixflow:expectedExecutionTime/>
+        <fixflow:taskCommand id="Advance_ProcessStatus" name="流程状态" commandType="processStatus"/>
+        <fixflow:taskCommand id="HandleCommand_3" name="办结并存档" commandType="submit" isVerification="true" isSaveData="true" isSimulationRun="false"/>
+      </bpmn2:extensionElements>
+      <bpmn2:incoming>SequenceFlow_3</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_9</bpmn2:outgoing>
+      <bpmn2:potentialOwner id="PotentialOwner_10" fixflow:resourceType="role" fixflow:includeExclusion="INCLUDE" fixflow:isContainsSub="false" name="前台">
+        <bpmn2:resourceAssignmentExpression id="ResourceAssignmentExpression_10">
+          <bpmn2:formalExpression id="FormalExpression_10" fixflow:name="&quot;374dfcccb6e44e35948e3abac7b34bf0&quot;">&quot;374dfcccb6e44e35948e3abac7b34bf0&quot;</bpmn2:formalExpression>
+        </bpmn2:resourceAssignmentExpression>
+      </bpmn2:potentialOwner>
+    </bpmn2:userTask>
+    <bpmn2:sequenceFlow id="SequenceFlow_9" name="" sourceRef="UserTask_3" targetRef="EndEvent_1"/>
+    <bpmn2:userTask id="UserTask_1" fixflow:taskType="FIXFLOWTASK" name="4.人资总监浏览">
+      <bpmn2:extensionElements>
+        <fixflow:assignPolicyType id="potentialOwner"/>
+        <fixflow:skipStrategy fixflow:isCreateSkipProcess="false" fixflow:isEnable="true">
+          <fixflow:expression xsi:type="fixflow:Expression" id="Expression_3" name="returnprocessInfo.getInitiator()==&quot;a7025251f6e64a31881dc74a798625f0&quot;">return processInfo.getInitiator() == &quot;a7025251f6e64a31881dc74a798625f0&quot;</fixflow:expression>
+        </fixflow:skipStrategy>
+        <fixflow:expectedExecutionTime/>
+        <fixflow:taskCommand id="Advance_ProcessStatus" name="流程状态" commandType="processStatus"/>
+        <fixflow:taskCommand id="HandleCommand_3" name="提交前台" commandType="submit" isVerification="true" isSaveData="true" isSimulationRun="false"/>
+        <fixflow:taskCommand id="HandleCommand_4" name="回退上一步" commandType="rollBackTaskPreviousStep" isVerification="true" isSaveData="true" isSimulationRun="false"/>
+      </bpmn2:extensionElements>
+      <bpmn2:incoming>SequenceFlow_11</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_3</bpmn2:outgoing>
+      <bpmn2:potentialOwner id="PotentialOwner_11" fixflow:resourceType="role" fixflow:includeExclusion="INCLUDE" fixflow:isContainsSub="false" name="人资总监">
+        <bpmn2:resourceAssignmentExpression id="ResourceAssignmentExpression_11">
+          <bpmn2:formalExpression id="FormalExpression_11" fixflow:name="&quot;96b5823f7c9d4159b1432f39042d61a6&quot;">&quot;96b5823f7c9d4159b1432f39042d61a6&quot;</bpmn2:formalExpression>
+        </bpmn2:resourceAssignmentExpression>
+      </bpmn2:potentialOwner>
+    </bpmn2:userTask>
+    <bpmn2:sequenceFlow id="SequenceFlow_3" name="" sourceRef="UserTask_1" targetRef="UserTask_3"/>
+    <bpmn2:endEvent id="EndEvent_1" name="结束">
+      <bpmn2:incoming>SequenceFlow_9</bpmn2:incoming>
+    </bpmn2:endEvent>
   </bpmn2:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1" name="Default 流程定义">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="tryine_bossdirectmanager_travel">
@@ -203,19 +203,13 @@ return false;</bpmn2:conditionExpression>
         <dc:Bounds height="36.0" width="36.0" x="101.0" y="106.0"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_EndEvent_1" bpmnElement="EndEvent_1">
-        <dc:Bounds height="36.0" width="36.0" x="720.0" y="283.0"/>
+        <dc:Bounds height="36.0" width="36.0" x="690.0" y="283.0"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_ExclusiveGateway_2" bpmnElement="ExclusiveGateway_2" isMarkerVisible="true">
         <dc:Bounds height="50.0" width="50.0" x="212.0" y="188.0"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_ParallelGateway_1" bpmnElement="ParallelGateway_1">
         <dc:Bounds height="50.0" width="50.0" x="464.0" y="188.0"/>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="BPMNShape_UserTask_3" bpmnElement="UserTask_3">
-        <dc:Bounds height="50.0" width="110.0" x="560.0" y="276.0"/>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="BPMNShape_UserTask_1" bpmnElement="UserTask_1">
-        <dc:Bounds height="50.0" width="110.0" x="560.0" y="188.0"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_UserTask_5" bpmnElement="UserTask_5">
         <dc:Bounds height="50.0" width="110.0" x="334.0" y="92.0"/>
@@ -229,11 +223,17 @@ return false;</bpmn2:conditionExpression>
       <bpmndi:BPMNShape id="BPMNShape_UserTask_6" bpmnElement="UserTask_6">
         <dc:Bounds height="50.0" width="70.0" x="300.0" y="276.0"/>
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_UserTask_3" bpmnElement="UserTask_3">
+        <dc:Bounds height="50.0" width="110.0" x="550.0" y="276.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_UserTask_1" bpmnElement="UserTask_1">
+        <dc:Bounds height="50.0" width="110.0" x="550.0" y="188.0"/>
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_9" bpmnElement="SequenceFlow_9" sourceElement="BPMNShape_UserTask_3" targetElement="BPMNShape_EndEvent_1">
-        <di:waypoint xsi:type="dc:Point" x="670.0" y="301.0"/>
-        <di:waypoint xsi:type="dc:Point" x="692.0" y="301.0"/>
-        <di:waypoint xsi:type="dc:Point" x="692.0" y="301.0"/>
-        <di:waypoint xsi:type="dc:Point" x="720.0" y="301.0"/>
+        <di:waypoint xsi:type="dc:Point" x="660.0" y="301.0"/>
+        <di:waypoint xsi:type="dc:Point" x="689.0" y="301.0"/>
+        <di:waypoint xsi:type="dc:Point" x="689.0" y="301.0"/>
+        <di:waypoint xsi:type="dc:Point" x="690.0" y="301.0"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_10" bpmnElement="SequenceFlow_10" sourceElement="BPMNShape_StartEvent_2" targetElement="BPMNShape_UserTask_4">
         <di:waypoint xsi:type="dc:Point" x="119.0" y="142.0"/>
@@ -242,10 +242,10 @@ return false;</bpmn2:conditionExpression>
         <di:waypoint xsi:type="dc:Point" x="119.0" y="188.0"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_3" bpmnElement="SequenceFlow_3" sourceElement="BPMNShape_UserTask_1" targetElement="BPMNShape_UserTask_3">
-        <di:waypoint xsi:type="dc:Point" x="615.0" y="238.0"/>
-        <di:waypoint xsi:type="dc:Point" x="615.0" y="255.0"/>
-        <di:waypoint xsi:type="dc:Point" x="615.0" y="255.0"/>
-        <di:waypoint xsi:type="dc:Point" x="615.0" y="276.0"/>
+        <di:waypoint xsi:type="dc:Point" x="605.0" y="238.0"/>
+        <di:waypoint xsi:type="dc:Point" x="605.0" y="255.0"/>
+        <di:waypoint xsi:type="dc:Point" x="605.0" y="255.0"/>
+        <di:waypoint xsi:type="dc:Point" x="605.0" y="276.0"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_4" bpmnElement="SequenceFlow_4" sourceElement="BPMNShape_UserTask_4" targetElement="BPMNShape_ExclusiveGateway_2">
         <di:waypoint xsi:type="dc:Point" x="174.0" y="213.0"/>
@@ -275,9 +275,9 @@ return false;</bpmn2:conditionExpression>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_11" bpmnElement="SequenceFlow_11" sourceElement="BPMNShape_ParallelGateway_1" targetElement="BPMNShape_UserTask_1">
         <di:waypoint xsi:type="dc:Point" x="515.0" y="213.0"/>
-        <di:waypoint xsi:type="dc:Point" x="535.0" y="213.0"/>
-        <di:waypoint xsi:type="dc:Point" x="535.0" y="213.0"/>
-        <di:waypoint xsi:type="dc:Point" x="560.0" y="213.0"/>
+        <di:waypoint xsi:type="dc:Point" x="544.0" y="213.0"/>
+        <di:waypoint xsi:type="dc:Point" x="544.0" y="213.0"/>
+        <di:waypoint xsi:type="dc:Point" x="550.0" y="213.0"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_1" bpmnElement="SequenceFlow_1" sourceElement="BPMNShape_UserTask_6" targetElement="BPMNShape_UserTask_2">
         <di:waypoint xsi:type="dc:Point" x="370.0" y="301.0"/>
