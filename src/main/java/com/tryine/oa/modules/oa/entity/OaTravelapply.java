@@ -141,15 +141,6 @@ public class OaTravelapply extends FlowEntity<OaTravelapply> {
 		this.joinPeople = joinPeople;
 	}
 	
-	@Length(min=0, max=2000, message="直接上级意见长度必须介于 0 和 2000 之间")
-	public String getdirectLeaderIdea() {
-		return directLeaderIdea;
-	}
-
-	public void setdirectLeaderIdea(String directLeaderIdea) {
-		this.directLeaderIdea = directLeaderIdea;
-	}
-	
 	@Length(min=0, max=2000, message="集团总经理意见长度必须介于 0 和 2000 之间")
 	public String getGeneralManagerIdea() {
 		return generalManagerIdea;

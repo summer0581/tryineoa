@@ -56,10 +56,10 @@
 					}
 					}
 			}else{
-				$("#directleaderIdea,#generalManagerIdea").attr("readonly","readonly");
+				$("#directLeaderIdea,#generalManagerIdea,#branchLeaderIdea,#humanResourceIdea,#chairManIdea").attr("readonly","readonly");
 			}
 			if("demoCompleteTask" == action){
-				$("#directleaderIdea,#generalManagerIdea").attr("readonly","readonly");
+				$("#directLeaderIdea,#generalManagerIdea,#branchLeaderIdea,#humanResourceIdea,#chairManIdea").attr("readonly","readonly");
 			}
 		});
 	</script>
@@ -171,7 +171,7 @@
 		</div>
 		</c:if>
 		<div class="control-group">
-			<label class="control-label">人资总监意见：</label>
+			<label class="control-label">人力行政中心意见：</label>
 			<div class="controls">
 				<form:textarea path="humanResourceIdea" htmlEscape="false"  maxlength="2000" class="input-xxlarge "/>
 			</div>
@@ -183,7 +183,7 @@
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label">董事长意见：</label>
+			<label class="control-label">集团董事长意见：</label>
 			<div class="controls">
 				<form:textarea path="chairManIdea" htmlEscape="false"  maxlength="2000" class="input-xxlarge "/>
 			</div>

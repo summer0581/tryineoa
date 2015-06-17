@@ -52,11 +52,11 @@
 						}
 					}
 				}else{
-					$("#directLeaderIdea,#generalManagerIdea,#humanResourceIdea,#chairManIdea").attr("readonly","readonly");
+					$("#directLeaderIdea,#generalManagerIdea,#branchLeaderIdea,#humanResourceIdea,#chairManIdea").attr("readonly","readonly");
 				}
 
 			}else if("demoCompleteTask" == action){
-				$("#directLeaderIdea,#generalManagerIdea,#humanResourceIdea,#chairManIdea").attr("readonly","readonly");
+				$("#directLeaderIdea,#generalManagerIdea,#branchLeaderIdea,#humanResourceIdea,#chairManIdea").attr("readonly","readonly");
 			}
 		});
 	</script>
@@ -154,7 +154,7 @@
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label">人资部意见：</label>
+			<label class="control-label">人力行政中心意见：</label>
 			<div class="controls">
 				<form:textarea path="humanResourceIdea" htmlEscape="false" maxlength="2000" class="input-xlarge "/>
 			</div>

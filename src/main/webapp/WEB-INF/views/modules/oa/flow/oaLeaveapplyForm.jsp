@@ -158,19 +158,19 @@
 			</div>
 		</div>
 		<div class="control-group">
+			<label class="control-label">人力行政中心意见：</label>
+			<div class="controls">
+				<form:textarea path="humanResourceIdea" htmlEscape="false" maxlength="2000" class="input-xlarge "/>
+			</div>
+		</div>
+		<div class="control-group">
 			<label class="control-label">集团总经理意见：</label>
 			<div class="controls">
 				<form:textarea path="generalManagerIdea" htmlEscape="false" maxlength="2000" class="input-xlarge "/>
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label">人资部意见：</label>
-			<div class="controls">
-				<form:textarea path="humanResourceIdea" htmlEscape="false" maxlength="2000" class="input-xlarge "/>
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label">董事长意见：</label>
+			<label class="control-label">集团董事长意见：</label>
 			<div class="controls">
 				<form:textarea path="chairManIdea" htmlEscape="false" maxlength="2000" class="input-xlarge "/>
 			</div>
