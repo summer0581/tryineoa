@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:fixflow="http://www.founderfix.com/fixflow" id="Definitions_1" targetNamespace="http://www.founderfix.com">
-  <bpmn2:process id="tryine_bossdirectmanager_leave" fixflow:verification="true" fixflow:dbid="tryine_bossdirectmanager_leave:1:1c3efdc2-904e-4230-8aaa-1d03226690cd" fixflow:category="人力资源" name="董事长直系请假申请">
+  <bpmn2:process id="tryine_bossdirectmanager_leave" fixflow:verification="true" fixflow:dbid="tryine_bossdirectmanager_leave:1:57dfc2ff-97cf-46ec-ab05-f4175a6b9d86" fixflow:category="人力资源" name="董事长直系请假申请">
     <bpmn2:extensionElements>
       <fixflow:formUri>
         <fixflow:expression xsi:type="fixflow:Expression" id="Expression_1" name="&quot;oa/oaLeaveapply/form?action=doTask&quot;">&quot;oa/oaLeaveapply/form?action=doTask&quot;</fixflow:expression>
@@ -9,8 +9,8 @@
         <fixflow:expression xsi:type="fixflow:Expression" id="Expression_2" name="&quot;董事长直系请假申请&quot;">&quot;董事长直系请假申请&quot;</fixflow:expression>
       </fixflow:taskSubject>
       <fixflow:DataVariable id="leaveDate" dataType="double" isPersistence="true" bizType="customVariable">
-        <fixflow:expression xsi:type="fixflow:Expression" name="0.0">0.0</fixflow:expression>
-        <fixflow:documentation xsi:type="fixflow:Documentation"></fixflow:documentation>
+        <fixflow:expression xsi:type="fixflow:Expression" id="Expression_3" name="0.0">0.0</fixflow:expression>
+        <fixflow:documentation xsi:type="fixflow:Documentation" id="Documentation_1"></fixflow:documentation>
       </fixflow:DataVariable>
     </bpmn2:extensionElements>
     <bpmn2:userTask id="UserTask_4" fixflow:taskType="FIXFLOWTASK" name="1.请假申请">
@@ -93,9 +93,9 @@
         <fixflow:assignPolicyType id="potentialOwner"/>
         <fixflow:taskCommand id="HandleCommand_3" name="办结并存档" commandType="submit" isVerification="true" isSaveData="true" isSimulationRun="false"/>
         <fixflow:skipStrategy fixflow:isEnable="true">
-          <fixflow:expression xsi:type="fixflow:Expression" name="returntrue;">return true;</fixflow:expression>
+          <fixflow:expression xsi:type="fixflow:Expression" id="Expression_5" name="returntrue;">return true;</fixflow:expression>
           <fixflow:skipAssignee xsi:type="fixflow:SkipAssignee">
-            <fixflow:expression xsi:type="fixflow:Expression" name="&quot;374dfcccb6e44e35948e3abac7b34bf0&quot;">&quot;374dfcccb6e44e35948e3abac7b34bf0&quot;</fixflow:expression>
+            <fixflow:expression xsi:type="fixflow:Expression" id="Expression_6" name="&quot;374dfcccb6e44e35948e3abac7b34bf0&quot;">&quot;374dfcccb6e44e35948e3abac7b34bf0&quot;</fixflow:expression>
           </fixflow:skipAssignee>
         </fixflow:skipStrategy>
         <fixflow:taskCommand id="Advance_ProcessStatus" name="流程状态" commandType="processStatus"/>
