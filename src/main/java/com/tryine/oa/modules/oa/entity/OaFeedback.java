@@ -9,6 +9,10 @@ import org.hibernate.validator.constraints.Length;
 
 import com.google.common.collect.Lists;
 import com.tryine.oa.common.persistence.DataEntity;
+import com.tryine.oa.common.utils.Collections3;
+import com.tryine.oa.common.utils.IdGen;
+import com.tryine.oa.common.utils.StringUtils;
+import com.tryine.oa.modules.sys.entity.User;
 
 /**
  * 意见反馈Entity
@@ -84,5 +88,18 @@ public class OaFeedback extends DataEntity<OaFeedback> {
 	public void setIsReply(int isReply) {
 		this.isReply = isReply;
 	}
-	
+	public String getReceivedUserids() {
+		return Collections3.extractToString(oaFeedbackReceivedList, "user.id", ",") ;
+	}
+
+	public void setReceivedUserids(String receivedUserids) {
+		this.oaFeedbackReceivedList = Lists.newArrayList();
+		for (String id : StringUtils.split(receivedUserids, ",")){
+			OaFeedbackReceived entity = new OaFeedbackReceived();
+			entity.setId(IdGen.uuid());
+			entity.setFeedback(this);
+			entity.setUser(new User(id));
+			this.oaFeedbackReceivedList.add(entity);
+		}
+	}
 }

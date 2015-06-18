@@ -2,7 +2,7 @@
 <%@ include file="/WEB-INF/views/include/taglib.jsp"%>
 <html>
 <head>
-	<title>意见反馈管理</title>
+	<title>企业信箱管理</title>
 	<meta name="decorator" content="default"/>
 	<script type="text/javascript">
 		$(document).ready(function() {
@@ -18,14 +18,14 @@
 </head>
 <body>
 	<ul class="nav nav-tabs">
-		<li class="active"><a href="${ctx}/oa/oaFeedback/">意见反馈列表</a></li>
-		<shiro:hasPermission name="oa:oaFeedback:edit"><li><a href="${ctx}/oa/oaFeedback/form">意见反馈添加</a></li></shiro:hasPermission>
+		<li class="active"><a href="${ctx}/oa/oaFeedback/">已发件</a></li>
+		<shiro:hasPermission name="oa:oaFeedback:edit"><li><a href="${ctx}/oa/oaFeedback/form">写信</a></li></shiro:hasPermission>
 	</ul>
 	<form:form id="searchForm" modelAttribute="oaFeedback" action="${ctx}/oa/oaFeedback/" method="post" class="breadcrumb form-search">
 		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
 		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
 		<ul class="ul-form">
-			<li><label>意见标题：</label>
+			<li><label>标题：</label>
 				<form:input path="name" htmlEscape="false" maxlength="64" class="input-medium"/>
 			</li>
 			<li><label>填写时间：</label>
@@ -41,9 +41,9 @@
 	<table id="contentTable" class="table table-striped table-bordered table-condensed">
 		<thead>
 			<tr>
-				<th>意见标题</th>
+				<th>标题</th>
 				<th>填写时间</th>
-				<th>意见箱</th>
+				<th>类型</th>
 				<th>是否回复</th>
 				<shiro:hasPermission name="oa:oaFeedback:edit"><th>操作</th></shiro:hasPermission>
 			</tr>
@@ -73,7 +73,7 @@
 				</td>
 				<shiro:hasPermission name="oa:oaFeedback:edit"><td>
     				<a href="${ctx}/oa/oaFeedback/form?id=${oaFeedback.id}">修改</a>
-					<a href="${ctx}/oa/oaFeedback/delete?id=${oaFeedback.id}" onclick="return confirmx('确认要删除该意见反馈吗？', this.href)">删除</a>
+					<a href="${ctx}/oa/oaFeedback/delete?id=${oaFeedback.id}" onclick="return confirmx('确认要删除该条信息吗？', this.href)">删除</a>
 				</td></shiro:hasPermission>
 			</tr>
 		</c:forEach>

@@ -2,7 +2,7 @@
 <%@ include file="/WEB-INF/views/include/taglib.jsp"%>
 <html>
 <head>
-	<title>意见反馈管理</title>
+	<title>企业信箱管理</title>
 	<meta name="decorator" content="default"/>
 	<script type="text/javascript">
 		$(document).ready(function() {
@@ -27,23 +27,23 @@
 </head>
 <body>
 	<ul class="nav nav-tabs">
-		<li><a href="${ctx}/oa/oaFeedback/">意见反馈列表</a></li>
-		<li class="active"><a href="${ctx}/oa/oaFeedback/viewform?id=${oaFeedback.id}">意见反馈查看</a></li>
+		<li><a href="${ctx}/oa/oaFeedback/">已发件</a></li>
+		<li class="active"><a href="${ctx}/oa/oaFeedback/viewform?id=${oaFeedback.id}">信件查看</a></li>
 	</ul><br/>
 	<form:form id="inputForm" modelAttribute="oaFeedback" action="${ctx}/oa/oaFeedback/save" method="post" class="form-horizontal">
 		<form:hidden path="id"/>
 		<sys:message content="${message}"/>		
 		<div class="control-group text-center">
-			意见基本信息
+			基本信息
 		</div>
 		<div class="control-group">
-			<label class="control-label">意见标题：</label>
+			<label class="control-label">标题：</label>
 			<div class="controls">
 				${oaFeedback.name }
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label">意见箱：</label>
+			<label class="control-label">类型：</label>
 			<div class="controls">
 				${box.name }
 			</div>
@@ -112,7 +112,7 @@
 			</c:if>
 		</c:forEach>
 		<div class="form-actions">
-			<shiro:hasPermission name="oa:oaFeedback:edit"><input id="btnSubmit" class="btn btn-primary" type="submit" value="保 存"/>&nbsp;</shiro:hasPermission>
+			<%-- <shiro:hasPermission name="oa:oaFeedback:edit"><input id="btnSubmit" class="btn btn-primary" type="submit" value="保 存"/>&nbsp;</shiro:hasPermission> --%>
 			<input id="btnCancel" class="btn" type="button" value="返 回" onclick="history.go(-1)"/>
 		</div>
 	</form:form>

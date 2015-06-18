@@ -30,7 +30,8 @@ public class OaJiabanapply extends FlowEntity<OaJiabanapply> {
 	private String reason;		// 加班事由
 	private String directLeaderIdea;		// 直接上级意见
 	private String humanResourceIdea;		// 人资部意见
-	private String generalManagerIdea;		// 总经理意见
+	private String generalManagerIdea;		// 集团总经理意见
+	private String branchLeaderIdea;		// 分公司总经理意见
 	private String chairManIdea;		// 董事长意见
 	private Date beginStarttime;		// 开始 开始时间
 	private Date endStarttime;		// 结束 开始时间
@@ -116,7 +117,7 @@ public class OaJiabanapply extends FlowEntity<OaJiabanapply> {
 		this.address = address;
 	}
 	
-	@Length(min=0, max=4000, message="加班事由长度必须介于 0 和 4000 之间")
+	@Length(min=0, max=2000, message="加班事由长度必须介于 0 和 2000 之间")
 	public String getReason() {
 		return reason;
 	}
@@ -125,7 +126,7 @@ public class OaJiabanapply extends FlowEntity<OaJiabanapply> {
 		this.reason = reason;
 	}
 	
-	@Length(min=0, max=4000, message="直接上级意见长度必须介于 0 和 4000 之间")
+	@Length(min=0, max=2000, message="直接上级意见长度必须介于 0 和 2000 之间")
 	public String getDirectLeaderIdea() {
 		return directLeaderIdea;
 	}
@@ -134,7 +135,7 @@ public class OaJiabanapply extends FlowEntity<OaJiabanapply> {
 		this.directLeaderIdea = directLeaderIdea;
 	}
 	
-	@Length(min=0, max=4000, message="人资部意见长度必须介于 0 和 4000 之间")
+	@Length(min=0, max=2000, message="人资部意见长度必须介于 0 和 2000 之间")
 	public String getHumanResourceIdea() {
 		return humanResourceIdea;
 	}
@@ -143,7 +144,7 @@ public class OaJiabanapply extends FlowEntity<OaJiabanapply> {
 		this.humanResourceIdea = humanResourceIdea;
 	}
 	
-	@Length(min=0, max=4000, message="总经理意见长度必须介于 0 和 4000 之间")
+	@Length(min=0, max=2000, message="集团总经理意见长度必须介于 0 和 2000 之间")
 	public String getGeneralManagerIdea() {
 		return generalManagerIdea;
 	}
@@ -151,8 +152,16 @@ public class OaJiabanapply extends FlowEntity<OaJiabanapply> {
 	public void setGeneralManagerIdea(String generalManagerIdea) {
 		this.generalManagerIdea = generalManagerIdea;
 	}
-	
-	@Length(min=0, max=4000, message="董事长意见长度必须介于 0 和 4000 之间")
+	@Length(min=0, max=2000, message="分公司总经理意见长度必须介于 0 和 2000 之间")
+	public String getBranchLeaderIdea() {
+		return branchLeaderIdea;
+	}
+
+	public void setBranchLeaderIdea(String branchLeaderIdea) {
+		this.branchLeaderIdea = branchLeaderIdea;
+	}
+
+	@Length(min=0, max=2000, message="董事长意见长度必须介于 0 和 2000 之间")
 	public String getChairManIdea() {
 		return chairManIdea;
 	}

@@ -154,6 +154,14 @@ public class UserUtils {
 	}
 	
 	/**
+	 * 获取指定用户角色列表(忽略数据范围选项)
+	 * @return
+	 */
+	public static List<Role> getRoleList(User user){
+		return user.getRoleList();
+	}
+	
+	/**
 	 * 获取当前用户授权菜单
 	 * @return
 	 */

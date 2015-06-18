@@ -1,10 +1,10 @@
-<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page contentType="text/html;charset=UTF-8" deferredSyntaxAllowedAsLiteral="true"%>
 <%@ include file="/WEB-INF/views/include/taglib.jsp"%>
 <html>
 <head>
 	<title>加班申请管理</title>
 	<meta name="decorator" content="default"/>
-
+	<script src="${ctxStatic}/common/common.js?version=${jsversion}" type="text/javascript"></script>
 	<script type="text/javascript">
 		$(document).ready(function() {
 			//$("#name").focus();
@@ -44,7 +44,7 @@
 						if("UserTask_2" == nodeId){
 							$("#directLeaderIdea").removeAttr("readonly");
 						}else if("UserTask_3" == nodeId){
-							$("#generalManagerIdea").removeAttr("readonly");
+							$("#branchLeaderIdea").removeAttr("readonly");
 						}else if("UserTask_4" == nodeId){
 							$("#humanResourceIdea").removeAttr("readonly");
 						}else if("UserTask_5" == nodeId){
@@ -52,11 +52,11 @@
 						}
 					}
 				}else{
-					$("#directLeaderIdea,#generalManagerIdea,#humanResourceIdea,#chairManIdea").attr("readonly","readonly");
+					$("#directLeaderIdea,#generalManagerIdea,#branchLeaderIdea,#humanResourceIdea,#chairManIdea").attr("readonly","readonly");
 				}
 
 			}else if("demoCompleteTask" == action){
-				$("#directLeaderIdea,#generalManagerIdea,#humanResourceIdea,#chairManIdea").attr("readonly","readonly");
+				$("#directLeaderIdea,#generalManagerIdea,#branchLeaderIdea,#humanResourceIdea,#chairManIdea").attr("readonly","readonly");
 			}
 		});
 	</script>
@@ -103,7 +103,7 @@
 			<div class="controls">
 				<input id="starttime" name="starttime" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate required"
 					value="<fmt:formatDate value="${oaJiabanapply.starttime}" pattern="yyyy-MM-dd HH:mm:00"/>"
-					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:00',maxDate:'#F{$dp.$D(\'endtime\');}',isShowClear:false});"/> -
+					onclick="WdatePicker({minDate:'%y-#{%M-1}-%d 00:00:00',dateFmt:'yyyy-MM-dd HH:mm:00',maxDate:'#F{$dp.$D(\'endtime\');}',isShowClear:false});"/> -
 				<input id="endtime" name="endtime" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate required"
 					value="<fmt:formatDate value="${oaJiabanapply.endtime}" pattern="yyyy-MM-dd HH:mm:00"/>"
 					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:00',minDate:'#F{$dp.$D(\'starttime\');}',isShowClear:false});"/>
@@ -134,7 +134,7 @@
 		<div class="control-group">
 			<label class="control-label">加班事由：</label>
 			<div class="controls">
-				<form:textarea path="reason" htmlEscape="false" rows="4" maxlength="4000" class="input-xxlarge required"/>
+				<form:textarea path="reason" htmlEscape="false" rows="4" maxlength="2000" class="input-xxlarge required"/>
 				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>
@@ -144,26 +144,26 @@
 		<div class="control-group">
 			<label class="control-label">直接上级意见：</label>
 			<div class="controls">
-				<form:textarea path="directLeaderIdea" htmlEscape="false" maxlength="4000" class="input-xlarge "/>
+				<form:textarea path="directLeaderIdea" htmlEscape="false" maxlength="2000" class="input-xlarge "/>
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label">总经理意见：</label>
+			<label class="control-label">分公司总经理意见：</label>
 			<div class="controls">
-				<form:textarea path="generalManagerIdea" htmlEscape="false" maxlength="4000" class="input-xlarge "/>
+				<form:textarea path="branchLeaderIdea" htmlEscape="false" maxlength="2000" class="input-xlarge "/>
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label">人资部意见：</label>
+			<label class="control-label">人力行政中心意见：</label>
 			<div class="controls">
-				<form:textarea path="humanResourceIdea" htmlEscape="false" maxlength="4000" class="input-xlarge "/>
+				<form:textarea path="humanResourceIdea" htmlEscape="false" maxlength="2000" class="input-xlarge "/>
 			</div>
 		</div>
-
+		<div><span style="color:#317EB3;">*左键双击输入框快速输入“同意/不同意”</span></div>
 		<!-- <div class="control-group">
 			<label class="control-label">董事长意见：</label>
 			<div class="controls">
-				<form:textarea path="chairManIdea" htmlEscape="false" maxlength="4000" class="input-xlarge "/>
+				<form:textarea path="chairManIdea" htmlEscape="false" maxlength="2000" class="input-xlarge "/>
 			</div>
 		</div> -->
 		<flow:initFlow flowInitMap="${result }"></flow:initFlow>

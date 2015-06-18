@@ -63,7 +63,7 @@ public class OaFeedbackController extends BaseController {
 	}
 	
 	@RequiresPermissions("oa:oaFeedback:view")
-	@RequestMapping(value = {"list", ""})
+	@RequestMapping(value = {"list",""})
 	public String list(OaFeedback oaFeedback, HttpServletRequest request, HttpServletResponse response, Model model) {
 		Page<OaFeedback> page = oaFeedbackService.findPage(new Page<OaFeedback>(request, response), oaFeedback); 
 		model.addAttribute("page", page);
@@ -105,7 +105,8 @@ public class OaFeedbackController extends BaseController {
 		if (!beanValidator(model, oaFeedback)){
 			return form(oaFeedback, model);
 		}
-		OaFeedbackBox oaFeedbackBox = oaFeedbackBoxService.get(oaFeedback.getBox());
+		//List<OaFeedbackReceived> oaFeedbackReceiveds = oaFeedback.getOaFeedbackReceivedList();
+		/*OaFeedbackBox oaFeedbackBox = oaFeedbackBoxService.get(oaFeedback.getBox());
 		String userids = oaFeedbackBox.getUserids();
 		if(StringUtils.isNotBlank(userids)){
 			String[] useridarry = userids.split(",");
@@ -117,13 +118,32 @@ public class OaFeedbackController extends BaseController {
 				ofr.setUser(new User(useridarry[i]));
 				ofr.setFeedback(oaFeedback);
 				receivedList.add(ofr);
+			}*/
+		if(null!=oaFeedback){
+			List<OaFeedbackReceived> oaFeedbackReceiveds = oaFeedback.getOaFeedbackReceivedList();
+			List<OaFeedbackReceived> os = new ArrayList<OaFeedbackReceived>();
+			for(int i=0;i<oaFeedbackReceiveds.size();i++){
+				OaFeedbackReceived ofr = new OaFeedbackReceived();
+				ofr.setId(IdGen.uuid());
+				ofr.setIsRead("0");
+				ofr.setUser(oaFeedbackReceiveds.get(i).getUser());
+				ofr.setFeedback(oaFeedbackReceiveds.get(i).getFeedback());
+				os.add(ofr);
 			}
-			oaFeedback.setOaFeedbackReceivedList(receivedList);
+			/*
+			
+			for(OaFeedbackReceived ofr : oaFeedbackReceiveds){
+				ofr.setId(IdGen.uuid());
+				ofr.setIsRead("0");
+				oaFeedbackReceiveds.add(ofr);
+			}*/
+			oaFeedback.setOaFeedbackReceivedList(os);
 		}
+		//}
 		
 		/*消息发送start*/
 			OaMessage oaMessage =  new OaMessage();
-			oaMessage.setContent("您有新的意见反馈【 "+oaFeedback.getName()+"】需要查看！");
+			oaMessage.setContent("您有新的信件【 "+oaFeedback.getName()+"】需要查看！");
 			oaMessage.setUrl("/oa/oaFeedbackReceived");
 			if("1".equals(oaFeedback.getIsHidename())){
 				oaMessage.setTempUsername("匿名");
@@ -144,7 +164,7 @@ public class OaFeedbackController extends BaseController {
 
 		
 		oaFeedbackService.save(oaFeedback);
-		addMessage(redirectAttributes, "保存意见反馈成功");
+		addMessage(redirectAttributes, "保存信件成功");
 		return "redirect:"+Global.getAdminPath()+"/oa/oaFeedback/?repage";
 	}
 	
@@ -152,7 +172,7 @@ public class OaFeedbackController extends BaseController {
 	@RequestMapping(value = "delete")
 	public String delete(OaFeedback oaFeedback, RedirectAttributes redirectAttributes) {
 		oaFeedbackService.delete(oaFeedback);
-		addMessage(redirectAttributes, "删除意见反馈成功");
+		addMessage(redirectAttributes, "删除信件成功");
 		return "redirect:"+Global.getAdminPath()+"/oa/oaFeedback/?repage";
 	}
 

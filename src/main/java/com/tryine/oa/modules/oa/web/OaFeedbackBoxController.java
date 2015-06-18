@@ -23,7 +23,7 @@ import com.tryine.oa.modules.oa.entity.OaFeedbackBox;
 import com.tryine.oa.modules.oa.service.OaFeedbackBoxService;
 
 /**
- * 意见箱维护Controller
+ * 类型维护Controller
  * @author Summer
  * @version 2015-05-05
  */
@@ -68,7 +68,7 @@ public class OaFeedbackBoxController extends BaseController {
 			return form(oaFeedbackBox, model);
 		}
 		oaFeedbackBoxService.save(oaFeedbackBox);
-		addMessage(redirectAttributes, "保存意见箱成功");
+		addMessage(redirectAttributes, "保存类型成功");
 		return "redirect:"+Global.getAdminPath()+"/oa/oaFeedbackBox/?repage";
 	}
 	
@@ -76,7 +76,7 @@ public class OaFeedbackBoxController extends BaseController {
 	@RequestMapping(value = "delete")
 	public String delete(OaFeedbackBox oaFeedbackBox, RedirectAttributes redirectAttributes) {
 		oaFeedbackBoxService.delete(oaFeedbackBox);
-		addMessage(redirectAttributes, "删除意见箱成功");
+		addMessage(redirectAttributes, "删除类型成功");
 		return "redirect:"+Global.getAdminPath()+"/oa/oaFeedbackBox/?repage";
 	}
 

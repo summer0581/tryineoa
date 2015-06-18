@@ -1,9 +1,10 @@
-<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page contentType="text/html;charset=UTF-8" deferredSyntaxAllowedAsLiteral="true"%>
 <%@ include file="/WEB-INF/views/include/taglib.jsp"%>
 <html>
 <head>
 	<title>出差申请管理</title>
 	<meta name="decorator" content="default"/>
+	<script src="${ctxStatic}/common/common.js?version=${jsversion}" type="text/javascript"></script>
 	<script type="text/javascript">
 		$(document).ready(function() {
 			//$("#name").focus();
@@ -32,25 +33,33 @@
 					$(".Wdate").removeAttr("onclick");
 					$("#officeButton").remove();
 					$("#officeName").unbind("click");
-						if("tryine_bossdirectmanager_travel" == pdk && "UserTask_4" != nodeId){
-							if("UserTask_1" == nodeId){
-								$("#directleaderIdea").removeAttr("readonly");
-							}else if("UserTask_2" == nodeId){
-								$("#generalManagerIdea").removeAttr("readonly");
-							}
-						}else if("tryine_travelapply" == pdk && "UserTask_1" != nodeId){
-							if("UserTask_2" == nodeId){
-								$("#directleaderIdea").removeAttr("readonly");
-							}else if("UserTask_3" == nodeId){
-								$("#generalManagerIdea").removeAttr("readonly");
-							}
+					if("tryine_bossdirectmanager_travel" == pdk && "UserTask_4" != nodeId){
+						if("UserTask_1" == nodeId){//人力资源审核
+							$("#humanResourceIdea").removeAttr("readonly");
+						}else if("UserTask_2" == nodeId){//董事长审核
+							$("#chairManIdea").removeAttr("readonly");
+						}else if("UserTask_5".equals(nodeId)||"UserTask_6".equals(nodeId)){//集团总经理
+							$("#generalManagerIdea").removeAttr("readonly");
+						}
+					}else if("tryine_travelapply" == pdk && "UserTask_1" != nodeId){
+						if("UserTask_2" == nodeId){//部门领导审核
+							$("#directLeaderIdea").removeAttr("readonly");
+						}else if("UserTask_3" == nodeId){//分公司总经理
+							$("#branchLeaderIdea").removeAttr("readonly");
+						}else if("UserTask_4" == nodeId){//人资总监
+							$("#humanResourceIdea").removeAttr("readonly");
+						}else if("UserTask_5".equals(nodeId)||"UserTask_8".equals(nodeId)){//集团总经理
+							$("#generalManagerIdea").removeAttr("readonly");
+						}else if("UserTask_7" == nodeId){//董事长
+							$("#chairManIdea").removeAttr("readonly");
 						}
 					}
+					}
 			}else{
-				$("#directleaderIdea,#generalManagerIdea").attr("readonly","readonly");
+				$("#directLeaderIdea,#generalManagerIdea,#branchLeaderIdea,#humanResourceIdea,#chairManIdea").attr("readonly","readonly");
 			}
 			if("demoCompleteTask" == action){
-				$("#directleaderIdea,#generalManagerIdea").attr("readonly","readonly");
+				$("#directLeaderIdea,#generalManagerIdea,#branchLeaderIdea,#humanResourceIdea,#chairManIdea").attr("readonly","readonly");
 			}
 		});
 	</script>
@@ -96,7 +105,7 @@
 			<div class="controls">
 				<input id="outTime" name="outTime" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate required"
 					value="<fmt:formatDate value="${oaTravelapply.outTime}" pattern="yyyy-MM-dd HH:mm:00"/>"
-					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:00',maxDate:'#F{$dp.$D(\'plantobacktime\');}',isShowClear:false});"/>
+					onclick="WdatePicker({minDate:'%y-#{%M-1}-%d 00:00:00',dateFmt:'yyyy-MM-dd HH:mm:00',maxDate:'#F{$dp.$D(\'plantobacktime\');}',isShowClear:false});"/>
 					<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>
@@ -140,7 +149,7 @@
 		<div class="control-group">
 			<label class="control-label">外出事由：</label>
 			<div class="controls">
-				<form:textarea path="outReason" htmlEscape="false" rows="4" maxlength="4000" class="input-xxlarge required"/>
+				<form:textarea path="outReason" htmlEscape="false" rows="4" maxlength="2000" class="input-xxlarge required"/>
 				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>
@@ -149,32 +158,37 @@
 		</div>
 		<c:if test="${'tryine_travelapply' eq result.processDefinitionKey}">
 		<div class="control-group">
-			<label class="control-label">直接上级：</label>
+			<label class="control-label">直接上级意见：</label>
 			<div class="controls">
-				<form:textarea path="directleaderIdea" htmlEscape="false"  maxlength="4000" class="input-xxlarge "/>
+				<form:textarea path="directLeaderIdea" htmlEscape="false" maxlength="2000" class="input-xlarge "/>
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label">分公司总经理：</label>
+			<label class="control-label">分公司总经理意见：</label>
 			<div class="controls">
-				<form:textarea path="generalManagerIdea" htmlEscape="false"  maxlength="4000" class="input-xxlarge "/>
+				<form:textarea path="branchLeaderIdea" htmlEscape="false" maxlength="2000" class="input-xlarge "/>
 			</div>
 		</div>
 		</c:if>
-		<c:if test="${'tryine_bossdirectmanager_travel' eq result.processDefinitionKey  }">
 		<div class="control-group">
-			<label class="control-label">人资总监意见：</label>
+			<label class="control-label">人力行政中心意见：</label>
 			<div class="controls">
-				<form:textarea path="directleaderIdea" htmlEscape="false"  maxlength="4000" class="input-xxlarge "/>
+				<form:textarea path="humanResourceIdea" htmlEscape="false"  maxlength="2000" class="input-xxlarge "/>
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label">董事长意见：</label>
+			<label class="control-label">集团总经理意见：</label>
 			<div class="controls">
-				<form:textarea path="generalManagerIdea" htmlEscape="false"  maxlength="4000" class="input-xxlarge "/>
+				<form:textarea path="generalManagerIdea" htmlEscape="false" maxlength="2000" class="input-xlarge "/>
 			</div>
 		</div>
-		</c:if>
+		<div class="control-group">
+			<label class="control-label">集团董事长意见：</label>
+			<div class="controls">
+				<form:textarea path="chairManIdea" htmlEscape="false"  maxlength="2000" class="input-xxlarge "/>
+			</div>
+		</div>
+		<div><span style="color:#317EB3;">*左键双击输入框快速输入“同意/不同意”</span></div>
 
 
 		<flow:initFlow flowInitMap="${result }"></flow:initFlow>

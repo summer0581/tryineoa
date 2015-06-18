@@ -359,7 +359,7 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
      */
     public static String getProjectPath(){
 		String projectPath = "";
-		return "D:\\testworkspace\\tryineoa\\";
+		return "D:\\workspace\\tryineoa\\";
 		/*try {
 			File file = new DefaultResourceLoader().getResource("").getFile();
 			if (file != null){
@@ -379,7 +379,8 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return projectPath;*/
+		return projectPath;
+		*/
     }
     
     /**

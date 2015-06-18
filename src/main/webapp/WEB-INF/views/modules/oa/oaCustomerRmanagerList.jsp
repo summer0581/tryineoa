@@ -22,6 +22,7 @@
 		<li class="active"><a href="${ctx}/oa/oaCustomerRmanager/">全部客户</a></li>	
 		<li ><a href="${ctx}/oa/oaCustomerRmanager/qiyelist">企业客户</a></li>	
 		<li ><a href="${ctx}/oa/oaCustomerRmanager/gerenlist">个人客户</a></li>	
+		<li><a href="${ctx}/oa/oaCustomerRmanager/shareList">共享客户</a></li>
 		<li class="btns">
 			<input id="btnQiye" class="btn btn-primary" type="button" value="增加企业客户" onclick="location='${ctx}/oa/oaCustomerRmanager/qiyeform'"/>
 			<input id="btnGeren" class="btn btn-primary" type="button" value="增加个人客户" onclick="location='${ctx}/oa/oaCustomerRmanager/form'"/>
@@ -68,6 +69,12 @@
 					<form:options items="${fns:getDictList('oa_customer_hangye')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
 				</form:select>
 			</li>
+			<li><label>电子邮箱：</label>
+				<form:input path="email" htmlEscape="false" maxlength="64" class="input-medium"/>
+			</li>
+			<li><label>电话：</label>
+				<form:input path="telephone" htmlEscape="false" maxlength="64" class="input-medium"/>
+			</li>
 			<li><label>关系等级：</label>
 				<form:select path="guanxidj" class="input-medium">
 					<form:option value="" label=" "/>
@@ -81,20 +88,20 @@
 					<form:options items="${fns:getDictList('oa_customer_laiyuan')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
 				</form:select>
 			</li>
-			<li><label>电子邮箱：</label>
-				<form:input path="email" htmlEscape="false" maxlength="64" class="input-medium"/>
-			</li>
-			<li><label>电话：</label>
-				<form:input path="telephone" htmlEscape="false" maxlength="64" class="input-medium"/>
+			<li><label>价值评估：</label>
+				<form:select path="jiazhipg" class="input-medium">
+					<form:option value="" label=" "/>
+					<form:options items="${fns:getDictList('oa_customer_xinyongdj')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
+				</form:select>
 			</li>
 			<li><label>地址：</label>
 				<form:input path="address" htmlEscape="false" maxlength="64" class="input-medium"/>
 			</li>
-			<li><label>价值评估：</label>
-				<form:radiobuttons path="jiazhipg" items="${fns:getDictList('oa_customer_xinyongdj')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
-			</li>
 			<li><label>信用等级：</label>
-				<form:radiobuttons path="xinyongdj" items="${fns:getDictList('oa_customer_xinyongdj')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
+				<form:select path="xinyongdj" class="input-medium">
+					<form:option value="" label=" "/>
+					<form:options items="${fns:getDictList('oa_customer_xinyongdj')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
+				</form:select>
 			</li>
 			<li><label>人员规模：</label>
 				<form:select path="guimo" class="input-medium">

@@ -169,7 +169,7 @@ public class OaJiabanapplyController extends BaseController {
 			if("UserTask_2".equals(nodeId)){//部门领导审核
 				_taskComment = oaJiabanapply.getDirectLeaderIdea();
 			}else if("UserTask_3".equals(nodeId)){//分公司总经理
-				_taskComment = oaJiabanapply.getGeneralManagerIdea();
+				_taskComment = oaJiabanapply.getBranchLeaderIdea();
 			}else if("UserTask_4".equals(nodeId)){//人资总监
 				_taskComment = oaJiabanapply.getHumanResourceIdea();
 			}else if("UserTask_5".equals(nodeId)){//董事长

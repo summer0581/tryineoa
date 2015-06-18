@@ -31,6 +31,7 @@ public class OaMessage extends DataEntity<OaMessage> {
 	private boolean isSelf;//是否为自己的数据
 	private String readFlag;	// 本人阅读状态
 	private String type; //查询类别 noread,readed,sended
+	private boolean isAnonymous;//是否匿名
 	
 	public OaMessage() {
 		super();

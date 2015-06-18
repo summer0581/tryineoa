@@ -5,6 +5,7 @@ package com.tryine.oa.modules.oa.web;
 
 import java.sql.SQLException;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,6 +25,7 @@ import com.founder.fix.fixflow.core.task.TaskInstance;
 import com.founder.fix.fixflow.service.impl.FlowCenterServiceImpl;
 import com.tryine.oa.common.config.Global;
 import com.tryine.oa.common.persistence.Page;
+import com.tryine.oa.common.utils.DateUtils;
 import com.tryine.oa.common.utils.StringUtils;
 import com.tryine.oa.common.web.BaseController;
 import com.tryine.oa.modules.flow.service.FlowService;
@@ -167,27 +169,36 @@ public class OaTiaoxiuapplyController extends BaseController {
 		if (!beanValidator(model, oaTiaoxiuapply)){
 			return form(oaTiaoxiuapply, params, model);
 		}
+		Date startTime = DateUtils.parseDate(params.get("restStarttime"));
+		Date endTime = DateUtils.parseDate(params.get("restEndtime"));	
+		Double leaveDate = DateUtils.getDistanceOfTwoDate(startTime, endTime);
+		Map<String, Double> taskParams = new HashMap<String, Double>();
+		taskParams.put("leaveDate", leaveDate);
+		params.put("taskParams", taskParams);//将计算出的请假天数传入流程
 		oaTiaoxiuapplyService.save(oaTiaoxiuapply);
 		String action = (String)params.get("action");
 		String nodeId = (String)params.get("nodeId");
 		String processDefinitionKey = (String)params.get("processDefinitionKey");
-		
 		String _taskComment = "";
 		if("tryine_leaveapply".equals(processDefinitionKey)){
 			if("UserTask_2".equals(nodeId)){//部门领导审核
 				_taskComment = oaTiaoxiuapply.getDirectLeaderIdea();
 			}else if("UserTask_3".equals(nodeId)){//分公司总经理
-				_taskComment = oaTiaoxiuapply.getGeneralManagerIdea();
+				_taskComment = oaTiaoxiuapply.getBranchLeaderIdea();
 			}else if("UserTask_4".equals(nodeId)){//人资总监
 				_taskComment = oaTiaoxiuapply.getHumanResourceIdea();
+			}else if("UserTask_7".equals(nodeId)||"UserTask_8".equals(nodeId)){//集团总经理
+				_taskComment = oaTiaoxiuapply.getGeneralManagerIdea();
 			}else if("UserTask_5".equals(nodeId)){//董事长
 				_taskComment = oaTiaoxiuapply.getChairManIdea();
 			}
 		}else if("tryine_bossdirectmanager_leave".equals(processDefinitionKey)){
 			if("UserTask_1".equals(nodeId)){//人资总监
 				_taskComment = oaTiaoxiuapply.getHumanResourceIdea();
-			}else if("UserTask_2".equals(nodeId)){//董事长
+			}else if("UserTask_5".equals(nodeId)){//董事长
 				_taskComment = oaTiaoxiuapply.getChairManIdea();
+			}else if("UserTask_2".equals(nodeId)||"UserTask_7".equals(nodeId)){//集团总经理
+				_taskComment = oaTiaoxiuapply.getGeneralManagerIdea();
 			}
 		}
 

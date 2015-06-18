@@ -11,6 +11,10 @@ import org.hibernate.validator.constraints.Length;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.google.common.collect.Lists;
 import com.tryine.oa.common.persistence.DataEntity;
+import com.tryine.oa.common.utils.Collections3;
+import com.tryine.oa.common.utils.IdGen;
+import com.tryine.oa.common.utils.StringUtils;
+import com.tryine.oa.modules.sys.entity.User;
 
 
 
@@ -28,7 +32,7 @@ public class OaCustomerRmanager extends DataEntity<OaCustomerRmanager> {
 	private Date hfTime;		// 下次回访时间
 	private String sex;		// 性别
 	private String zhonglei;		// 客户种类
-	private String xinyongdj = "middle";		// 客户信用等级
+	private String xinyongdj;		// 客户信用等级
 	private String hangye;		// 客户行业
 	private String guanxidj;		// 客户关系等级
 	private String jieduan;		// 客户阶段
@@ -42,13 +46,40 @@ public class OaCustomerRmanager extends DataEntity<OaCustomerRmanager> {
 	private String fax;		// 传真
 	private String website;		// 网址
 	private String address;		// 地址
-	private String gongxiang = "noshare";		// 客户共享
-	private String tuanduiliulan = "1";		// 团队浏览
-	private String jiazhipg = "middle";		// 客户价值评估
+	private String gongxiang;		// 客户共享
+	private String tuanduiliulan;		// 团队浏览
+	private String jiazhipg;		// 客户价值评估
 	private String guimo;		// 客户人员规模
 	private String type;		// 客户类别(企业或个人)
+	private String isOpenSea="1";	//是否是公海客户
+	private String ownerNames; //拥有者名字集
 	private List<OaCustomerRelation> oaCustomerRelationList = Lists.newArrayList();		// 子表列表
+	private List<OaCustomerReadShareRelation> oaCustomerReadShareRelationList = Lists.newArrayList();		// 子表列表
+	private List<OaCustomerWriteShareRelation> oaCustomerWriteShareRelationList = Lists.newArrayList();		// 子表列表
+
+	private String oaCustomerRmanagerReadNames;//共享只读人员名字集合(from回显)
+	private String oaCustomerRmanagerWriteNames;//共享可写人员名字集合(from回显)
 	
+	
+	
+	public List<OaCustomerReadShareRelation> getOaCustomerReadShareRelationList() {
+		return oaCustomerReadShareRelationList;
+	}
+
+	public void setOaCustomerReadShareRelationList(
+			List<OaCustomerReadShareRelation> oaCustomerReadShareRelationList) {
+		this.oaCustomerReadShareRelationList = oaCustomerReadShareRelationList;
+	}
+
+	public List<OaCustomerWriteShareRelation> getOaCustomerWriteShareRelationList() {
+		return oaCustomerWriteShareRelationList;
+	}
+
+	public void setOaCustomerWriteShareRelationList(
+			List<OaCustomerWriteShareRelation> oaCustomerWriteShareRelationList) {
+		this.oaCustomerWriteShareRelationList = oaCustomerWriteShareRelationList;
+	}
+
 	public OaCustomerRmanager() {
 		super();
 	}
@@ -288,4 +319,75 @@ public class OaCustomerRmanager extends DataEntity<OaCustomerRmanager> {
 	public void setOaCustomerRelationList(List<OaCustomerRelation> oaCustomerRelationList) {
 		this.oaCustomerRelationList = oaCustomerRelationList;
 	}
+	
+	public String getIsOpenSea() {
+		return isOpenSea;
+	}
+
+	public void setIsOpenSea(String isOpenSea) {
+		this.isOpenSea = isOpenSea;
+	}
+	
+	public String getOwnerNames() {
+		return ownerNames;
+	}
+
+	public void setOwnerNames(String ownerNames) {
+		this.ownerNames = ownerNames;
+	}
+
+	public String getOaCustomerRmanagerReadNames() {
+		return oaCustomerRmanagerReadNames;
+	}
+
+	public void setOaCustomerRmanagerReadNames(String oaCustomerRmanagerReadNames) {
+		this.oaCustomerRmanagerReadNames = oaCustomerRmanagerReadNames;
+	}
+
+	public String getOaCustomerRmanagerWriteNames() {
+		return oaCustomerRmanagerWriteNames;
+	}
+
+	public void setOaCustomerRmanagerWriteNames(String oaCustomerRmanagerWriteNames) {
+		this.oaCustomerRmanagerWriteNames = oaCustomerRmanagerWriteNames;
+	}
+	
+	public String getOaCustomerRmanagerReadIds() {
+		return Collections3.extractToString(oaCustomerReadShareRelationList, "readUser.id", ",") ;
+	}
+	
+	/**
+	 * 设置共享只读人员ID
+	 * @return
+	 */
+	public void setOaCustomerRmanagerReadIds(String ids) {
+		this.oaCustomerReadShareRelationList = Lists.newArrayList();
+		for (String id : StringUtils.split(ids, ",")){
+			OaCustomerReadShareRelation entity = new OaCustomerReadShareRelation();
+			entity.setId(IdGen.uuid());
+			entity.setOaCustomerRead(this);
+			entity.setReadUser(new User(id));
+			this.oaCustomerReadShareRelationList.add(entity);
+		}
+	}
+	
+	public String getOaCustomerRmanagerWriteIds() {
+		return Collections3.extractToString(oaCustomerWriteShareRelationList, "writeUser.id", ",") ;
+	}
+	
+	/**
+	 * 设置共享可写人员ID
+	 * @return
+	 */
+	public void setOaCustomerRmanagerWriteIds(String ids) {
+		this.oaCustomerWriteShareRelationList = Lists.newArrayList();
+		for (String id : StringUtils.split(ids, ",")){
+			OaCustomerWriteShareRelation entity = new OaCustomerWriteShareRelation();
+			entity.setId(IdGen.uuid());
+			entity.setOaCustomerWrite(this);
+			entity.setWriteUser(new User(id));
+			this.oaCustomerWriteShareRelationList.add(entity);
+		}
+	}
+	
 }

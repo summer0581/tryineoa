@@ -5,13 +5,13 @@
 	<sql id="oaCustomerRelationColumns">
 		a.id AS "id",
 		a.oa_customer_id AS "oaCustomer.id",
-		a.user_id AS "user.id",
-		u3.name AS "user.name"
+		a.owner_user_id AS "ownerUser.id",
+		u1.name AS "ownerUser.name"
 	</sql>
 	
 	<sql id="oaCustomerRelationJoins">
 		LEFT JOIN oa_customer_rmanager b ON b.id = a.oa_customer_id
-		LEFT JOIN sys_user u3 ON u3.id = a.user_id
+		LEFT JOIN sys_user u1 ON u1.id = a.owner_user_id
 	</sql>
     
 	<select id="get" resultType="OaCustomerRelation">
@@ -63,11 +63,11 @@
 		INSERT INTO oa_customer_relation(
 			id,
 			oa_customer_id,
-			user_id
+			owner_user_id
 		) VALUES (
 			#{id},
 			#{oaCustomer.id},
-			#{user.id}
+			#{ownerUser.id}
 		)
 	</insert>
 	
@@ -75,13 +75,13 @@
 		INSERT INTO oa_customer_relation(
 			id,
 			oa_customer_id,
-			USER_ID
+			owner_user_id
 		)
 		<foreach collection="list" item="e" separator=" UNION ALL ">
 			SELECT
 				#{e.id},
 				#{e.oaCustomer.id},
-				#{e.user.id}
+				#{e.ownerUser.id}
 			FROM dual
 		</foreach>
 	</insert>
@@ -89,7 +89,7 @@
 	<update id="update">
 		UPDATE oa_customer_relation SET 	
 			oa_customer_id = #{oaCustomer.id},
-			user_id = #{user.id}
+			owner_user_id = #{ownerUser.id}
 		WHERE id = #{id}
 	</update>
 	
